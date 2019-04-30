@@ -11,25 +11,20 @@ const PHP_START_LEN = PHP_START.length,
 	PHP_END_LEN = PHP_END.length;
 
 const html = LANGUAGES.HTML;
-const php = {
-	exuecte: commonExecute,
-	getKeywords: () => {
-		return ['and', 'or', 'xor', 'exception', 'as', 'break', 'case', 'class', 'const', 'continue ', 'declare',
-			'default', 'do', 'echo', 'else', 'elseif', 'enddeclare', 'endfor', 'endforeach', 'endif', 'endswitch',
-			'endwhile', 'extends', 'for', 'foreach', 'function', 'global', 'if', 'include', 'include_once', 'new',
-			'print', 'require', 'require_once', 'return', 'static', 'switch', 'use', 'var', 'while', 'final',
-			'php_user_filter', 'interface', 'implements', 'public', 'private', 'protected', 'abstract', 'clone ',
-			'try', 'catch', 'throw', 'cfunction', 'this', '__LINE__', '__FUNCTION__', '__CLASS__', '__METHOD__'];
-	},
-	getPlugIn: () => {
-		return {
-			charSpan: Span.STRING,
-			isBuiltInFunc: function (word) {
-				return Array.has(dftBuiltInFunc, word);
-			}
-		};
+
+const php = common.initLangObject(null, {
+	charSpan: Span.STRING,
+	isBuiltInFunc: function (word) {
+		return Array.has(dftBuiltInFunc, word);
 	}
-};
+},
+	['and', 'or', 'xor', 'exception', 'as', 'break', 'case', 'class', 'const', 'continue ', 'declare',
+		'default', 'do', 'echo', 'else', 'elseif', 'enddeclare', 'endfor', 'endforeach', 'endif', 'endswitch',
+		'endwhile', 'extends', 'for', 'foreach', 'function', 'global', 'if', 'include', 'include_once', 'new',
+		'print', 'require', 'require_once', 'return', 'static', 'switch', 'use', 'var', 'while', 'final',
+		'php_user_filter', 'interface', 'implements', 'public', 'private', 'protected', 'abstract', 'clone ',
+		'try', 'catch', 'throw', 'cfunction', 'this', '__LINE__', '__FUNCTION__', '__CLASS__', '__METHOD__']
+);
 
 function doPHP(input) {
 

@@ -8,6 +8,10 @@ const common = require("./common");
 Object.addAll(constants, exports);
 Object.addAll(components, exports);
 
+for (let langFile of require("fs").readdirSync("./langs")) {
+	require(`./langs/${langFile}`);
+}
+
 const NEW_LINE = /(\r\n|\r)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
 	FILED_LIST = '</legend><pre><ol class="code_list"><li>',

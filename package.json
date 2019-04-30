@@ -8,7 +8,6 @@
 		"url": "git+https://github.com/undeadway/FlyHighLighter.git"
 	},
 	"dependencies": {
-		"coralian":"0.0.4"
+		"coralian": "0.0.14"
 	}
 }
-

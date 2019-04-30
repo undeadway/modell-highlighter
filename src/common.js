@@ -178,7 +178,7 @@ function commonExecute(code) {
 	return output.join(String.BLANK);
 }
 
-function getLang(execute, plugIn, keywords) {
+function initLangObject(execute = commonExecute, plugIn, keywords) {
 
 	return {
 		getKeywords: function () {
@@ -194,7 +194,7 @@ function getLang(execute, plugIn, keywords) {
 var pseudocode = (function () {
 	var dftBuiltInFunc = ['eval', 'alert', 'print'];
 
-	return getLang(commonExecute, {
+	return initLangObject(commonExecute, {
 		doComment: commonDoComment,
 		isBuiltInFunc: function (word) {
 			return dftBuiltInFunc.has(word);
@@ -223,17 +223,16 @@ exports = module.exports = {
 	doRegExp: commonDoRegExp,
 	doComment: commonDoComment,
 	execute: commonExecute,
+	initLangObject: initLangObject,
 	getLang: (langName) => {
 		return LANGUAGES[langName] || pseudocode;
 	},
 	addLang: function (langs, execute, plugIn, ...keywords) {
 
-		execute = execute || commonExecute;
-
 		if (typeIs(keywords[0], 'array')) {
 			keywords = keywords[0];
 		}
-		let langObj = getLang(execute, plugIn, keywords);
+		let langObj = initLangObject(execute, plugIn, keywords);
 
 		for (let lang of langs) {
 			LANGUAGES[lang.name] = langObj;

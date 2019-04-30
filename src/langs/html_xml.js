@@ -328,8 +328,6 @@ function doHTML(input) {
 		let content = RegExp.$3; // 正文
 		let after = RegExp.$4; // 后标签
 
-		let puts = [RegExp.$1, RegExp.$2, RegExp.$3, RegExp.$4, RegExp.$5, RegExp.$6];
-
 		let output = doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, before) +
 			doScriptOrStyle(tag, content) +
 			doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, after);
