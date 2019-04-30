@@ -9,19 +9,23 @@
 .code .doc, .code .xml_cdata{color:#309999;}
 .code .keyword, .code .xmltag{color:#4b3bff;}
 
-.code .backtickstr, .code .css_name, .code .keyword{font-style:italic;}
+.code .keyword{margin-right:3px;}
+.code .css_name, .code .keyword{font-style:italic;}
+.code .css_id{color:#f89225;}
+.code .css_class{color:#086f95;}
 .code .css_at{color:#6c5f14;}
 .code .css_pseudo_class{color:#8557d9;}
-.code .string, .code .data_val{color:#FF7F27;}
-.code .todo, .code .data_description{color:#1588ee;}
-.code .number{color:#FF0000;}
-.code .css_class, .code .regexp, .code .macrodefine, .code .data_key{color:#178b0e;}
-.code .bracket{color:#ce25d1; margin:0px 1px;}
-.code .character, .code .css_id, .code .builtin_func, .code .xml_doctype{color:#fe4688;}
-.code .builtin_var, .code .filetype{color:#00C800;}
-.code .backtickstr{margin:0px 2px; color:#A9E014;}
+.code .character{color:#f82583;}
+.code .string, .code .data_val{color:#ec773a;}
+.code .todo{color:#FF0000;}
+.code .number{color:#FF3300;}
+.code .annotation{color:#6a1c9c;}
+.code .regexp, .code .macrodefine, .code .data_key{color:#178b0e;}
+.code .bracket{color:#ce25d1; margin:0px 2px;}
+.code .builtin_func, .code .xml_doctype{color:#fe4688;}
+.code .builtin_var, .code .filetype{color:#4928c5;}
 
-.code .css_id, .code .css_class, .code .data_description,
+.code .css_id, .code .css_class, 
 .code .bracket, .code .todo, .code .xml_doctype, .code .filetype{font-weight:bold;}
 
 .code_list{list-style-type:decimal;}

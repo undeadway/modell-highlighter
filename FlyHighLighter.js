@@ -493,6 +493,10 @@
 			}
 		}
 
+		if (!String.isEmpty(word)) {
+			output.push(word);
+		}
+
 		return output.join(BLANK);
 	}
 
@@ -572,8 +576,7 @@
 					 *    2) 行注释 //(/) Comment 
 					 *				    [Description]
 					 */
-					if (at === LEFT_BRACE || at === RIGHT_BRACE // 左右花括号
-					) {
+					if (at === LEFT_BRACE || at === RIGHT_BRACE ) {// 左右花括号
 						index += 1;
 						break FOR_ATTRIBUTE;
 					} else if (i > 0 && at === SLASH) { // 注释
@@ -1279,7 +1282,7 @@
 					break;
 			}
 
-			if (String.endsWith(trim, XML_COMMENT_END)) {
+			if (String.endsWith(trimed, XML_COMMENT_END)) {
 				let spaces = content.slice(ends + 3);
 				output.push(COMMENT_SPAN);
 				output.push(XML_COMMENT_END_ENTITY);
@@ -1654,7 +1657,7 @@
 			return output.join(BLANK);
 		}
 
-		lang = getFullName(lang.toUpperCase());
+		lang = String.trim(getFullName(lang.toUpperCase()));
 
 		return FILED_START + getLangName(lang) + FILED_LIST + parseLang(lang, input) + FILED_END;
 	}
