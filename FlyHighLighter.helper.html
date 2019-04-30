@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<title>FlyHighLighter测试页面</title>
-<script type="text/javascript" src="../js/Eureka!.js"></script>
+<title>FlyHighLighter帮助文档</title>
+<script type="text/javascript" src="./coralian.js"></script>
 <script type="text/javascript" src="./FlyHighLighter.js"></script>
 <link rel="stylesheet" type="text/css" href="./FlyHighLighter.css" />
 <style type="text/css">
@@ -21,8 +21,8 @@
 <div id="right">
 </div>
 <script type="text/javascript">
-var FlyHighLighter = Eureka.getFromGlobal("fly.HighLighter");
 (function() {
+
 	var langs = FlyHighLighter.getLangs();
 
 	var select = document.getElementById("select");
@@ -37,10 +37,11 @@ var FlyHighLighter = Eureka.getFromGlobal("fly.HighLighter");
 
 function test() {
 
-	var html = FlyHighLighter.execute(
+	var output = FlyHighLighter.execute(
 		document.getElementById("source").value,
 		document.getElementById("select").value);
-	document.getElementById("right").innerHTML = html;
+
+	document.getElementById("right").innerHTML = output;
 }
 </script>
 </body>
