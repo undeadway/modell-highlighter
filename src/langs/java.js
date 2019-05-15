@@ -7,9 +7,9 @@ const ANNOTATION_SPAN = '<span class="annotation">',
 
 function doAnnotation(code, index, len, output) {
 
-	var word = String.BLANK;
+	let word = String.BLANK;
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (Mark.SPACE_REGX.test(at) || at === Mark.LEFT_PARENTHE) break;
 		word += at;
 	}

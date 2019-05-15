@@ -21,7 +21,7 @@ const plugIn = {
 	},
 	isBuiltInFunc: function (word) {
 
-		var outWord = defaultDoCharCase(word),
+		let outWord = defaultDoCharCase(word),
 			result = false;
 		dftBuiltInFunc.forEach(function (wd) {
 			if (String.equalsIgnoreCase(outWord, wd)) {
@@ -36,7 +36,7 @@ const plugIn = {
 	escaper: Mark.DQUOTE,
 	doKeyword: function (output, kw, word, next, charCaseMethod) {
 
-		var outWord = defaultDoCharCase(word),
+		let outWord = defaultDoCharCase(word),
 			result = false;
 		kw.forEach(function (wd) {
 			if (String.equalsIgnoreCase(outWord, wd)) {

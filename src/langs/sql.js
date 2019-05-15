@@ -6,7 +6,7 @@ const common = require("./../common");
 
 common.addLang([{ name: "SQL" }], null, {
 	doComment: function (code, index, len, at, output) {
-		var next = code.charAt(index + 1);
+		let next = code.charAt(index + 1);
 		if (at === Mark.SLASH && next === Mark.ASTERISK) {
 			index = components.doBlockComment4CLike(code, index, len, output);
 		} else if (at == Mark.HYPHEN && next === Mark.HYPHEN) {

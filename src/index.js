@@ -47,7 +47,7 @@ function getLangName(lang) {
 
 function parseLang(lang, input) {
 
-	var language = common.getLang(lang);
+	let language = common.getLang(lang);
 	return language.execute(input.replace(NEW_LINE, constants.Mark.NL_N));
 }
 

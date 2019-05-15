@@ -11,10 +11,10 @@ const langMap = {
 };
 
 function commonDoRegExp(code, index, len, at, output) {
-	var word = [at],
+	let word = [at],
 		before = at,
 		hasRegex = false;
-	var start = index;
+	let start = index;
 	for (start += 1; start < len; start++) {
 		at = code.charAt(start);
 		if (at === Mark.NL_N) {
@@ -36,13 +36,13 @@ function commonDoRegExp(code, index, len, at, output) {
 }
 
 function commonDoComment(code, index, len, at, output) {
-	var next = code.charAt(index + 1);
-	var method = (next === Mark.SLASH || next === Mark.ASTERISK) ? doComment4CLike : doJsRegExp;
+	let next = code.charAt(index + 1);
+	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? doComment4CLike : doJsRegExp;
 	return method(code, index, len, at, output);
 }
 
 function commonExecute(code) {
-	var kw = this.getKeywords(),
+	let kw = this.getKeywords(),
 		plugIn = this.getPlugIn(),
 		escaper = CLike.ESCAPER,
 		judgeExe = components.defaultJudgePluginExe,
@@ -63,7 +63,7 @@ function commonExecute(code) {
 		charSpan = Span.CHAR,
 		doc = false;
 
-	var word = String.BLANK, output = [];
+	let word = String.BLANK, output = [];
 
 	// 插件和可替换（继承）处理的预处理
 	if (hasPlugIn) {
@@ -193,8 +193,8 @@ function initLangObject(execute, plugIn, keywords) {
 	};
 }
 
-var pseudocode = (function () {
-	var dftBuiltInFunc = ['eval', 'alert', 'print'];
+let pseudocode = (function () {
+	let dftBuiltInFunc = ['eval', 'alert', 'print'];
 
 	return initLangObject(commonExecute, {
 		doComment: commonDoComment,
@@ -244,7 +244,7 @@ exports = module.exports = {
 		}
 	},
 	getLanguagesName: () => {
-		var result = Object.keys(LANGUAGES).map(function (lang) {
+		let result = Object.keys(LANGUAGES).map(function (lang) {
 			return langMap[lang] || lang;
 		});
 		return result.sort();

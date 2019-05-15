@@ -3,15 +3,15 @@ const { Span, XmlEntity, Mark, CLike } = require("./../constants");
 const { doHtmlEscape } = require("./../components");
 const { addLang } = require("./../common");
 
-const MACRODEFINE_SPAN = '<span class="macrodefine">';
+const MACRODEFINE_SPAN = '<span class="macrodefine">';``
 const dftBuiltInFunc = ['printf', 'malloc', 'free'];
 
 function doMacroDefine(code, index, len, output) {
 
-	var before = null;
+	let before = null;
 
 	for (index; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.NL_N || (Mark.SPACE_REGX.test(at) && before !== Mark.SHARP) || at === Mark.LEFT_ANGLE || at === Mark.DQUOTE) {
 			output.push(Span.CLOSE);
 			doHtmlEscape(at, output);
@@ -37,7 +37,7 @@ const plugIn = {
 	},
 	OPERATOR_REGX: CLike.OPERATOR_REGX,
 	execute: function (code, index, len, output) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		switch (at) {
 			case Mark.SHARP:
 				output.push(MACRODEFINE_SPAN);

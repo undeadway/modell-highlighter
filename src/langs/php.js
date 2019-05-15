@@ -28,7 +28,7 @@ const php = common.initLangObject(null, {
 
 function doPHP(input) {
 
-	var phpStart = input.indexOf(PHP_START);
+	let phpStart = input.indexOf(PHP_START);
 
 	if (phpStart < 0) {
 		return php.execute(input);
@@ -36,9 +36,9 @@ function doPHP(input) {
 
 	phpStart += PHP_START_LEN;
 
-	var phpEnd = input.indexOf(PHP_END);
+	let phpEnd = input.indexOf(PHP_END);
 
-	var output = html.execute(input.slice(0, phpStart)) +
+	let output = html.execute(input.slice(0, phpStart)) +
 		php.execute(input.slice(phpStart, phpEnd)) + html.execute(PHP_END) +
 		doPHP(input.slice(phpEnd + PHP_END_LEN));
 

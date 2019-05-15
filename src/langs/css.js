@@ -15,7 +15,7 @@ const CSS_ID_SPAN = '<span class="css_name css_id">',
 function doCssName(code, index, len, output) {
 	for (; index < len; index++) {
 
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 
 		if (at === Mark.TILDE || Mark.SPACE_REGX.test(at)) {
 			doHtmlEscape(at, output);
@@ -43,7 +43,7 @@ function doCssName(code, index, len, output) {
 function doCssBody(code, index, len, output) {
 
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (Mark.SPACE_REGX.test(at)) {
 			doHtmlEscape(at, output);
 		} else if (at === Mark.RIGHT_BRACKET) {
@@ -52,7 +52,7 @@ function doCssBody(code, index, len, output) {
 		} else if (at === Mark.SLASH && Mark.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
 		} else if (at !== Mark.LEFT_BRACKET) {
-			var charCode = code.charCodeAt(index);
+			let charCode = code.charCodeAt(index);
 			index = doCssAttr(code, index, len, output);
 			if (index < len) {
 				index = cssBody(code, index, len, output);
@@ -83,7 +83,7 @@ function doCssAt(code, index, len, output) {
 function doCssPseudoClass(code, index, len, output) {
 
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.COMMA || Mark.SPACE_REGX.test(at)) {
 			output.push(Span.CLOSE);
 			doHtmlEscape(at, output);
@@ -100,7 +100,7 @@ function doCssPseudoClass(code, index, len, output) {
 // 这个函数是具体负责解析各种名称的
 function doCssCssNames(code, index, len, output) {
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.RIGHT_ANGLE) {
 			output.push(Span.CLOSE);
 			doHtmlEscape(at, output);
@@ -129,7 +129,7 @@ function cssBody(code, index, len, output) {
 
 	output.push(Span.DATA_VAL);
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.SEMICOLON) {
 			output.push(Span.CLOSE);
 			output.push(at);
@@ -150,7 +150,7 @@ function cssBody(code, index, len, output) {
 function cssSpace(code, index, len, output) {
 
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.SLASH && Mark.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
 		} else if (at === COMMA || SPACE_REGX.test(at)) {
@@ -165,7 +165,7 @@ function doCssAttr(code, index, len, output) {
 
 	output.push(Span.DATA_KEY);
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.COLON || at === Mark.RIGHT_BRACKET) {
 			output.push(Span.CLOSE);
 			output.push(at);
@@ -181,10 +181,10 @@ function doCssAttr(code, index, len, output) {
 
 function doCSS(code) {
 
-	var len = code.length,
+	let len = code.length,
 		index = 0,
 		output = [];
-	var at = code.charAt(index);
+	let at = code.charAt(index);
 	// CSS 文档以 @charset 开头
 	if (String.startsWith(String.trim(code).toUpperCase(), CSS_FILETYPE)) {
 		for (; index < len; index++) {

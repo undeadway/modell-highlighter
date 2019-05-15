@@ -102,9 +102,9 @@ function isWord(str) {
  */
 function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 	output.push(charSpan);
-	var before = escaper;
+	let before = escaper;
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at === Mark.NL_N) {
 			doNewLineJoin(output, charSpan);
 		} else {
@@ -125,7 +125,7 @@ function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 }
 
 function defaultDoCharCase(word, charCaseMethod) {
-	var outWord = word;
+	let outWord = word;
 	if (charCaseMethod) {
 		switch (typeOf(charCaseMethod)) {
 			case 'string':
@@ -159,9 +159,9 @@ function defaultDoBuiltIn(word, nextCode, next, output, isBuiltInFunc, isBuiltIn
 
 	if (canInWord(nextCode)) return false; // 紧接着的字符可以入词则返回
 
-	var builtInFuncFlg = isBuiltInFunc(word),
+	let builtInFuncFlg = isBuiltInFunc(word),
 		builtInVarFlg = isBuiltInVar(word);
-	var result = (builtInFuncFlg || builtInVarFlg);
+	let result = (builtInFuncFlg || builtInVarFlg);
 
 	if (result) {
 		if (builtInFuncFlg) {
@@ -180,14 +180,13 @@ function defaultIsBuiltIn() {
 }
 
 function defaultDoNumber(code, index, len, output) {
-	var hex = false;
-	var start = index;
-	var at = code.charAt(index);
+
+	let at = code.charAt(index);
 	if (canInWord(code.charCodeAt(index - 1))) {
 		output.push(at);
 		return index;
 	}
-	var word = "";
+	let word = "";
 	for (; index < len; index++) {
 		at = code.charAt(index);
 		if (at === 'x' || at === 'X') {
@@ -229,7 +228,7 @@ function doBlockComment4CLike(code, index, len, output, doc) {
 	doc = doc && code.charAt(index + 2) === Mark.ASTERISK;
 	output.push(doc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
-		var at = code.charAt(index);
+		let at = code.charAt(index);
 		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== SLASH) {
 			if (at === Mark.NL_N) {
 				doNewLineJoin(output, doc ? Span.DOC : Span.COMMENT);
@@ -250,7 +249,7 @@ function judgeComment4CLike(at) {
 }
 
 function doComment4CLike(code, index, len, at, output, doc) {
-	var next = (index < len - 1) ? code.charAt(index + 1) : BLNAK;
+	let next = (index < len - 1) ? code.charAt(index + 1) : BLNAK;
 	if (judgeComment4CLike(next)) {
 		index = doLineComment4Like(code, index, len, at, output);
 	} else if (next === Mark.ASTERISK) {
