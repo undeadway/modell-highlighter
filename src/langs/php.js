@@ -10,7 +10,7 @@ const PHP_START = "<?php",
 const PHP_START_LEN = PHP_START.length,
 	PHP_END_LEN = PHP_END.length;
 
-const html = common.getLang("HTML").HTML;
+const html = common.getLang("HTML");
 
 const php = common.initLangObject(null, {
 	charSpan: Span.STRING,
