@@ -1,6 +1,6 @@
 
 const { Span, Mark } = require("./../constants");
-const { doHtmlEscape } = require("./../components");
+const { doHtmlEscape, doBlockComment4CLike } = require("./../components");
 const { addLang } = require("./../common");
 
 const CSS_ID_SPAN = '<span class="css_name css_id">',
@@ -37,7 +37,6 @@ function doCssName(code, index, len, output) {
 		}
 
 		index = doCssCssNames(code, index, len, output, at);
-
 	}
 }
 

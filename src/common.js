@@ -1,6 +1,6 @@
 
-const { Span, Mark, Common, CLike } = require("./constants");
-const { doHtmlEscape } = require("./components");
+const { Span, Mark, Common, CLike, CharCode } = require("./constants");
+const components = require("./components");
 
 const LANGUAGES = {};
 
@@ -45,19 +45,19 @@ function commonExecute(code) {
 	var kw = this.getKeywords(),
 		plugIn = this.getPlugIn(),
 		escaper = CLike.ESCAPER,
-		judgeExe = defaultJudgePluginExe,
+		judgeExe = components.defaultJudgePluginExe,
 		plugInExe = null,
 		hasPlugIn = !!plugIn,
 		// 插件的判断函数
-		doComment = doComment4CLike,
-		judgeComment = judgeComment4CLike,
-		isBuiltInFunc = defaultIsBuiltIn,
-		isBuiltInVar = defaultIsBuiltIn,
+		doComment = components.doComment4CLike,
+		judgeComment = components.judgeComment4CLike,
+		isBuiltInFunc = components.defaultIsBuiltIn,
+		isBuiltInVar = components.defaultIsBuiltIn,
 		// 插件的执行函数
-		doKeyword = defaultDoKeyword,
-		doChar = defaultDoChars,
-		doNumber = defaultDoNumber,
-		doBuiltIn = defaultDoBuiltIn,
+		doKeyword = components.defaultDoKeyword,
+		doChar = components.defaultDoChars,
+		doNumber = components.defaultDoNumber,
+		doBuiltIn = components.defaultDoBuiltIn,
 		// 插件替代量的默认值
 		charCaseMethod = null,
 		charSpan = Span.CHAR,
@@ -121,7 +121,7 @@ function commonExecute(code) {
 
 		if (Mark.SPACE_REGX.test(at)) { // 标准空白
 			output.push(word);
-			doHtmlEscape(at, output);
+			components.doHtmlEscape(at, output);
 			word = String.BLANK;
 		} else if (hasPlugIn && judgeExe(at)) { // 每个语言的自定义插件
 			index = plugInExe(code, index, len, output);
@@ -133,7 +133,7 @@ function commonExecute(code) {
 			output.push(word);
 			// 双引号，一般来说双引号都都是字符串，所以这里直接写死
 			// 以后要是遇到了 双引号不是字符串的，再做修改
-			index = defaultDoChars(code, index, len, output, escaper, at, Span.STRING);
+			index = components.defaultDoChars(code, index, len, output, escaper, at, Span.STRING);
 			word = String.BLANK;
 		} else if (at === Mark.QUOTE) {
 			output.push(word);
@@ -142,7 +142,7 @@ function commonExecute(code) {
 			index = doChar(code, index, len, output, escaper, at, charSpan);
 			word = String.BLANK;
 		} else {
-			if (CHAR_CODE_0 <= codeAt && codeAt <= CHAR_CODE_9) { // 数字
+			if (CharCode.ZERO <= codeAt && codeAt <= CharCode.NINE) { // 数字
 				output.push(word);
 				word = String.BLANK;
 				index = doNumber(code, index, len, output);
@@ -178,7 +178,9 @@ function commonExecute(code) {
 	return output.join(String.BLANK);
 }
 
-function initLangObject(execute = commonExecute, plugIn, keywords) {
+function initLangObject(execute, plugIn, keywords) {
+
+	execute = execute || commonExecute;
 
 	return {
 		getKeywords: function () {

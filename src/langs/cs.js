@@ -3,6 +3,7 @@ const { Span, Mark, CLike } = require("./../constants");
 const { addLang } = require("./../common");
 
 const DATA_DESCRIPTION_SPAN = '<span class="data_description">';
+const dftBuiltInVar = ["System", "IO", "Windows", "Forms"];
 
 function doAttribute(code, index, len, output) {
 
@@ -16,6 +17,7 @@ function doAttribute(code, index, len, output) {
 			 *    1) 块注释 /× ×/ [Description]
 			 *    2) 行注释 //(/) Comment 
 			 *				    [Description]
+			 * 其他 Description 的形式未总结，或者只要是空白，就可以写 
 			 */
 			if (at === Mark.LEFT_BRACE || at === Mark.RIGHT_BRACE) { // 左右花括号
 				index += 1;
@@ -48,7 +50,7 @@ function doAttribute(code, index, len, output) {
 	}
 
 	output.push(Span.BRACKET + Mark.LEFT_SQUARE_BRACKET + Span.CLOSE);
-	let word = BLANK;
+	let word = String.BLANK;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at === Mark.RIGHT_SQUARE_BRACKET || at === Mark.LEFT_PARENTHE || Mark.SPACE_REGX.test(at) || at === Mark.POINT) break;
@@ -59,8 +61,6 @@ function doAttribute(code, index, len, output) {
 
 	return --index;
 }
-
-let dftBuiltInVar = ["System", "IO", "Windows", "Forms"];
 
 addLang([{ name: "C#" }], null, {
 	judgeExe: function (at) {

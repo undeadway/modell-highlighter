@@ -12,7 +12,7 @@ function doMacroDefine(code, index, len, output) {
 
 	for (index; index < len; index++) {
 		var at = code.charAt(index);
-		if (at === NL_N || (Mark.SPACE_REGX.test(at) && before !== Mark.SHARP) || at === Mark.LEFT_ANGLE || at === Mark.DQUOTE) {
+		if (at === Mark.NL_N || (Mark.SPACE_REGX.test(at) && before !== Mark.SHARP) || at === Mark.LEFT_ANGLE || at === Mark.DQUOTE) {
 			output.push(Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
@@ -23,7 +23,7 @@ function doMacroDefine(code, index, len, output) {
 	}
 }
 
-var plugIn = {
+const plugIn = {
 	judgeExe: function (at) {
 		switch (at) {
 			case SHARP:
@@ -39,7 +39,7 @@ var plugIn = {
 	execute: function (code, index, len, output) {
 		var at = code.charAt(index);
 		switch (at) {
-			case SHARP:
+			case Mark.SHARP:
 				output.push(MACRODEFINE_SPAN);
 				output.push(XmlEntity.SHARP);
 				return doMacroDefine(code, ++index, len, output);

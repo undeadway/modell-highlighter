@@ -173,7 +173,7 @@ function defaultDoBuiltIn(word, nextCode, next, output, isBuiltInFunc, isBuiltIn
 	}
 
 	return result;
-} f
+}
 
 function defaultIsBuiltIn() {
 	return false;
@@ -214,7 +214,7 @@ function doLineComment4Like(code, index, len, at, output) {
 	output.push(Span.COMMENT);
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === NL_N) {
+		if (at === Mark.NL_N) {
 			doNewLineJoin(output);
 			break;
 		} else {
@@ -231,7 +231,7 @@ function doBlockComment4CLike(code, index, len, output, doc) {
 	for (; index < len; index++) {
 		var at = code.charAt(index);
 		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== SLASH) {
-			if (at === NL_N) {
+			if (at === Mark.NL_N) {
 				doNewLineJoin(output, doc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);

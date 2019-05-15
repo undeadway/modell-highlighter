@@ -4,25 +4,25 @@ exports = module.exports = {
 	Span: {
 		// 共通标签
 		CLOSE: '</span>',
-		COMMENT: '<span class:"comment">',
-		STRING: '<span class:"string">',
-		NUMBER: '<span class:"number">',
-		FILETYPE: '<span class:"filetype">',
+		COMMENT: '<span class="comment">',
+		STRING: '<span class="string">',
+		NUMBER: '<span class="number">',
+		FILETYPE: '<span class="filetype">',
 		// 常用标签
-		CHAR: '<span class:"character">',
-		KEYWORD: '<span class:"keyword">',
-		REGEXP: '<span class:"regexp">',
-		DOC: '<span class:"doc">',
+		CHAR: '<span class="character">',
+		KEYWORD: '<span class="keyword">',
+		REGEXP: '<span class="regexp">',
+		DOC: '<span class="doc">',
 		// 内置的各种内容
-		BUILTIN_FUNC: '<span class:"builtin_func">',
-		BUILTIN_VAR: '<span class:"builtin_var">',
+		BUILTIN_FUNC: '<span class="builtin_func">',
+		BUILTIN_VAR: '<span class="builtin_var">',
 		// 各种符号
-		BRACKET: '<span class:"bracket">',
-		OPERATOR: '<span class:"operator">',
-		XMLTAG: '<span class:"xmltag">',
+		BRACKET: '<span class="bracket">',
+		OPERATOR: '<span class="operator">',
+		XMLTAG: '<span class="xmltag">',
 		// 键值对（XML属性、CSS 等可用）
-		DATA_KEY: '<span class:"data_key">',
-		DATA_VAL: '<span class:"data_val">',
+		DATA_KEY: '<span class="data_key">',
+		DATA_VAL: '<span class="data_val">',
 	},
 	Mark: {
 		SPACE_REGX: /\s/, // 标准空白
@@ -54,7 +54,7 @@ exports = module.exports = {
 		RIGHT_ANGLE: '>',
 	},
 	CharCode: {
-		ZER0: 0x0030,
+		ZERO: 0x0030,
 		NINE: 0x0039,
 		// 大写字母字母的 ASCII 编号
 		UPPER_A: 0x0041,
@@ -65,8 +65,8 @@ exports = module.exports = {
 		LOWER_Z: 0x007A,
 		LOWER_F: 0x0066,
 		// 特殊符号的 ASCII 编号
-		UNDERBAR: 95, // _
-		DOLLAR: 36, // $
+		UNDERBAR: 0x005F, // _
+		DOLLAR: 0x0024, // $
 	},
 	XmlEntity: {
 		LEFT_ANGLE: '&lt;', // XML 实体

@@ -7,7 +7,7 @@ const ANNOTATION_SPAN = '<span class="annotation">',
 
 function doAnnotation(code, index, len, output) {
 
-	var word = BLANK;
+	var word = String.BLANK;
 	for (; index < len; index++) {
 		var at = code.charAt(index);
 		if (Mark.SPACE_REGX.test(at) || at === Mark.LEFT_PARENTHE) break;
@@ -22,11 +22,11 @@ function doAnnotation(code, index, len, output) {
 	return --index;
 }
 
-var dftBuiltInFunc = ['Object', 'System', 'NullPointerException', 'Boolean', 'Integer', 'main', 'Exception',
+const dftBuiltInFunc = ['Object', 'System', 'NullPointerException', 'Boolean', 'Integer', 'main', 'Exception',
 	'Throwable', 'Error', 'Class', 'String', 'Long', 'Number', 'Character', 'Short', 'Byte', 'Float',
 	'Double', 'Math', 'Date', 'Calendar', 'StringBuffer', 'StringBuilder', 'Arrays'
 ];
-var dftBuiltInVar = ['T', 'E', 'K', 'V'];
+const dftBuiltInVar = ['T', 'E', 'K', 'V'];
 
 common.addLang([{ name: "JAVA" }], null, {
 	judgeExe: function (at) {
@@ -46,7 +46,7 @@ common.addLang([{ name: "JAVA" }], null, {
 	doc: true,
 	execute: function (code, index, len, output) {
 		switch (code.charAt(index)) {
-			case AT:
+			case Mark.AT:
 				return doAnnotation(code, index, len, output);
 			default:
 				return index;

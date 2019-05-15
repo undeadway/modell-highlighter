@@ -8,7 +8,7 @@ const common = require("./common");
 Object.addAll(constants, exports);
 Object.addAll(components, exports);
 
-for (let langFile of require("fs").readdirSync("./langs")) {
+for (let langFile of require("fs").readdirSync("./src/langs")) {
 	require(`./langs/${langFile}`);
 }
 
