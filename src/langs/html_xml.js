@@ -72,7 +72,7 @@ function doXmlComment(code) {
 	output.push(XML_COMMENT_END_ENTITY);
 	output.push(Span.CLOSE);
 
-	return output.join('');
+	return output.join(String.BLANK);
 }
 
 function doXmlAttibute(input) {
@@ -111,7 +111,7 @@ function doXmlAttibute(input) {
 
 	output.push(Span.CLOSE);
 
-	output = output.join('');
+	output = output.join(String.BLANK);
 
 	output = output.replace(XML_EMPTY_ATTR_REGX, String.BLANK);
 	output = output.replace(XML_EMPTY_VAL_REGX, String.BLANK);
@@ -152,7 +152,7 @@ function doXmlCommons(commonSpan, startVal, endVal, input) {
 	output.push(endVal);
 	output.push(Span.CLOSE);
 
-	return output.join('');
+	return output.join(String.BLANK);
 }
 
 function doScriptOrStyle(tag, content) {
@@ -205,7 +205,7 @@ function doScriptOrStyle(tag, content) {
 		}
 	}
 
-	return output.join('');
+	return output.join(String.BLANK);
 }
 
 function doXml(input) {
@@ -265,7 +265,7 @@ function doXml(input) {
 		doHtmlEscape(input.charAt(i), output);
 	}
 
-	input = output.join('');
+	input = output.join(String.BLANK);
 
 	// 回替
 	Array.forEach(xmlReplaceList, function (i, e) {
@@ -301,11 +301,11 @@ function doHTML(input) {
 		}
 
 		let output = doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, beforeTag) +
-			before.join('') +
+			before.join(String.BLANK) +
 			Span.COMMENT + XML_COMMENT_START_ENTITY + Span.CLOSE +
 			doScriptOrStyle(tag, content) +
 			Span.COMMENT + XML_COMMENT_END_ENTITY + Span.CLOSE +
-			after.join('') +
+			after.join(String.BLANK) +
 			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, afterTag);
 
 		input = input.replace(COMMENT_TAG_REGX, HTML_REPLACE_PART + htmlReplaceList.length + REPLACE_END);

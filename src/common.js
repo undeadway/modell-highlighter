@@ -28,7 +28,7 @@ function commonDoRegExp(code, index, len, at, output) {
 		before = at;
 	}
 	if (hasRegex) {
-		output.push(Span.REGEXP + word.join('') + Span.CLOSE);
+		output.push(Span.REGEXP + word.join(String.BLANK) + Span.CLOSE);
 		start--;
 		index = start;
 	}
