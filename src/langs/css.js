@@ -7,7 +7,7 @@ const CSS_ID_SPAN = '<span class="css_name css_id">',
 	CSS_CLASS_SPAN = '<span class="css_name css_class">',
 	CSS_AT_SPAN = '<span class="css_name css_at">',
 	CSS_XMLTAG_SPAN = '<span class="css_name xmltag">',
-	CSS_PSEUDO_CLASS_SPAN = '<span class="css_name css_pseudo_class">',
+	CSS_PESUDO_CLASS_SPAN = '<span class="css_name css_pesudo_class">',
 	CSS_FILETYPE = "@CHARSET";
 
 // 这个函数负责进入解析 CSS 名称部分
@@ -52,7 +52,7 @@ function doCssBody(code, index, len, output) {
 		} else if (at === Mark.SLASH && Mark.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
 		} else if (at !== Mark.LEFT_BRACKET) {
-			let charCode = code.charCodeAt(index);
+			// let charCode = code.charCodeAt(index);
 			index = doCssAttr(code, index, len, output);
 			if (index < len) {
 				index = cssBody(code, index, len, output);
@@ -80,7 +80,7 @@ function doCssAt(code, index, len, output) {
 	}
 }
 
-function doCssPseudoClass(code, index, len, output) {
+function doCssPesudoClass(code, index, len, output) {
 
 	for (; index < len; index++) {
 		let at = code.charAt(index);
@@ -104,9 +104,9 @@ function doCssCssNames(code, index, len, output) {
 		if (at === Mark.RIGHT_ANGLE) {
 			output.push(Span.CLOSE);
 			doHtmlEscape(at, output);
-			if (code.charAt(index + 1) === COLON) {
-				output.push(CSS_PSEUDO_CLASS_SPAN);
-				index = doCssPseudoClass(code, ++index, len, output);
+			if (code.charAt(index + 1) === Mark.COLON) {
+				output.push(CSS_PESUDO_CLASS_SPAN);
+				index = doCssPesudoClass(code, ++index, len, output);
 			} else {
 				return index;
 			}
@@ -139,7 +139,7 @@ function cssBody(code, index, len, output) {
 			output.push(Span.CLOSE);
 			return --index;
 		}
-		if (at === NL_N) {
+		if (at === Mark.NL_N) {
 			doNewLineJoin(output, Span.DATA_VAL);
 		} else {
 			doHtmlEscape(at, output);
@@ -171,7 +171,7 @@ function doCssAttr(code, index, len, output) {
 			output.push(at);
 			return ++index;
 		}
-		if (at === NL_N) {
+		if (at === Mark.NL_N) {
 			doNewLineJoin(output, Span.DATA_KEY);
 		} else {
 			doHtmlEscape(at, output);

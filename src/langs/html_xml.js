@@ -18,10 +18,10 @@ const XML_TAG_REGX = /<([^>]*?)>/i,
 	// XML_ATTR_REGX = /(.+)\=(.+)/,
 	XML_CDATA_REGX = /<\!\[CDATA\[([\s\S\n]*)\]\]>/;
 
-const XML_REPLACE_PART = "XML_Replace_Part:",
-	HTML_REPLACE_PART = "HTML_Replace_Part:",
+const XML_REPLACE_PART = "{{XML_Replace_Part:",
+	HTML_REPLACE_PART = "{{HTML_Replace_Part:",
 	// XML_ATTR_REPLACE_PART = "XML_Attr_Replace_Part:",
-	REPLACE_END = ":|";
+	REPLACE_END = ":|}}";
 
 const XML_COMMENT_START_ENTITY = "&lt!--",
 	XML_COMMENT_END_ENTITY = "--&gt;",
@@ -246,7 +246,7 @@ function doXml(input) {
 
 	// 处理</xxx>
 	while (XML_END_TAG_REGX.test(input)) {
-		let output = XMLTAG + XmlEntity.LEFT_ANGLE + SLASH + RegExp.$1 + XmlEntity.RIGHT_ANGLE + Span.CLOSE;
+		let output = Span.XMLTAG + XmlEntity.LEFT_ANGLE + Mark.SLASH + RegExp.$1 + XmlEntity.RIGHT_ANGLE + Span.CLOSE;
 
 		input = input.replace(XML_END_TAG_REGX, XML_REPLACE_PART + xmlReplaceList.length + REPLACE_END);
 		xmlReplaceList.push(output);
@@ -306,7 +306,7 @@ function doHTML(input) {
 			doScriptOrStyle(tag, content) +
 			Span.COMMENT + XML_COMMENT_END_ENTITY + Span.CLOSE +
 			after.join('') +
-			doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE + SLASH, XmlEntity.RIGHT_ANGLE, afterTag);
+			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, afterTag);
 
 		input = input.replace(COMMENT_TAG_REGX, HTML_REPLACE_PART + htmlReplaceList.length + REPLACE_END);
 		htmlReplaceList.push(output);

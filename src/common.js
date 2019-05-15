@@ -193,7 +193,7 @@ function initLangObject(execute, plugIn, keywords) {
 	};
 }
 
-let pseudocode = (function () {
+let pesudocode = (function () {
 	let dftBuiltInFunc = ['eval', 'alert', 'print'];
 
 	return initLangObject(commonExecute, {
@@ -227,7 +227,7 @@ exports = module.exports = {
 	execute: commonExecute,
 	initLangObject: initLangObject,
 	getLang: (langName) => {
-		return LANGUAGES[langName] || pseudocode;
+		return LANGUAGES[langName] || pesudocode;
 	},
 	addLang: function (langs, execute, plugIn, ...keywords) {
 

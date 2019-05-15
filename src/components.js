@@ -98,7 +98,7 @@ function isWord(str) {
  * @param output 输出对象（数组）
  * @param escaper 转义字符
  * @param end  结束标识符
- * @param charSpann 字符 span 标签，用于区分字符和字符串
+ * @param charSpan 字符 span 标签，用于区分字符和字符串
  */
 function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 	output.push(charSpan);
@@ -143,6 +143,7 @@ function defaultDoCharCase(word, charCaseMethod) {
 /**
  * 处理关键字
  * 
+ * @param output 输出值
  * @param kw 每种语言的关键字集
  * @param word 请求判断的语言
  * @param next 下一个字符
@@ -229,7 +230,7 @@ function doBlockComment4CLike(code, index, len, output, doc) {
 	output.push(doc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== SLASH) {
+		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== Mark.SLASH) {
 			if (at === Mark.NL_N) {
 				doNewLineJoin(output, doc ? Span.DOC : Span.COMMENT);
 			} else {

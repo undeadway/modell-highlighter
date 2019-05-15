@@ -26,7 +26,7 @@ function doMacroDefine(code, index, len, output) {
 const plugIn = {
 	judgeExe: function (at) {
 		switch (at) {
-			case SHARP:
+			case Mark.SHARP:
 				return true;
 			default:
 				return false;
