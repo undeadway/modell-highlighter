@@ -31,7 +31,7 @@ function doAttribute(code, index, len, output) {
 					for (let j = i - 2; j >= 0; j--) {
 						let at2 = code.charAt(j);
 						/*
-						 * 因为存在 “// aaa // bbb” 这种形式的注视
+						 * 因为存在 “// aaa // bbb” 这种形式的注释
 						 * 所以不能直接判断第一个遇到的 // 之前是否有非空白，而只能以换行符为准
 						 */
 						if (at2 === Mark.NL_N) { // 遇到换行符之后取整段字符，看是否以 // 开头

@@ -21,14 +21,16 @@ const XML_TAG_REGX = /<([^>]*?)>/i,
 const XML_REPLACE_PART = "{{XML_Replace_Part:",
 	HTML_REPLACE_PART = "{{HTML_Replace_Part:",
 	// XML_ATTR_REPLACE_PART = "XML_Attr_Replace_Part:",
-	REPLACE_END = ":|}}";
+	REPLACE_END = ":}}";
 
+	// XML 标签转义之后的实体
 const XML_COMMENT_START_ENTITY = "&lt!--",
 	XML_COMMENT_END_ENTITY = "--&gt;",
 	XML_CDATA_START = "&lt![CDATA[",
 	XML_CDATA_END = "]]&gt;",
 	XML_PROCESSING_START = "&lt?",
 	XML_PROCESSING_END = "?&gt;",
+	// XML 注释
 	XML_COMMENT_START = "<!--",
 	XML_COMMENT_END = "-->";
 
@@ -39,7 +41,9 @@ const XML_CDATA_SPAN = '<span class="xml_cdata">',
 	XML_DOCTYPE_SPAN = '<span class="xml_doctype">';
 
 function doXmlCData(code) {
+
 	let output = [];
+
 	output.push(XML_CDATA_SPAN);
 	output.push(XML_CDATA_START);
 	output.push(Span.CLOSE);
@@ -79,8 +83,7 @@ function doXmlAttibute(input) {
 
 	let output = [];
 
-	let isInName = true;
-	let isInVal = false;
+	let isInName = true, isInVal = false;
 
 	for (let i = 0, len = input.length; i < len; i++) {
 		let at = input.charAt(i);
@@ -112,7 +115,6 @@ function doXmlAttibute(input) {
 	output.push(Span.CLOSE);
 
 	output = output.join(String.BLANK);
-
 	output = output.replace(XML_EMPTY_ATTR_REGX, String.BLANK);
 	output = output.replace(XML_EMPTY_VAL_REGX, String.BLANK);
 

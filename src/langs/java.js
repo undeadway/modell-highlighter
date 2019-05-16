@@ -22,11 +22,15 @@ function doAnnotation(code, index, len, output) {
 	return --index;
 }
 
-const dftBuiltInFunc = ['Object', 'System', 'NullPointerException', 'Boolean', 'Integer', 'main', 'Exception',
-	'Throwable', 'Error', 'Class', 'String', 'Long', 'Number', 'Character', 'Short', 'Byte', 'Float',
-	'Double', 'Math', 'Date', 'Calendar', 'StringBuffer', 'StringBuilder', 'Arrays'
+const dftBuiltInFunc = ['main',
+	'Boolean', 'Byte', 'Character', 'Double', 'Float', 'Integer', 'Long', 'Short', 'Enum',
+	'Error', 'Exception', 'NoSuchFieldException', 'NoSuchMethodException', 'NullPointerException',
+	'ClassCastException', 'ClassNotFoundException', 'IndexOutOfBoundsException', 'IllegalAccessException',
+	'IllegalArgumentException', 'Throwable', 'Class', 'Object', 'System', 'Thread', 'Runnable', 'Properties',
+	'String', 'Number', 'Void', 'StringBuffer', 'StringBuilder', 'Math', 'Package', 'Random',
+	'Arrays', 'Calendar', 'Map', 'List', 'Set', 'Collection', 'HashMap', 'HashSet', 'ArrayList'
 ];
-const dftBuiltInVar = ['T', 'E', 'K', 'V'];
+const dftBuiltInVar = ['T', 'E', 'K', 'V', 'O'];
 
 common.addLang([{ name: "JAVA" }], null, {
 	judgeExe: function (at) {
