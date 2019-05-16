@@ -157,59 +157,6 @@ function doXmlCommons(commonSpan, startVal, endVal, input) {
 	return output.join(String.BLANK);
 }
 
-function doScriptOrStyle(tag, content) {
-
-	let output = [];
-	let trimed = String.trim(content);
-	let starts = 0,
-		ends = content.length;
-
-	if (String.endsWith(trimed, XML_COMMENT_END)) {
-		ends = content.lastIndexOf(XML_COMMENT_END);
-	}
-
-	if (String.startsWith(trimed, XML_COMMENT_START)) {
-		starts = content.indexOf(XML_COMMENT_START);
-
-		let spaces = content.slice(0, starts);
-
-		for (let i = 0, len = spaces.length; i < len; i++) {
-			doHtmlEscape(spaces.charAt(i), output);
-		}
-
-		output.push(Span.COMMENT);
-		output.push(XML_COMMENT_START_ENTITY);
-		output.push(Span.CLOSE);
-
-		starts += 4;
-	}
-
-	let tmp = content.slice(starts, ends);
-
-	switch (tag) {
-		case 'SCRIPT':
-			output.push(_doJS.execute(tmp));
-			break;
-		case 'STYLE':
-			output.push(_doCSS.execute(tmp));
-			break;
-		default:
-			break;
-	}
-
-	if (String.endsWith(trimed, XML_COMMENT_END)) {
-		let spaces = content.slice(ends + 3);
-		output.push(Span.COMMENT);
-		output.push(XML_COMMENT_END_ENTITY);
-		output.push(Span.CLOSE);
-		for (let i = 0, len = spaces.length; i < len; i++) {
-			doHtmlEscape(spaces.charAt(i), output);
-		}
-	}
-
-	return output.join(String.BLANK);
-}
-
 function doXml(input) {
 
 	let xmlReplaceList = [];
@@ -278,6 +225,61 @@ function doXml(input) {
 }
 
 common.addLang([{ name: "XML" }], doXml);
+
+/////////////// 下面的部分是专门用于 HTML 的 ///////////////
+
+function doScriptOrStyle(tag, content) {
+
+	let output = [];
+	let trimed = String.trim(content);
+	let starts = 0,
+		ends = content.length;
+
+	if (String.endsWith(trimed, XML_COMMENT_END)) {
+		ends = content.lastIndexOf(XML_COMMENT_END);
+	}
+
+	if (String.startsWith(trimed, XML_COMMENT_START)) {
+		starts = content.indexOf(XML_COMMENT_START);
+
+		let spaces = content.slice(0, starts);
+
+		for (let i = 0, len = spaces.length; i < len; i++) {
+			doHtmlEscape(spaces.charAt(i), output);
+		}
+
+		output.push(Span.COMMENT);
+		output.push(XML_COMMENT_START_ENTITY);
+		output.push(Span.CLOSE);
+
+		starts += 4;
+	}
+
+	let tmp = content.slice(starts, ends);
+
+	switch (tag) {
+		case 'SCRIPT':
+			output.push(_doJS.execute(tmp));
+			break;
+		case 'STYLE':
+			output.push(_doCSS.execute(tmp));
+			break;
+		default:
+			break;
+	}
+
+	if (String.endsWith(trimed, XML_COMMENT_END)) {
+		let spaces = content.slice(ends + 3);
+		output.push(Span.COMMENT);
+		output.push(XML_COMMENT_END_ENTITY);
+		output.push(Span.CLOSE);
+		for (let i = 0, len = spaces.length; i < len; i++) {
+			doHtmlEscape(spaces.charAt(i), output);
+		}
+	}
+
+	return output.join(String.BLANK);
+}
 
 function doHTML(input) {
 
