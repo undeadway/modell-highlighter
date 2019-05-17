@@ -30,7 +30,6 @@ const plugIn = {
 	isBuiltInFunc: function (word) {
 		return Array.has(dftBuiltInFunc, word);
 	},
-	operatorRegx: CLike.OPERATOR_REGX,
 	execute: function (code, index, len, output) {
 		let at = code.charAt(index);
 		switch (at) {
