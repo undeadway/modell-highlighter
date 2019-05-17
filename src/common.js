@@ -24,7 +24,7 @@ function commonDoRegExp(code, index, len, at, output) {
 		} else if (hasRegex && !(at === 'i' || at === 'g' || at === 'm')) {
 			break;
 		}
-		doHtmlEscape(at, word);
+		components.doHtmlEscape(at, word);
 		before = at;
 	}
 	if (hasRegex) {
@@ -37,7 +37,7 @@ function commonDoRegExp(code, index, len, at, output) {
 
 function commonDoComment(code, index, len, at, output) {
 	let next = code.charAt(index + 1);
-	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? doComment4CLike : doJsRegExp;
+	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? components.doComment4CLike : commonDoRegExp;
 	return method(code, index, len, at, output);
 }
 
@@ -45,6 +45,7 @@ function commonExecute(code) {
 	let kw = this.getKeywords(),
 		plugIn = this.getPlugIn(),
 		escaper = CLike.ESCAPER,
+		operatorRegx = CLike.OPERATOR_REGX,
 		judgeExe = components.defaultJudgePluginExe,
 		plugInExe = null,
 		hasPlugIn = !!plugIn,
@@ -106,8 +107,8 @@ function commonExecute(code) {
 		if (plugIn.isBuiltInVar) {
 			isBuiltInVar = plugIn.isBuiltInVar;
 		}
-		if (plugIn.OPERATOR_REGX) {
-			operatorRegx = plugIn.OPERATOR_REGX;
+		if (plugIn.operatorRegx) {
+			operatorRegx = plugIn.operatorRegx;
 		}
 		doc = plugIn.doc;
 	}
@@ -152,12 +153,12 @@ function commonExecute(code) {
 					word = String.BLANK;
 				} else if (at === Mark.LEFT_ANGLE) { // 左尖括号
 					output.push(word);
-					doHtmlEscape(at, output);
+					components.doHtmlEscape(at, output);
 					word = String.BLANK;
 				} else {
 					word += at;
 					let next = code.charCodeAt(index + 1);
-					if (CLike.OPERATOR_REGX.test(word)) { // 类C语言的操作符
+					if (operatorRegx.test(word)) { // 类C语言的操作符
 						output.push(word);
 						word = String.BLANK;
 					} else if (doKeyword(output, kw, word, next, charCaseMethod)) { // 关键字

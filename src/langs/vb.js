@@ -1,6 +1,6 @@
 
 const { Mark } = require("./../constants");
-const {doLineComment4Like} = require("./../components");
+const {doLineComment4Like, defaultDoCharCase, canInWord} = require("./../components");
 const { addLang } = require("./../common");
 
 const dftBuiltInFunc = ['CDate', 'Date', 'DateAdd', 'DateDiff', 'DatePart', 'DateSerial', 'DateValue', 'Day',

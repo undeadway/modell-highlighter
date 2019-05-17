@@ -42,7 +42,7 @@ function checkNumberPosition(str, at) {
 	return str.indexOf(at) === str.lastIndexOf(at);
 }
 
-function isNumber() {
+function isNumber(str) {
 
 	return IS_HEX_NUMBER_REGX.test(str) && // 16 进制数
 		IS_DECIMAL_REGX.test(str) && // 小数
@@ -250,7 +250,7 @@ function judgeComment4CLike(at) {
 }
 
 function doComment4CLike(code, index, len, at, output, doc) {
-	let next = (index < len - 1) ? code.charAt(index + 1) : BLNAK;
+	let next = (index < len - 1) ? code.charAt(index + 1) : String.BLNAK;
 	if (judgeComment4CLike(next)) {
 		index = doLineComment4Like(code, index, len, at, output);
 	} else if (next === Mark.ASTERISK) {

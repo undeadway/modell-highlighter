@@ -25,17 +25,12 @@ function doMacroDefine(code, index, len, output) {
 
 const plugIn = {
 	judgeExe: function (at) {
-		switch (at) {
-			case Mark.SHARP:
-				return true;
-			default:
-				return false;
-		}
+		return at === Mark.SHARP;
 	},
 	isBuiltInFunc: function (word) {
 		return Array.has(dftBuiltInFunc, word);
 	},
-	OPERATOR_REGX: CLike.OPERATOR_REGX,
+	operatorRegx: CLike.OPERATOR_REGX,
 	execute: function (code, index, len, output) {
 		let at = code.charAt(index);
 		switch (at) {

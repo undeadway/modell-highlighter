@@ -87,7 +87,7 @@ function doXmlAttibute(input) {
 
 	for (let i = 0, len = input.length; i < len; i++) {
 		let at = input.charAt(i);
-		if (SPACE_REGX.test(at) && isInName) {
+		if (Mark.SPACE_REGX.test(at) && isInName) {
 			if (i > 0) {
 				output.push(Span.CLOSE);
 			}
@@ -164,7 +164,7 @@ function doXml(input) {
 	// 处理 <!DOCTYPE ...>
 	if (XML_DOCTYPE_REGX.test(input)) {
 		input = input.replace(XML_DOCTYPE_REGX, XML_REPLACE_PART + xmlReplaceList.length + REPLACE_END);
-		let output = XML_DOCTYPE_SPAN + XmlEntity.LEFT_ANGLE + EXCALMATORY + RegExp.$1 + RegExp.$2 +
+		let output = XML_DOCTYPE_SPAN + XmlEntity.LEFT_ANGLE + Mark.EXCALMATORY + RegExp.$1 + RegExp.$2 +
 			XmlEntity.RIGHT_ANGLE + Span.CLOSE;
 		xmlReplaceList.push(output);
 	}
@@ -179,7 +179,7 @@ function doXml(input) {
 
 	// 处理 <?xxx ... ?>
 	while (XML_PROCESSING_REGX.test(input)) {
-		let output = doXmlCommons(XMLTAG_SPAN, XML_PROCESSING_START, XML_PROCESSING_END, RegExp.$1);
+		let output = doXmlCommons(Span.XMLTAG, XML_PROCESSING_START, XML_PROCESSING_END, RegExp.$1);
 
 		input = input.replace(XML_PROCESSING_REGX, XML_REPLACE_PART + xmlReplaceList.length + REPLACE_END);
 		xmlReplaceList.push(output);
@@ -203,7 +203,7 @@ function doXml(input) {
 
 	// 处理 <xxx ... > / <xxx ... />
 	while (XML_TAG_REGX.test(input)) {
-		let output = doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, RegExp.$1);
+		let output = doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, RegExp.$1);
 
 		input = input.replace(XML_TAG_REGX, XML_REPLACE_PART + xmlReplaceList.length + REPLACE_END);
 		xmlReplaceList.push(output);
@@ -304,7 +304,7 @@ function doHTML(input) {
 			doHtmlEscape(afterSpace.charAt(i), after);
 		}
 
-		let output = doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, beforeTag) +
+		let output = doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, beforeTag) +
 			before.join(String.BLANK) +
 			Span.COMMENT + XML_COMMENT_START_ENTITY + Span.CLOSE +
 			doScriptOrStyle(tag, content) +
@@ -332,9 +332,9 @@ function doHTML(input) {
 		let content = RegExp.$3; // 正文
 		let after = RegExp.$4; // 后标签
 
-		let output = doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, before) +
+		let output = doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, before) +
 			doScriptOrStyle(tag, content) +
-			doXmlCommons(XMLTAG_SPAN, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, after);
+			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, after);
 
 		input = input.replace(SCRIPT_STYLE_TAG_REGX, HTML_REPLACE_PART + htmlReplaceList.length + REPLACE_END);
 		htmlReplaceList.push(output);

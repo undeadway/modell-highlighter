@@ -1,6 +1,6 @@
 
 const { Span, Mark } = require("./../constants");
-const { doHtmlEscape, doBlockComment4CLike } = require("./../components");
+const { doHtmlEscape, doBlockComment4CLike, doNewLineJoin } = require("./../components");
 const { addLang } = require("./../common");
 
 const CSS_ID_SPAN = '<span class="css_name css_id">',
@@ -153,7 +153,7 @@ function cssSpace(code, index, len, output) {
 		let at = code.charAt(index);
 		if (at === Mark.SLASH && Mark.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
-		} else if (at === COMMA || SPACE_REGX.test(at)) {
+		} else if (at === Mark.COMMA || Mark.SPACE_REGX.test(at)) {
 			doHtmlEscape(at, output);
 		} else {
 			return index;

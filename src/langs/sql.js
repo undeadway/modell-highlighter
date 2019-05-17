@@ -32,7 +32,7 @@ common.addLang([{ name: "SQL" }], null, {
 			} else {
 				components.doHtmlEscape(at, output);
 				if (at === end) {
-					next = code.charAt(index + 1);
+					let next = code.charAt(index + 1);
 					if (next === end) { // 转义符号
 						components.doHtmlEscape(next, output);
 						index++;

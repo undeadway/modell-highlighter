@@ -59,7 +59,7 @@ exports.execute = (input, lang) => {
 	if (!String.contains(input, constants.Mark.NL_N) && !lang) {
 		let output = [CODE_TAG_START];
 		for (let i = 0, len = input.length; i < len; i++) {
-			doHtmlEscape(input.charAt(i), output);
+			components.doHtmlEscape(input.charAt(i), output);
 		}
 		output.push(CODE_TAG_END);
 		return output.join(String.BLANK);
