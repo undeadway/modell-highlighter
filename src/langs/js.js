@@ -4,9 +4,9 @@ const common = require("./../common");
 
 const dftBuiltInFunc = ['eval', 'alert', 'Object', 'String', 'Date', 'Number', 'Math', 'RegExp', 'Function',
 	'Error', 'Boolean', 'Array', 'parseInt', 'parseFloat', 'isNaN', 'isFinite', 'decodeURI', 'decodeURIComponent',
-	'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'setTimeout', 'setInterval'
+	'encodeURI', 'encodeURIComponent', 'escape', 'unescape', 'setTimeout', 'setInterval', 'apply', 'call', 'callee'
 ];
-const dftBuiltInVar = ['document', 'window', 'console', 'Infinity', 'NaN'];
+const dftBuiltInVar = ['document', 'window', 'console', 'Infinity', 'NaN', 'arguments', 'global', 'exports', 'module'];
 
 // json 就是 js ，所以直接引用JS 的实现
 common.addLang([{ name: 'JAVASCRIPT' }, { name: 'JSON' }], null, {
