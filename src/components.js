@@ -36,11 +36,6 @@ function doHtmlEscape(at, output) {
 function canInNumber(at) {
 	return CAN_IN_NUMBER_REGX.test(at);
 }
-function isInNumber(at, before, after) { }
-
-function checkNumberPosition(str, at) {
-	return str.indexOf(at) === str.lastIndexOf(at);
-}
 
 function isNumber(str) {
 
@@ -266,8 +261,6 @@ function defaultJudgePluginExe() {
 exports = module.exports = {
 	doHtmlEscape: doHtmlEscape,
 	canInNumber: canInNumber,
-	isInNumber: isInNumber,
-	checkNumberPosition: checkNumberPosition,
 	isNumber: isNumber,
 	doNewLineJoin: doNewLineJoin,
 	canInWord: canInWord,
