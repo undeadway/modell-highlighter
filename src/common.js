@@ -1,6 +1,6 @@
 
 const { Span, Mark, Common, CLike, CharCode } = require("./constants");
-const components = require("./components");
+const { doHtmlEscape, defaultDoChars, doComment4CLike, defaultJudgePluginExe, judgeComment4CLike, defaultIsBuiltIn, defaultDoKeyword, defaultDoNumber, defaultDoBuiltIn, append } = require("./components");
 
 const LANGUAGES = {};
 
@@ -17,18 +17,18 @@ function commonDoRegExp(code, index, len, at, output) {
 	let start = index;
 	for (start += 1; start < len; start++) {
 		at = code.charAt(start);
-		if (at === Mark.NL_N) {
+		if (at === Mark.NEW_LINE) {
 			break;
 		} else if (at === Mark.SLASH && before !== CLike.ESCAPER) {
 			hasRegex = true;
 		} else if (hasRegex && !(at === 'i' || at === 'g' || at === 'm')) {
 			break;
 		}
-		components.doHtmlEscape(at, word);
+		doHtmlEscape(at, word);
 		before = at;
 	}
 	if (hasRegex) {
-		output.push(Span.REGEXP + word.join(String.BLANK) + Span.CLOSE);
+		append(output, Span.REGEXP + word.join(String.BLANK) + Span.CLOSE);
 		start--;
 		index = start;
 	}
@@ -37,7 +37,7 @@ function commonDoRegExp(code, index, len, at, output) {
 
 function commonDoComment(code, index, len, at, output) {
 	let next = code.charAt(index + 1);
-	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? components.doComment4CLike : commonDoRegExp;
+	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? doComment4CLike : commonDoRegExp;
 	return method(code, index, len, at, output);
 }
 
@@ -46,19 +46,19 @@ function commonExecute(code) {
 		plugIn = this.getPlugIn(),
 		escaper = CLike.ESCAPER,
 		operatorRegx = CLike.OPERATOR_REGX,
-		judgeExe = components.defaultJudgePluginExe,
+		judgeExe = defaultJudgePluginExe,
 		plugInExe = null,
 		hasPlugIn = !!plugIn,
 		// 插件的判断函数
-		doComment = components.doComment4CLike,
-		judgeComment = components.judgeComment4CLike,
-		isBuiltInFunc = components.defaultIsBuiltIn,
-		isBuiltInVar = components.defaultIsBuiltIn,
+		doComment = doComment4CLike,
+		judgeComment = judgeComment4CLike,
+		isBuiltInFunc = defaultIsBuiltIn,
+		isBuiltInVar = defaultIsBuiltIn,
 		// 插件的执行函数
-		doKeyword = components.defaultDoKeyword,
-		doChar = components.defaultDoChars,
-		doNumber = components.defaultDoNumber,
-		doBuiltIn = components.defaultDoBuiltIn,
+		doKeyword = defaultDoKeyword,
+		doChar = defaultDoChars,
+		doNumber = defaultDoNumber,
+		doBuiltIn = defaultDoBuiltIn,
 		// 插件替代量的默认值
 		charCaseMethod = null,
 		charSpan = Span.CHAR,
@@ -121,48 +121,48 @@ function commonExecute(code) {
 		if (codeAt === 8203) continue;
 
 		if (Mark.SPACE_REGX.test(at)) { // 标准空白
-			output.push(word);
-			components.doHtmlEscape(at, output);
+			append(output, word);
+			doHtmlEscape(at, output);
 			word = String.BLANK;
 		} else if (hasPlugIn && judgeExe(at)) { // 每个语言的自定义插件
 			index = plugInExe(code, index, len, output);
 		} else if (judgeComment(at)) { // 注释
-			output.push(word);
+			append(output, word);
 			index = doComment(code, index, len, at, output, doc);
 			word = String.BLANK;
 		} else if (at === Mark.DQUOTE) {
-			output.push(word);
+			append(output, word);
 			// 双引号，一般来说双引号都都是字符串，所以这里直接写死
 			// 以后要是遇到了 双引号不是字符串的，再做修改
-			index = components.defaultDoChars(code, index, len, output, escaper, at, Span.STRING);
+			index = defaultDoChars(code, index, len, output, escaper, at, Span.STRING);
 			word = String.BLANK;
 		} else if (at === Mark.QUOTE) {
-			output.push(word);
+			append(output, word);
 			// 单引号，默认判断为字符，具体实现由各语言自定义的 doChar 方法来实现
 			// 即，如果将 doChar 自定义为 doChars ，那单引号也可以被当作字符串来处理
 			index = doChar(code, index, len, output, escaper, at, charSpan);
 			word = String.BLANK;
 		} else {
 			if (CharCode.ZERO <= codeAt && codeAt <= CharCode.NINE) { // 数字
-				output.push(word);
+				append(output, word);
 				word = String.BLANK;
 				index = doNumber(code, index, len, output);
 			} else {
 				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
-					output.push(word + Span.BRACKET + at + Span.CLOSE);
+					append(output, word + Span.BRACKET + at + Span.CLOSE);
 					word = String.BLANK;
 				} else if (at === Mark.LEFT_ANGLE) { // 左尖括号
-					output.push(word);
-					components.doHtmlEscape(at, output);
+					append(output, word);
+					doHtmlEscape(at, output);
 					word = String.BLANK;
 				} else {
 					word += at;
 					let next = code.charCodeAt(index + 1);
 					if (operatorRegx.test(word)) { // 类C语言的操作符
-						output.push(word);
+						append(output, word);
 						word = String.BLANK;
 					} else if (doKeyword(output, kw, word, next, charCaseMethod)) { // 关键字
-						output.push(Span.KEYWORD + word + Span.CLOSE);
+						append(output, Span.KEYWORD + word + Span.CLOSE);
 						word = String.BLANK;
 					} else if (doBuiltIn(word, next, code.charAt(index + 1), output, isBuiltInFunc, isBuiltInVar)) { // 语言内置函数、变量等
 						word = String.BLANK;
@@ -172,9 +172,7 @@ function commonExecute(code) {
 		}
 	}
 
-	if (!String.isEmpty(word)) {
-		output.push(word);
-	}
+	append(output, word);
 
 	return output.join(String.BLANK);
 }
@@ -200,26 +198,26 @@ let pesudocode = (function () {
 	return initLangObject(commonExecute, {
 		doComment: commonDoComment,
 		isBuiltInFunc: function (word) {
-			return dftBuiltInFunc.has(word);
+			return Array.has(dftBuiltInFunc, word);
 		},
 	}, ['abstract', 'assert',
-			'boolean', 'break', 'byte',
-			'case', 'catch', 'class', 'char', 'const', 'continue',
-			'default', 'delete ', 'do', 'double',
-			'else', 'eval', 'echo', 'enum', 'export', 'extends',
-			'false', 'final', 'finally', 'float', 'for', 'foreach', 'function',
-			'goto',
-			'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface',
-			'long',
-			'new', 'null', 'namespace',
-			'package', 'private', 'protected', 'public',
-			'return',
-			'short', 'static', 'string', 'struct', 'super', 'switch',
-			'this', 'throw', 'throws', 'true', 'try',
-			'var',
-			'while',
-			'void'
-		]);
+		'boolean', 'break', 'byte',
+		'case', 'catch', 'class', 'char', 'const', 'continue',
+		'default', 'delete ', 'do', 'double',
+		'else', 'eval', 'echo', 'enum', 'export', 'extends',
+		'false', 'final', 'finally', 'float', 'for', 'foreach', 'function',
+		'goto',
+		'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface',
+		'long',
+		'new', 'null', 'namespace',
+		'package', 'private', 'protected', 'public',
+		'return',
+		'short', 'static', 'string', 'struct', 'super', 'switch',
+		'this', 'throw', 'throws', 'true', 'try',
+		'var',
+		'while',
+		'void'
+	]);
 })();
 
 exports = module.exports = {

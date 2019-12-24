@@ -48,7 +48,7 @@ function getLangName(lang) {
 function parseLang(lang, input) {
 
 	let language = common.getLang(lang);
-	return language.execute(input.replace(NEW_LINE, constants.Mark.NL_N));
+	return language.execute(input.replace(NEW_LINE, constants.Mark.NEW_LINE));
 }
 
 exports.execute = (input, lang) => {
@@ -56,7 +56,7 @@ exports.execute = (input, lang) => {
 	input = String.trim(input);
 	if (!input) return String.BLANK;
 
-	if (!String.contains(input, constants.Mark.NL_N) && !lang) {
+	if (!String.contains(input, constants.Mark.NEW_LINE) && !lang) {
 		let output = [CODE_TAG_START];
 		for (let i = 0, len = input.length; i < len; i++) {
 			components.doHtmlEscape(input.charAt(i), output);

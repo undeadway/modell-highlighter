@@ -1,6 +1,5 @@
 
 const { Span } = require("./../constants");
-const components = require("./../components");
 const common = require("./../common");
 
 const dftBuiltInFunc = ['eval'];

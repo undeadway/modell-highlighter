@@ -1,6 +1,6 @@
 
 const { Span, XmlEntity, Mark } = require("../constants");
-const { doHtmlEscape, doNewLineJoin } = require("./../components");
+const { doHtmlEscape, doNewLineJoin, append } = require("./../components");
 const common = require("./../common");
 
 const _doCSS = common.getLang("CSS"), _doJS = common.getLang("JAVASCRIPT");
@@ -23,7 +23,7 @@ const XML_REPLACE_PART = "{{XML_Replace_Part:",
 	// XML_ATTR_REPLACE_PART = "XML_Attr_Replace_Part:",
 	REPLACE_END = ":}}";
 
-	// XML 标签转义之后的实体
+// XML 标签转义之后的实体
 const XML_COMMENT_START_ENTITY = "&lt!--",
 	XML_COMMENT_END_ENTITY = "--&gt;",
 	XML_CDATA_START = "&lt![CDATA[",
@@ -44,37 +44,37 @@ function doXmlCData(code) {
 
 	let output = [];
 
-	output.push(XML_CDATA_SPAN);
-	output.push(XML_CDATA_START);
-	output.push(Span.CLOSE);
+	append(output, XML_CDATA_SPAN);
+	append(output, XML_CDATA_START);
+	append(output, Span.CLOSE);
 
 	for (let i = 0, len = code.length; i < len; i++) {
 		doHtmlEscape(code.charAt(i), output);
 	}
 
-	output.push(XML_CDATA_SPAN);
-	output.push(XML_CDATA_END);
-	output.push(Span.CLOSE);
+	append(output, XML_CDATA_SPAN);
+	append(output, XML_CDATA_END);
+	append(output, Span.CLOSE);
 
 	return output.join(String.BLANK);
 }
 
 function doXmlComment(code) {
 	let output = [];
-	output.push(Span.COMMENT);
-	output.push(XML_COMMENT_START_ENTITY);
+	append(output, Span.COMMENT);
+	append(output, XML_COMMENT_START_ENTITY);
 
 	for (let i = 0, len = code.length; i < len; i++) {
 		let at = code.charAt(i);
-		if (at === Mark.NL_N) {
+		if (at === Mark.NEW_LINE) {
 			doNewLineJoin(output, Span.COMMENT);
 		} else {
 			doHtmlEscape(at, output);
 		}
 	}
 
-	output.push(XML_COMMENT_END_ENTITY);
-	output.push(Span.CLOSE);
+	append(output, XML_COMMENT_END_ENTITY);
+	append(output, Span.CLOSE);
 
 	return output.join(String.BLANK);
 }
@@ -89,18 +89,18 @@ function doXmlAttibute(input) {
 		let at = input.charAt(i);
 		if (Mark.SPACE_REGX.test(at) && isInName) {
 			if (i > 0) {
-				output.push(Span.CLOSE);
+				append(output, Span.CLOSE);
 			}
 			doHtmlEscape(at, output);
 			if (i < len) {
-				output.push(Span.DATA_KEY);
+				append(output, Span.DATA_KEY);
 			}
 			isInVal = true;
 			isInName = false;
 		} else if ((at === Mark.EQUALS) && isInVal) {
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
-			output.push(Span.DATA_VAL);
+			append(output, Span.DATA_VAL);
 			isInName = true;
 			isInVal = false;
 		} else {
@@ -112,7 +112,7 @@ function doXmlAttibute(input) {
 		}
 	}
 
-	output.push(Span.CLOSE);
+	append(output, Span.CLOSE);
 
 	output = output.join(String.BLANK);
 	output = output.replace(XML_EMPTY_ATTR_REGX, String.BLANK);
@@ -135,24 +135,24 @@ function doXmlCommons(commonSpan, startVal, endVal, input) {
 	let withSlash = String.endsWith(input, Mark.SLASH) && !String.endsWith(tmp[0], Mark.SLASH);
 
 	let output = [];
-	output.push(commonSpan);
-	output.push(startVal);
-	output.push(tmp[0]);
-	output.push(Span.CLOSE);
+	append(output, commonSpan);
+	append(output, startVal);
+	append(output, tmp[0]);
+	append(output, Span.CLOSE);
 
 	if (tmp.length > 1) {
 		let end = input.length;
 		if (withSlash) end -= 1;
 		input = input.slice(tmp[0].length, end);
-		output.push(doXmlAttibute(input));
+		append(output, doXmlAttibute(input));
 	}
 
-	output.push(commonSpan);
+	append(output, commonSpan);
 	if (withSlash) {
-		output.push(Mark.SLASH);
+		append(output, Mark.SLASH);
 	}
-	output.push(endVal);
-	output.push(Span.CLOSE);
+	append(output, endVal);
+	append(output, Span.CLOSE);
 
 	return output.join(String.BLANK);
 }
@@ -248,9 +248,9 @@ function doScriptOrStyle(tag, content) {
 			doHtmlEscape(spaces.charAt(i), output);
 		}
 
-		output.push(Span.COMMENT);
-		output.push(XML_COMMENT_START_ENTITY);
-		output.push(Span.CLOSE);
+		append(output, Span.COMMENT);
+		append(output, XML_COMMENT_START_ENTITY);
+		append(output, Span.CLOSE);
 
 		starts += 4;
 	}
@@ -259,10 +259,10 @@ function doScriptOrStyle(tag, content) {
 
 	switch (tag) {
 		case 'SCRIPT':
-			output.push(_doJS.execute(tmp));
+			append(output, _doJS.execute(tmp));
 			break;
 		case 'STYLE':
-			output.push(_doCSS.execute(tmp));
+			append(output, _doCSS.execute(tmp));
 			break;
 		default:
 			break;
@@ -270,9 +270,9 @@ function doScriptOrStyle(tag, content) {
 
 	if (String.endsWith(trimed, XML_COMMENT_END)) {
 		let spaces = content.slice(ends + 3);
-		output.push(Span.COMMENT);
-		output.push(XML_COMMENT_END_ENTITY);
-		output.push(Span.CLOSE);
+		append(output, Span.COMMENT);
+		append(output, XML_COMMENT_END_ENTITY);
+		append(output, Span.CLOSE);
 		for (let i = 0, len = spaces.length; i < len; i++) {
 			doHtmlEscape(spaces.charAt(i), output);
 		}

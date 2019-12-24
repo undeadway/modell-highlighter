@@ -1,9 +1,9 @@
 
 const { Span, XmlEntity, Mark, CLike } = require("./../constants");
-const { doHtmlEscape } = require("./../components");
+const { doHtmlEscape, append } = require("./../components");
 const { addLang } = require("./../common");
 
-const MACRODEFINE_SPAN = '<span class="macrodefine">';``
+const MACRODEFINE_SPAN = '<span class="macrodefine">';
 const dftBuiltInFunc = ['printf', 'malloc', 'free'];
 
 function doMacroDefine(code, index, len, output) {
@@ -12,8 +12,8 @@ function doMacroDefine(code, index, len, output) {
 
 	for (index; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.NL_N || (Mark.SPACE_REGX.test(at) && before !== Mark.SHARP) || at === Mark.LEFT_ANGLE || at === Mark.DQUOTE) {
-			output.push(Span.CLOSE);
+		if (at === Mark.NEW_LINE || (Mark.SPACE_REGX.test(at) && before !== Mark.SHARP) || at === Mark.LEFT_ANGLE || at === Mark.DQUOTE) {
+			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
 		} else {
@@ -34,8 +34,8 @@ const plugIn = {
 		let at = code.charAt(index);
 		switch (at) {
 			case Mark.SHARP:
-				output.push(MACRODEFINE_SPAN);
-				output.push(XmlEntity.SHARP);
+				append(output, MACRODEFINE_SPAN);
+				append(output, XmlEntity.SHARP);
 				return doMacroDefine(code, ++index, len, output);
 			default:
 				return index;

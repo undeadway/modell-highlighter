@@ -7,29 +7,29 @@ const IS_INTEGER_REGX = /^[0-9](l)*/i;
 const CAN_IN_NUMBER_REGX = /([0-9a-f]|l|\.|x|\-)/i;
 
 function doHtmlEscape(at, output) {
-	if (String.isEmpty(at) || at === Mark.ZERO_WIDTH) return;
+	if (String.isEmpty(at) || at === CharCode.ZERO_WIDTH) return;
 
 	switch (at) {
-		case Mark.NL_N:
-			output.push(JOIN);
+		case Mark.NEW_LINE:
+			append(output, JOIN);
 			break;
 		case Mark.LEFT_ANGLE:
-			output.push(XmlEntity.LEFT_ANGLE);
+			append(output, XmlEntity.LEFT_ANGLE);
 			break;
 		case Mark.RIGHT_ANGLE:
-			output.push(XmlEntity.RIGHT_ANGLE);
+			append(output, XmlEntity.RIGHT_ANGLE);
 			break;
 		case Mark.SHARP:
-			output.push(XmlEntity.SHARP);
+			append(output, XmlEntity.SHARP);
 			break;
 		case Mark.AND:
-			output.push(XmlEntity.AMP);
+			append(output, XmlEntity.AMP);
 			break;
 		case Mark.DQUOTE:
-			output.push(XmlEntity.QUOT);
+			append(output, XmlEntity.QUOT);
 			break;
 		default:
-			output.push(at);
+			append(output, at);
 	}
 }
 
@@ -39,15 +39,15 @@ function canInNumber(at) {
 
 function isNumber(str) {
 
-	return IS_HEX_NUMBER_REGX.test(str) && // 16 进制数
-		IS_DECIMAL_REGX.test(str) && // 小数
+	return IS_HEX_NUMBER_REGX.test(str) || // 16 进制数
+		IS_DECIMAL_REGX.test(str) || // 小数
 		IS_INTEGER_REGX.test(str); // 整数
 }
 
 function doNewLineJoin(output, startSpan) {
-	output.push(Span.CLOSE);
-	output.push(JOIN);
-	if (startSpan) output.push(startSpan);
+	append(output, Span.CLOSE);
+	append(output, JOIN);
+	if (startSpan) append(output, startSpan);
 }
 
 /**
@@ -96,11 +96,11 @@ function isWord(str) {
  * @param charSpan 字符 span 标签，用于区分字符和字符串
  */
 function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
-	output.push(charSpan);
+	append(output, charSpan);
 	let before = escaper;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.NL_N) {
+		if (at === Mark.NEW_LINE) {
 			doNewLineJoin(output, charSpan);
 		} else {
 			doHtmlEscape(at, output);
@@ -115,7 +115,7 @@ function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 		}
 		before = at;
 	}
-	output.push(Span.CLOSE);
+	append(output, Span.CLOSE);
 	return index;
 }
 
@@ -161,10 +161,10 @@ function defaultDoBuiltIn(word, nextCode, next, output, isBuiltInFunc, isBuiltIn
 
 	if (result) {
 		if (builtInFuncFlg) {
-			output.push(Span.BUILTIN_FUNC + word + Span.CLOSE);
+			append(output, Span.BUILTIN_FUNC + word + Span.CLOSE);
 		}
 		if (builtInVarFlg) {
-			output.push(Span.BUILTIN_VAR + word + Span.CLOSE);
+			append(output, Span.BUILTIN_VAR + word + Span.CLOSE);
 		}
 	}
 
@@ -179,14 +179,13 @@ function defaultDoNumber(code, index, len, output) {
 
 	let at = code.charAt(index);
 	if (canInWord(code.charCodeAt(index - 1))) {
-		output.push(at);
+		append(output, at);
 		return index;
 	}
 	let word = "";
 	for (; index < len; index++) {
 		at = code.charAt(index);
 		if (at === 'x' || at === 'X') {
-			hex = true;
 		}
 		if (canInNumber(at)) {
 			if (at === Mark.HYPHEN && canInNumber(code.charAt(index - 1))) break;
@@ -197,19 +196,19 @@ function defaultDoNumber(code, index, len, output) {
 	}
 
 	if (isNumber(word)) {
-		output.push(Span.NUMBER + word + Span.CLOSE);
+		append(output, Span.NUMBER + word + Span.CLOSE);
 	} else {
-		output.push(word);
+		append(output, word);
 	}
 
 	return index - 1;
 }
 
 function doLineComment4Like(code, index, len, at, output) {
-	output.push(Span.COMMENT);
+	append(output, Span.COMMENT);
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === Mark.NL_N) {
+		if (at === Mark.NEW_LINE) {
 			doNewLineJoin(output);
 			break;
 		} else {
@@ -222,11 +221,11 @@ function doLineComment4Like(code, index, len, at, output) {
 
 function doBlockComment4CLike(code, index, len, output, doc) {
 	doc = doc && code.charAt(index + 2) === Mark.ASTERISK;
-	output.push(doc ? Span.DOC : Span.COMMENT);
+	append(output, doc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== Mark.SLASH) {
-			if (at === Mark.NL_N) {
+			if (at === Mark.NEW_LINE) {
 				doNewLineJoin(output, doc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);
@@ -235,8 +234,8 @@ function doBlockComment4CLike(code, index, len, output, doc) {
 			break;
 		}
 	}
-	output.push(CLike.BLOCK_COMMENT_END);
-	output.push(Span.CLOSE);
+	append(output, CLike.BLOCK_COMMENT_END);
+	append(output, Span.CLOSE);
 	return ++index;
 }
 
@@ -258,7 +257,15 @@ function doComment4CLike(code, index, len, at, output, doc) {
 function defaultJudgePluginExe() {
 	return false;
 }
+
+function append(output, str) {
+	if (String.isEmpty(str)) return;
+
+	output.push(str);
+}
+
 exports = module.exports = {
+	append: append,
 	doHtmlEscape: doHtmlEscape,
 	canInNumber: canInNumber,
 	isNumber: isNumber,

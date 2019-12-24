@@ -5,21 +5,25 @@
 ### 关于
 纯JS 打造同于将代码输出成网页格式的代码高亮器。  
 
+#### 版本
+可以从`[dist](./dist)`文件夹中下到最新的发布版。
+
 ### 支持的语言列表
 
 * C
-* C++
+* C++（未测试）
+* C#（未测试）
 * CSS
 * HTML
 * JAVA
 * JAVASCRIPT
 * JSON
-* PHP
+* PHP（未测试）
 * SQL
-* VB
+* VB（未测试）
 * VBA
-* VBSCRIPT
-* VB.NET
+* VBSCRIPT（未测试）
+* VB.NET（未测试）
 * XML
 
 ### 安装

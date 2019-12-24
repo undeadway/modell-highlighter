@@ -1,3 +1,7 @@
+/**
+ * FlyHighLighter 用到的所有常量
+ */
+
 exports = module.exports = {
 	JOIN: '</li><li>',
 	// 各种标签
@@ -20,7 +24,7 @@ exports = module.exports = {
 		BRACKET: '<span class="bracket">',
 		OPERATOR: '<span class="operator">',
 		XMLTAG: '<span class="xmltag">',
-		// 键值对（XML属性、CSS 等可用）
+		// 键值对标签（XML属性、CSS 等可用）
 		DATA_KEY: '<span class="data_key">',
 		DATA_VAL: '<span class="data_val">',
 	},
@@ -28,9 +32,10 @@ exports = module.exports = {
 		SPACE_REGX: /\s/, // 标准空白
 		DQUOTE: '"',
 		QUOTE: "'",
+		GRAVE_ACCENT: '`',
 		SLASH: '/',
 		ASTERISK: '*',
-		NL_N: '\n',
+		NEW_LINE: '\n',
 		AT: '@',
 		AND: '&',
 		TAB: '\t',
@@ -49,11 +54,11 @@ exports = module.exports = {
 		EQUALS: '=',
 		TILDE: '~',
 		EXCALMATORY: '!',
-		ZERO_WIDTH: "\uFEFF",
 		LEFT_ANGLE: '<',
-		RIGHT_ANGLE: '>',
+		RIGHT_ANGLE: '>'
 	},
 	CharCode: {
+		ZERO_WIDTH: "\uFEFF",
 		ZERO: 0x0030,
 		NINE: 0x0039,
 		// 大写字母字母的 ASCII 编号
@@ -68,20 +73,20 @@ exports = module.exports = {
 		UNDERBAR: 0x005F, // _
 		DOLLAR: 0x0024, // $
 	},
-	XmlEntity: {
-		LEFT_ANGLE: '&lt;', // XML 实体
-		RIGHT_ANGLE: '&gt;',
-		AMP: '&amp;',
-		QUOT: "&quot;",
-		APOS: "&apos;",
-		SHARP: '&#35;',
+	XmlEntity: { // XML 实体
+		LEFT_ANGLE: '&lt;', // <
+		RIGHT_ANGLE: '&gt;',  // >
+		AMP: '&amp;', // &
+		QUOT: "&quot;", // "
+		APOS: "&apos;", // '
+		SHARP: '&#35;', // #
 	},
 	Common: {
 		NUMBER_REGX: /^[0-9]/,
 		BRACEKT_REGX: /(\{|\}|\[|\]|\(|\)|<|>)/, // 默认括号，使用 C 语言的括号（类 C 语言都可使用）
 	},
 	CLike: {
-		LINE_COMMENT : "//",
+		LINE_COMMENT: "//",
 		ESCAPER: '\\',
 		//默认操作符（单字符，不计“->”这种多字符操作符），使用 C 语言的操作符（类 C 语言都可使用 ）
 		OPERATOR_REGX: /(\:|\+|\-|\*|\/|\%|\&|\||\^|\!|\~|\?|:|,|;|\.)/,

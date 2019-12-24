@@ -1,6 +1,7 @@
 
 const { Span, Mark, CLike } = require("./../constants");
 const { addLang } = require("./../common");
+const {append} = require("./../components");
 
 const DATA_DESCRIPTION_SPAN = '<span class="data_description">';
 const dftBuiltInVar = ["System", "IO", "Windows", "Forms"];
@@ -34,7 +35,7 @@ function doAttribute(code, index, len, output) {
 						 * 因为存在 “// aaa // bbb” 这种形式的注释
 						 * 所以不能直接判断第一个遇到的 // 之前是否有非空白，而只能以换行符为准
 						 */
-						if (at2 === Mark.NL_N) { // 遇到换行符之后取整段字符，看是否以 // 开头
+						if (at2 === Mark.NEW_LINE) { // 遇到换行符之后取整段字符，看是否以 // 开头
 							let line = code.slice(j + 1, index - 1).trim();
 							if (line.startsWith(CLike.LINE_COMMENT)) {
 								index += 1;
@@ -49,7 +50,7 @@ function doAttribute(code, index, len, output) {
 		}
 	}
 
-	output.push(Span.BRACKET + Mark.LEFT_SQUARE_BRACKET + Span.CLOSE);
+	append(output, Span.BRACKET + Mark.LEFT_SQUARE_BRACKET + Span.CLOSE);
 	let word = String.BLANK;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
@@ -57,7 +58,7 @@ function doAttribute(code, index, len, output) {
 		word += at;
 	}
 
-	output.push(DATA_DESCRIPTION_SPAN + word + Span.CLOSE);
+	append(output, DATA_DESCRIPTION_SPAN + word + Span.CLOSE);
 
 	return --index;
 }

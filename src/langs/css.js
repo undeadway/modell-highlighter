@@ -1,6 +1,6 @@
 
 const { Span, Mark } = require("./../constants");
-const { doHtmlEscape, doBlockComment4CLike, doNewLineJoin } = require("./../components");
+const { doHtmlEscape, doBlockComment4CLike, doNewLineJoin, append } = require("./../components");
 const { addLang } = require("./../common");
 
 const CSS_ID_SPAN = '<span class="css_name css_id">',
@@ -24,16 +24,16 @@ function doCssName(code, index, len, output) {
 
 		switch (at) {
 			case Mark.POINT:
-				output.push(CSS_CLASS_SPAN);
+				append(output, CSS_CLASS_SPAN);
 				break;
 			case Mark.SHARP:
-				output.push(CSS_ID_SPAN);
+				append(output, CSS_ID_SPAN);
 				break;
 			case Mark.LEFT_BRACKET:
 			case Mark.RIGHT_BRACKET:
 				return index;
 			default:
-				output.push(CSS_XMLTAG_SPAN);
+				append(output, CSS_XMLTAG_SPAN);
 		}
 
 		index = doCssCssNames(code, index, len, output, at);
@@ -47,7 +47,7 @@ function doCssBody(code, index, len, output) {
 		if (Mark.SPACE_REGX.test(at)) {
 			doHtmlEscape(at, output);
 		} else if (at === Mark.RIGHT_BRACKET) {
-			output.push(at);
+			append(output, at);
 			return index;
 		} else if (at === Mark.SLASH && Mark.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
@@ -66,12 +66,12 @@ function doCssBody(code, index, len, output) {
 }
 
 function doCssAt(code, index, len, output) {
-	output.push(CSS_AT_SPAN);
+	append(output, CSS_AT_SPAN);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at === Mark.LEFT_BRACKET) {
-			output.push(Span.CLOSE);
-			output.push(Mark.LEFT_BRACKET);
+			append(output, Span.CLOSE);
+			append(output, Mark.LEFT_BRACKET);
 
 			return index;
 		} else {
@@ -85,11 +85,11 @@ function doCssPesudoClass(code, index, len, output) {
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at === Mark.COMMA || Mark.SPACE_REGX.test(at)) {
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
 		} else if (at === Mark.LEFT_BRACKET) {
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			return --index;
 		} else {
 			doHtmlEscape(at, output);
@@ -102,20 +102,20 @@ function doCssCssNames(code, index, len, output) {
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at === Mark.RIGHT_ANGLE) {
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			if (code.charAt(index + 1) === Mark.COLON) {
-				output.push(CSS_PESUDO_CLASS_SPAN);
+				append(output, CSS_PESUDO_CLASS_SPAN);
 				index = doCssPesudoClass(code, ++index, len, output);
 			} else {
 				return index;
 			}
 		} else if (at === Mark.COMMA || Mark.SPACE_REGX.test(at)) {
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
 		} else if (at === Mark.LEFT_BRACKET) {
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			return --index;
 		} else {
 			doHtmlEscape(at, output);
@@ -127,19 +127,19 @@ function cssBody(code, index, len, output) {
 
 	index = cssSpace(code, index, len, output);
 
-	output.push(Span.DATA_VAL);
+	append(output, Span.DATA_VAL);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at === Mark.SEMICOLON) {
-			output.push(Span.CLOSE);
-			output.push(at);
+			append(output, Span.CLOSE);
+			append(output, at);
 			return index;
 		} else if (at === Mark.RIGHT_BRACKET) {
 			// 后括号判断为退出 CSS 身体部，身体部的所有逻辑到此结束
-			output.push(Span.CLOSE);
+			append(output, Span.CLOSE);
 			return --index;
 		}
-		if (at === Mark.NL_N) {
+		if (at === Mark.NEW_LINE) {
 			doNewLineJoin(output, Span.DATA_VAL);
 		} else {
 			doHtmlEscape(at, output);
@@ -163,15 +163,15 @@ function cssSpace(code, index, len, output) {
 
 function doCssAttr(code, index, len, output) {
 
-	output.push(Span.DATA_KEY);
+	append(output, Span.DATA_KEY);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at === Mark.COLON || at === Mark.RIGHT_BRACKET) {
-			output.push(Span.CLOSE);
-			output.push(at);
+			append(output, Span.CLOSE);
+			append(output, at);
 			return ++index;
 		}
-		if (at === Mark.NL_N) {
+		if (at === Mark.NEW_LINE) {
 			doNewLineJoin(output, Span.DATA_KEY);
 		} else {
 			doHtmlEscape(at, output);
@@ -190,11 +190,11 @@ function doCSS(code) {
 		for (; index < len; index++) {
 			at = code.charAt(index);
 			if (at === Mark.AT) {
-				output.push(Span.FILETYPE);
+				append(output, Span.FILETYPE);
 			}
-			output.push(at);
+			append(output, at);
 			if (at === Mark.SEMICOLON) {
-				output.push(Span.CLOSE);
+				append(output, Span.CLOSE);
 				index++;
 				break;
 			}
