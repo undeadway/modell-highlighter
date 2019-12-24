@@ -4,11 +4,12 @@ exports = module.exports = {};
 const constants = require("./constants");
 const components = require("./components");
 const common = require("./common");
+const fs = require("fs");
 
 Object.addAll(constants, exports);
 Object.addAll(components, exports);
 
-for (let langFile of require("fs").readdirSync("./src/langs")) {
+for (let langFile of fs.readdirSync("./src/langs")) {
 	require(`./langs/${langFile}`);
 }
 
