@@ -28,7 +28,11 @@
 
 ### 安装
 #### Node.js
-在Node.js中，只需要执行`npm install flyhighlighter`即可完成所有安装，然后在项目中引入即可。
+在Node.js中，只需要执行
+```
+npm install flyhighlighter
+```
+即可完成所有安装，然后在项目中引入即可。
 ```
 require("flyhighlighter");
 ```
