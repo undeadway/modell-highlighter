@@ -50,19 +50,21 @@ var output = FlyHighLighter.execute(source, langName);
 A source code highlighter created by pure javascript.
 
 ### Supported languages list
+
 * C
-* C++
+* C++（未测试）
+* C#
 * CSS
 * HTML
 * JAVA
 * JAVASCRIPT
 * JSON
-* PHP
+* PHP（未测试）
 * SQL
-* VB
+* VB（未测试）
 * VBA
-* VBSCRIPT
-* VB.NET
+* VBSCRIPT（未测试）
+* VB.NET（未测试）
 * XML
 
 ### Install
