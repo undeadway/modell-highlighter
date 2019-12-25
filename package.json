@@ -1,13 +1,17 @@
 {
 	"name": "flyhighlighter",
-	"version": "0.0.2",
-	"main": "FlyHighLighter.js",
-	"license": "Apache-2.0",
+	"version": "0.0.3",
+	"description": "A source code highlighter created by pure javascript.",
+	"main": "src/index.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/undeadway/FlyHighLighter.git"
 	},
 	"dependencies": {
 		"coralian": "0.0.14"
-	}
+	},
+	"author": "hzwaygc@gmail.com",
+	"license": "Apache-2.0",
+	"homepage": "http://codes.waygc.net/fly/FlyHighLighter.helper.html",
+	"devDependencies": {}
 }
