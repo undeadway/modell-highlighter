@@ -77,7 +77,9 @@ A source code highlighter created by pure javascript.
 ### Install
 #### Node.js
 Run the followen command:
-```npm install flyhighlighter```
+```
+npm install flyhighlighter
+```
 And import it into project:
 ```
 require("flyhighlighter");
