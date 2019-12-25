@@ -3,7 +3,7 @@ const highlighter = require("./../src/index");
 const fs = require("fs");
 const FOLDER = './test/res/';
 
-const testLang = 'c';
+const testLang = 'xml';
 
 if (testLang) {
 
