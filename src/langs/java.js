@@ -1,8 +1,7 @@
 const { Span, Mark } = require("../constants");
 const common = require("../common");
 
-const ANNOTATION_SPAN = '<span class="annotation">',
-	AT_INTERFACE = '@interface';
+const AT_INTERFACE = '@interface';
 
 function doAnnotation(code, index, len, output) {
 
@@ -15,7 +14,7 @@ function doAnnotation(code, index, len, output) {
 	if (word === AT_INTERFACE) {
 		output.push(Span.KEYWORD_SPAN + word + Span.CLOSE);
 	} else {
-		output.push(ANNOTATION_SPAN + word + Span.CLOSE);
+		output.push(Span.DESCRIPTION + word + Span.CLOSE);
 	}
 
 	return --index;

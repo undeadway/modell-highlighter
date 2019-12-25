@@ -17,9 +17,10 @@
  .code .comment{color:#dcdcaa; font-style:oblique;}
  .code .doc, .code .xml_cdata{color:#c9c986;}
 
-/* 绿色系：数字、CSS类 */
+/* 绿色系：数字、CSS类、预定义、Annotation、描述信息 */
  .code .number{color:#00F00F;}
- .code .css_class{color:#afff03;}
+ .code .css_class, .code .define{color:#afff03;}
+ .code .description, .code .data_key{color:#25f8a0;}
 
 /* 蓝色系：关键字、内置函数、变量  */
 .code .keyword, .code .xmltag{color:#9cdcfe;}
@@ -27,9 +28,8 @@
 .code .builtin_var, .code .filetype{color:#a892f9;}
 
 
-/* 紫色系：括号、预定义、Annotation、TODO、CSS@ */
+/* 紫色系：括号、TODO、CSS@ */
 .code .bracket{color:#f885fa; margin:0px 2px;}
-.code .macrodefine, .code .annotation, .code .data_key{color:#f82583;}
 .code .css_at, .code .todo{color:#bbb0ff;}
 
 .code .css_name, .code .keyword{font-style:italic;}

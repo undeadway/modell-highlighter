@@ -17,6 +17,8 @@ exports = module.exports = {
 		KEYWORD: '<span class="keyword">',
 		REGEXP: '<span class="regexp">',
 		DOC: '<span class="doc">',
+		DESCRIPTION: '<span class="description">',
+		DEFINE: '<span class="define">',
 		// 内置的各种内容
 		BUILTIN_FUNC: '<span class="builtin_func">',
 		BUILTIN_VAR: '<span class="builtin_var">',
@@ -26,7 +28,7 @@ exports = module.exports = {
 		XMLTAG: '<span class="xmltag">',
 		// 键值对标签（XML属性、CSS 等可用）
 		DATA_KEY: '<span class="data_key">',
-		DATA_VAL: '<span class="data_val">',
+		DATA_VAL: '<span class="data_val">'
 	},
 	Mark: {
 		SPACE_REGX: /\s/, // 标准空白

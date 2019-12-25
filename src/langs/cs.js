@@ -1,12 +1,12 @@
 
 const { Span, Mark, CLike } = require("./../constants");
 const { addLang } = require("./../common");
-const {append} = require("./../components");
+const { append } = require("./../components");
 
-const DATA_DESCRIPTION_SPAN = '<span class="data_description">';
-const dftBuiltInVar = ["System", "IO", "Windows", "Forms"];
+const dftBuiltInVar = ["System", "IO", "Windows", "Forms", "List"];
+const JUGDE_PLUGIN_KW = [Mark.LEFT_SQUARE_BRACKET, Mark.SHARP];
 
-function doAttribute(code, index, len, output) {
+function doDescription(code, index, len, output) {
 
 	FOR_ATTRIBUTE: for (let i = index - 1; i >= 0; i--) {
 		let at = code.charAt(i);
@@ -58,26 +58,59 @@ function doAttribute(code, index, len, output) {
 		word += at;
 	}
 
-	append(output, DATA_DESCRIPTION_SPAN + word + Span.CLOSE);
+	append(output, Span.DESCRIPTION + word + Span.CLOSE);
+
+	return --index;
+}
+
+function doRegion(code, index, len, output) {
+
+	append(output, Span.DEFINE);
+
+	let word = "";
+
+	for (index; index < len; index++) {
+		let at = code.charAt(index);
+		if (at === Mark.NEW_LINE) {
+			break;
+		}
+
+		word += at;
+	}
+
+	append(output, word);
+	append(output, Span.CLOSE);
 
 	return --index;
 }
 
 addLang([{ name: "C#" }], null, {
 	judgeExe: function (at) {
-		return at === Mark.LEFT_SQUARE_BRACKET;
+		// return at === Mark.LEFT_SQUARE_BRACKET;
+		return Array.has(JUGDE_PLUGIN_KW, at);
 	},
 	isBuiltInVar: function (word) {
 		return Array.has(dftBuiltInVar, word);
 	},
-	execute: doAttribute
+	execute: function (code, index, len, output) {
+		let at = code.charAt(index);
+
+		switch (at) {
+			case Mark.LEFT_SQUARE_BRACKET:
+				return doDescription(code, index, len, output);
+			case Mark.SHARP:
+				return doRegion(code, index, len, output);
+			default:
+				return index;
+		}
+	}
 }, ["abstract", "as", "base", "bool", "break", "byte", "case", "catch", "char", "checked", "class", "const", "continue",
-		"decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern",
-		"false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is",
-		"lock", "long", "namespace", "new", "null", "object", "operator", "out", "override",
-		"params", "private", "protected", "public", "readonly", "ref", "return",
-		"sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch",
-		"this", "throw", "true", "try", "typeof",
-		"uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while",
-		"add", "alias", "ascending", "async", "await", "descending", "dynamic", "from", "get", "global", "group",
-		"into", "join", "let", "nameof", "orderby", "partial", "remove", "select", "set", "value", "var", "when", "where", "yield"]);
+	"decimal", "default", "delegate", "do", "double", "else", "enum", "event", "explicit", "extern",
+	"false", "finally", "fixed", "float", "for", "foreach", "goto", "if", "implicit", "in", "int", "interface", "internal", "is",
+	"lock", "long", "namespace", "new", "null", "object", "operator", "out", "override",
+	"params", "private", "protected", "public", "readonly", "ref", "return",
+	"sbyte", "sealed", "short", "sizeof", "stackalloc", "static", "string", "struct", "switch",
+	"this", "throw", "true", "try", "typeof",
+	"uint", "ulong", "unchecked", "unsafe", "ushort", "using", "virtual", "void", "volatile", "while",
+	"add", "alias", "ascending", "async", "await", "descending", "dynamic", "from", "get", "global", "group",
+	"into", "join", "let", "nameof", "orderby", "partial", "remove", "select", "set", "value", "var", "when", "where", "yield"]);
