@@ -4,14 +4,26 @@ exports = module.exports = {};
 const constants = require("./constants");
 const components = require("./components");
 const common = require("./common");
-const fs = require("fs");
+// const fs = require("fs");
 
 Object.addAll(constants, exports);
 Object.addAll(components, exports);
 
-for (let langFile of fs.readdirSync("./src/langs")) {
-	require(`./langs/${langFile}`);
-}
+// for (let langFile of fs.readdirSync("./src/langs")) {
+// 	require(`./langs/${langFile}`);
+// }
+
+// 因为浏览器没有 fs 模块，无法通过读文件夹的方式来读取文件
+// 所以这里只能手动导入所有模块
+require("./langs/c_cpp");
+require("./langs/cs");
+require("./langs/css");
+require("./langs/html_xml");
+require("./langs/java");
+require("./langs/js");
+require("./langs/php");
+require("./langs/sql");
+require("./langs/vb");
 
 const NEW_LINE = /(\r\n|\r)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
@@ -54,23 +66,24 @@ function parseLang(lang, input) {
 	return language.execute(input.replace(NEW_LINE, constants.Mark.NEW_LINE));
 }
 
-exports.execute = (input, lang) => {
+Coralian.setToGlobal("FlyHighLighter", {
+	execute: (input, lang) => {
 
-	input = String.trim(input);
-	if (!input) return String.BLANK;
+		input = String.trim(input);
+		if (!input) return String.BLANK;
 
-	if (!String.contains(input, constants.Mark.NEW_LINE) && !lang) {
-		let output = [CODE_TAG_START];
-		for (let i = 0, len = input.length; i < len; i++) {
-			components.doHtmlEscape(input.charAt(i), output);
+		if (!String.contains(input, constants.Mark.NEW_LINE) && !lang) {
+			let output = [CODE_TAG_START];
+			for (let i = 0, len = input.length; i < len; i++) {
+				components.doHtmlEscape(input.charAt(i), output);
+			}
+			output.push(CODE_TAG_END);
+			return output.join(String.BLANK);
 		}
-		output.push(CODE_TAG_END);
-		return output.join(String.BLANK);
-	}
 
-	lang = String.trim(getFullName(lang.toUpperCase()));
+		lang = String.trim(getFullName(lang.toUpperCase()));
 
-	return FILED_START + getLangName(lang) + FILED_LIST + parseLang(lang, input) + FILED_END;
-}
-
-exports.getLangs = common.getLanguagesName;
+		return FILED_START + getLangName(lang) + FILED_LIST + parseLang(lang, input) + FILED_END;
+	},
+	getLangs: common.getLanguagesName
+});

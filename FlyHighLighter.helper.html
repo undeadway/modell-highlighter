@@ -7,8 +7,8 @@
 <script type="text/javascript" src="http://res.waygc.net/js/marked.min.js"></script>
 <script type="text/javascript" src="http://waygc.net/res/js/coralian.js"></script>
 <script type="text/javascript" src="http://waygc.net/res/js/coralian.client.js"></script>
-<script type="text/javascript" src="./FlyHighLighter.js"></script>
-<link rel="stylesheet" type="text/css" href="./FlyHighLighter.css" />
+<script type="text/javascript" src="./dist/FlyHighLighter.js"></script>
+<link rel="stylesheet" type="text/css" href="./test/FlyHighLighter.css" />
 <style type="text/css">
 	#left, #right{display: inline-block; vertical-align: top;}
 	#right fieldset{width:720px; min-width72px; max-width:720px;}
@@ -28,7 +28,7 @@
 (function() {
 
 	$.get({
-		url : "./FlyHightLighter.md",
+		url : "./README.md",
 		dataType: "text",
 		success : function(req) {
 			$("#readme").html(marked(req));
