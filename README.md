@@ -87,7 +87,7 @@ require("flyhighlighter");
 
 #### Browser
 Copy the compired file `FlyHighLighter` to client.  
-And `FlyHighLighter` has relied by `Coralian`, so also copy the file `coralian.js` to client.
+And `FlyHighLighter` has relied `Coralian`, so download the [coralian](https://gitee.com/undeadway/coralian) first.
 
 ### Using
 ```
