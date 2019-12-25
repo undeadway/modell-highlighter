@@ -28,14 +28,17 @@
 
 ### 安装
 #### Node.js
-在Node.js中，只需要执行`npm install flyhighlighter`即可。
+在Node.js中，只需要执行`npm install flyhighlighter`即可完成所有安装，然后在项目中引入即可。
+```
+rquire("flyhighlighter");
+```
+就可以开始使用`FlyHighLighter`了。
 
 #### 浏览器
 只需要将`dist`文件夹下已编译好的`FlyHighLighter.js`复制到项目中去即可。  
-`FlyHighLighter`依赖`Coralian`，所以请一并复制`coralian.js`。
+`FlyHighLighter`依赖`Coralian`，所以请事先下载[coralian](https://gitee.com/undeadway/coralian)。
 
 ### 使用
-在项目中导入`FlyHighLighter.js`和`coralian.js`。  
 然后可以通过下面的代码来使用 `FlyHighLighter`
 ```
 var source = "var source = 'test code'";
