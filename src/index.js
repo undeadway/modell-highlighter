@@ -32,6 +32,8 @@ function getFullName(lang) {
 			break;
 		case 'VBS':
 			lang = 'VBSCRIPT';
+		case 'CS':
+			lang = 'C#';
 		default:
 			break;
 	}
