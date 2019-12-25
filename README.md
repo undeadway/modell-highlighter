@@ -76,7 +76,13 @@ A source code highlighter created by pure javascript.
 
 ### Install
 #### Node.js
-It just to run the `npm install flyhighlighter` command on node.js side.
+Run the followen command:
+```npm install flyhighlighter```
+And import it into project:
+```
+require("flyhighlighter");
+```
+
 #### Browser
 Copy the compired file `FlyHighLighter` to client.  
 And `FlyHighLighter` has relied by `Coralian`, so also copy the file `coralian.js` to client.
