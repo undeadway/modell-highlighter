@@ -1,6 +1,6 @@
 {
 	"name": "flyhighlighter",
-	"version": "0.0.3",
+	"version": "0.0.4",
 	"description": "A source code highlighter created by pure javascript.",
 	"main": "src/index.js",
 	"repository": {
