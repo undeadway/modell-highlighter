@@ -1,5 +1,5 @@
-
-const { Span, Mark, CLike } = require("./../constants");
+const { Mark } = Coralian.constants;
+const { Span, CLike } = require("./../constants");
 const { addLang } = require("./../common");
 const { append } = require("./../components");
 

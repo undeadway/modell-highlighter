@@ -1,5 +1,6 @@
 
-const { Span, Mark, Common, CLike, CharCode } = require("./constants");
+const { Mark, CharCode } = Coralian.constants;
+const { Span, Common, CLike } = require("./constants");
 const { doHtmlEscape, defaultDoChars, doComment4CLike, defaultJudgePluginExe, judgeComment4CLike, defaultIsBuiltIn, defaultDoKeyword, defaultDoNumber, defaultDoBuiltIn, append } = require("./components");
 
 const LANGUAGES = {};

@@ -1,5 +1,5 @@
-
-const { Span, Mark } = require("./../constants");
+const { Mark } = Coralian.constants;
+const { Span } = require("./../constants");
 const { doHtmlEscape, doBlockComment4CLike, doNewLineJoin, append } = require("./../components");
 const { addLang } = require("./../common");
 

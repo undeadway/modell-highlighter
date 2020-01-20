@@ -1,5 +1,5 @@
-
-const { Span, Mark, CharCode, XmlEntity, Common, CLike, JOIN } = require("./constants");
+const { Mark, CharCode, XmlEntity } = Coralian.constants;
+const { Span, Common, CLike, JOIN } = require("./constants");
 
 const IS_HEX_NUMBER_REGX = /^0x[a-f0-9]+$/i;
 const IS_DECIMAL_REGX = /^[0-9]\.[0-9](d|f)*$/i;

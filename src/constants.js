@@ -30,59 +30,6 @@ exports = module.exports = {
 		DATA_KEY: '<span class="data_key">',
 		DATA_VAL: '<span class="data_val">'
 	},
-	Mark: {
-		SPACE_REGX: /\s/, // 标准空白
-		DQUOTE: '"',
-		QUOTE: "'",
-		GRAVE_ACCENT: '`',
-		SLASH: '/',
-		ASTERISK: '*',
-		NEW_LINE: '\n',
-		AT: '@',
-		AND: '&',
-		TAB: '\t',
-		SHARP: '#',
-		COMMA: ",",
-		SEMICOLON: ';',
-		COLON: ':',
-		LEFT_BRACKET: '{',
-		RIGHT_BRACKET: '}',
-		LEFT_SQUARE_BRACKET: '[',
-		RIGHT_SQUARE_BRACKET: ']',
-		LEFT_PARENTHE: '(',
-		RIGHT_PARENTHE: ')',
-		POINT: '.',
-		HYPHEN: "-",
-		EQUALS: '=',
-		TILDE: '~',
-		EXCALMATORY: '!',
-		LEFT_ANGLE: '<',
-		RIGHT_ANGLE: '>'
-	},
-	CharCode: {
-		ZERO_WIDTH: "\uFEFF",
-		ZERO: 0x0030,
-		NINE: 0x0039,
-		// 大写字母字母的 ASCII 编号
-		UPPER_A: 0x0041,
-		UPPER_Z: 0x005A,
-		UPPER_F: 0x0046,
-		// 小写字母字母的 ASCII 编号
-		LOWER_A: 0x0061,
-		LOWER_Z: 0x007A,
-		LOWER_F: 0x0066,
-		// 特殊符号的 ASCII 编号
-		UNDERBAR: 0x005F, // _
-		DOLLAR: 0x0024, // $
-	},
-	XmlEntity: { // XML 实体
-		LEFT_ANGLE: '&lt;', // <
-		RIGHT_ANGLE: '&gt;',  // >
-		AMP: '&amp;', // &
-		QUOT: "&quot;", // "
-		APOS: "&apos;", // '
-		SHARP: '&#35;', // #
-	},
 	Common: {
 		NUMBER_REGX: /^[0-9]/,
 		BRACEKT_REGX: /(\{|\}|\[|\]|\(|\)|<|>)/, // 默认括号，使用 C 语言的括号（类 C 语言都可使用）

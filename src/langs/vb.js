@@ -1,5 +1,5 @@
 
-const { Mark } = require("./../constants");
+const { Mark } = Coralian.constants;
 const { doLineComment4Like, defaultDoCharCase, canInWord } = require("./../components");
 const { addLang } = require("./../common");
 

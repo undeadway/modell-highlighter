@@ -1,3 +1,7 @@
+/**
+ * 测试中
+ */
+
 const common = require("./../common");
 
 const dftBuiltInVar = ['cat', 'chattr', 'chgrpchmod', 'chown', 'cksum', 'cmpdiff', 'diffstat', 'file', 'findgit', 'gitview', 'indent', 'cutln', 'less', 'locate',

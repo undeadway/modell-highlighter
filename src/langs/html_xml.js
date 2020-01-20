@@ -1,5 +1,5 @@
-
-const { Span, XmlEntity, Mark } = require("../constants");
+const { XmlEntity, Mark } = Coralian.constants;
+const { Span } = require("../constants");
 const { doHtmlEscape, doNewLineJoin, append } = require("./../components");
 const common = require("./../common");
 

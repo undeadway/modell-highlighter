@@ -1,4 +1,5 @@
-const { Span, Mark } = require("../constants");
+const { Mark } = Coralian.constants;
+const { Span } = require("../constants");
 const common = require("../common");
 
 const AT_INTERFACE = '@interface';
