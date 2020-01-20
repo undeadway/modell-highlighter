@@ -1,17 +1,13 @@
 
 exports = module.exports = {};
 
+const { Mark } = Coralian.constants;
 const constants = require("./constants");
 const components = require("./components");
 const common = require("./common");
-// const fs = require("fs");
 
 Object.addAll(constants, exports);
 Object.addAll(components, exports);
-
-// for (let langFile of fs.readdirSync("./src/langs")) {
-// 	require(`./langs/${langFile}`);
-// }
 
 // 因为浏览器没有 fs 模块，无法通过读文件夹的方式来读取文件
 // 所以这里只能手动导入所有模块
@@ -63,7 +59,7 @@ function getLangName(lang) {
 function parseLang(lang, input) {
 
 	let language = common.getLang(lang);
-	return language.execute(input.replace(NEW_LINE, constants.Mark.NEW_LINE));
+	return language.execute(input.replace(NEW_LINE, Mark.NEW_LINE));
 }
 
 Coralian.setToGlobal("FlyHighLighter", {
@@ -72,7 +68,7 @@ Coralian.setToGlobal("FlyHighLighter", {
 		input = String.trim(input);
 		if (!input) return String.BLANK;
 
-		if (!String.contains(input, constants.Mark.NEW_LINE) && !lang) {
+		if (!String.contains(input, Mark.NEW_LINE) && !lang) {
 			let output = [CODE_TAG_START];
 			for (let i = 0, len = input.length; i < len; i++) {
 				components.doHtmlEscape(input.charAt(i), output);
