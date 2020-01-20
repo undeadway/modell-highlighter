@@ -2,9 +2,7 @@
 exports = module.exports = {};
 
 const { Mark } = Coralian.constants;
-const constants = require("./constants");
-const components = require("./components");
-const common = require("./common");
+const { getLang, getLanguagesName } = require("./common");
 
 // 因为浏览器没有 fs 模块，无法通过读文件夹的方式来读取文件
 // 所以这里只能手动导入所有模块
@@ -56,7 +54,7 @@ function getLangName(lang) {
 
 function parseLang(lang, input) {
 
-	let language = common.getLang(lang);
+	let language = getLang(lang);
 	return language.execute(input.replace(NEW_LINE, Mark.NEW_LINE));
 }
 
@@ -79,9 +77,9 @@ const FlyHighLighter = {
 
 		return FILED_START + getLangName(lang) + FILED_LIST + parseLang(lang, input) + FILED_END;
 	},
-	getLangs: common.getLanguagesName
+	getLangs: getLanguagesName
 };
-Object.addAll(constants, FlyHighLighter);
-Object.addAll(components, FlyHighLighter);
+Object.addAll(require("./constants"), FlyHighLighter);
+Object.addAll(require("./components"), FlyHighLighter);
 
 Coralian.setToGlobal("FlyHighLighter", FlyHighLighter);
