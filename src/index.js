@@ -1,17 +1,8 @@
 
 exports = module.exports = {};
 
-const constants = require("./constants");
-const components = require("./components");
-const common = require("./common");
-// const fs = require("fs");
-
-Object.addAll(constants, exports);
-Object.addAll(components, exports);
-
-// for (let langFile of fs.readdirSync("./src/langs")) {
-// 	require(`./langs/${langFile}`);
-// }
+const { Mark } = Coralian.constants;
+const { getLang, getLanguagesName } = require("./common");
 
 // 因为浏览器没有 fs 模块，无法通过读文件夹的方式来读取文件
 // 所以这里只能手动导入所有模块
@@ -25,11 +16,12 @@ require("./langs/php");
 require("./langs/sql");
 require("./langs/vb");
 
-const NEW_LINE = /(\r\n|\r)/ig;
+const NEW_LINE_REGX = /(\r\n|\r)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
 	FILED_LIST = '</legend><pre><ol class="code_list"><li>',
 	FILED_END = '</li></ol></pre></fieldset>',
-	CODE_TAG_START = "<code>", CODE_TAG_END = "</code>";
+	CODE_TAG_START = "<code>",
+	CODE_TAG_END = "</code>";
 
 const langMap = {
 	JAVA: 'Java',
@@ -62,17 +54,19 @@ function getLangName(lang) {
 
 function parseLang(lang, input) {
 
-	let language = common.getLang(lang);
-	return language.execute(input.replace(NEW_LINE, constants.Mark.NEW_LINE));
+	let language = getLang(lang);
+	return language.execute(input.replace(NEW_LINE_REGX, Mark.NEW_LINE));
 }
 
-Coralian.setToGlobal("FlyHighLighter", {
+const FlyHighLighter = {
+	constants: {},
+	components: {},
 	execute: (input, lang) => {
 
 		input = String.trim(input);
 		if (!input) return String.BLANK;
 
-		if (!String.contains(input, constants.Mark.NEW_LINE) && !lang) {
+		if (!String.contains(input, Mark.NEW_LINE) && !lang) {
 			let output = [CODE_TAG_START];
 			for (let i = 0, len = input.length; i < len; i++) {
 				components.doHtmlEscape(input.charAt(i), output);
@@ -85,5 +79,9 @@ Coralian.setToGlobal("FlyHighLighter", {
 
 		return FILED_START + getLangName(lang) + FILED_LIST + parseLang(lang, input) + FILED_END;
 	},
-	getLangs: common.getLanguagesName
-});
+	getLangs: getLanguagesName
+};
+Object.addAll(require("./constants"), FlyHighLighter.constants);
+Object.addAll(require("./components"), FlyHighLighter.components);
+
+Coralian.setToGlobal("FlyHighLighter", FlyHighLighter);

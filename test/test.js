@@ -1,9 +1,10 @@
 require("coralian");
-const highlighter = require("./../src/index");
+require("./../src/index");
+const highlighter = FlyHighLighter;
 const fs = require("fs");
 const FOLDER = './test/res/';
 
-const testLang = 'xml';
+let testLang;
 
 if (testLang) {
 
