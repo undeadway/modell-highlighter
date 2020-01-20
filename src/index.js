@@ -59,6 +59,8 @@ function parseLang(lang, input) {
 }
 
 const FlyHighLighter = {
+	constants: {},
+	components: {},
 	execute: (input, lang) => {
 
 		input = String.trim(input);
@@ -79,7 +81,7 @@ const FlyHighLighter = {
 	},
 	getLangs: getLanguagesName
 };
-Object.addAll(require("./constants"), FlyHighLighter);
-Object.addAll(require("./components"), FlyHighLighter);
+Object.addAll(require("./constants"), FlyHighLighter.constants);
+Object.addAll(require("./components"), FlyHighLighter.components);
 
 Coralian.setToGlobal("FlyHighLighter", FlyHighLighter);
