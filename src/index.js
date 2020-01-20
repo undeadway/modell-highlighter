@@ -16,7 +16,7 @@ require("./langs/php");
 require("./langs/sql");
 require("./langs/vb");
 
-const NEW_LINE = /(\r\n|\r)/ig;
+const NEW_LINE_REGX = /(\r\n|\r)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
 	FILED_LIST = '</legend><pre><ol class="code_list"><li>',
 	FILED_END = '</li></ol></pre></fieldset>',
@@ -55,7 +55,7 @@ function getLangName(lang) {
 function parseLang(lang, input) {
 
 	let language = getLang(lang);
-	return language.execute(input.replace(NEW_LINE, Mark.NEW_LINE));
+	return language.execute(input.replace(NEW_LINE_REGX, Mark.NEW_LINE));
 }
 
 const FlyHighLighter = {
