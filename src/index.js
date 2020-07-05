@@ -1,4 +1,3 @@
-
 exports = module.exports = {};
 
 const { Mark } = Coralian.constants;

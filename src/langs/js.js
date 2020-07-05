@@ -1,3 +1,6 @@
+/**
+ * JavaScript
+ */
 const { Mark } = Coralian.constants;
 const { Span, CLike } = require("./../constants");
 const common = require("./../common");

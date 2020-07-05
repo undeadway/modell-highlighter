@@ -1,3 +1,6 @@
+/**
+ * CSS
+ */
 const { Mark } = Coralian.constants;
 const { Span } = require("./../constants");
 const { doHtmlEscape, doBlockComment4CLike, doNewLineJoin, append } = require("./../components");

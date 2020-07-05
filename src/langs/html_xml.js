@@ -1,3 +1,6 @@
+/**
+ * HTML、XML
+ */
 const { XmlEntity, Mark } = Coralian.constants;
 const { Span } = require("../constants");
 const { doHtmlEscape, doNewLineJoin, append } = require("./../components");
