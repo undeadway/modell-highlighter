@@ -55,7 +55,6 @@ function doCssBody(code, index, len, output) {
 		} else if (at === Mark.SLASH && Mark.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
 		} else if (at !== Mark.LEFT_BRACKET) {
-			// let charCode = code.charCodeAt(index);
 			index = doCssAttr(code, index, len, output);
 			if (index < len) {
 				index = cssBody(code, index, len, output);

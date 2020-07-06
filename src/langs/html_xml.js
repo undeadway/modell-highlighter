@@ -23,7 +23,6 @@ const XML_TAG_REGX = /<([^>]*?)>/i,
 
 const XML_REPLACE_PART = "{{XML_Replace_Part:",
 	HTML_REPLACE_PART = "{{HTML_Replace_Part:",
-	// XML_ATTR_REPLACE_PART = "XML_Attr_Replace_Part:",
 	REPLACE_END = ":}}";
 
 // XML 标签转义之后的实体
