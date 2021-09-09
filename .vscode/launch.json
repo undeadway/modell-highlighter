@@ -9,7 +9,7 @@
 			"type": "node",
 			"request": "launch",
 			"name": "启动测试",
-			"program": "${workspaceFolder}\\test\\test.js"
+			"program": "${workspaceFolder}/test/test.js"
 		}
 	]
 }

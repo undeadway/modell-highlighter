@@ -4,17 +4,30 @@ exports = module.exports = {};
 const { Mark } = Coralian.constants;
 const { getLang, getLanguagesName } = require("./common");
 
-// 因为浏览器没有 fs 模块，无法通过读文件夹的方式来读取文件
-// 所以这里只能手动导入所有模块
-require("./langs/c_cpp");
-require("./langs/cs");
-require("./langs/css");
-require("./langs/html_xml");
-require("./langs/java");
-require("./langs/js");
-require("./langs/php");
-require("./langs/sql");
-require("./langs/vb");
+// // 因为浏览器没有 fs 模块，无法通过读文件夹的方式来读取文件
+// // 所以这里只能手动导入所有模块
+// require("./langs/c_cpp");
+// require("./langs/cs");
+// require("./langs/css");
+// require("./langs/html_xml");
+// require("./langs/java");
+// require("./langs/js");
+// require("./langs/php");
+// require("./langs/sql");
+// require("./langs/vb");
+
+if (Coralian.side()) {
+	const langs = require.context("./langs/.");
+	langs.keys().forEach(key => {
+		langs(key);
+	});
+} else {
+	const fs = require("fs");
+	const langs = fs.readdirSync(`${__dirname}/langs`);
+	langs.map((file) => {
+		require(`./langs/${file}`);
+	});
+}
 
 const NEW_LINE_REGX = /(\r\n|\r)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
