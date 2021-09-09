@@ -11,11 +11,14 @@ if (Coralian.side()) {
 		langs(key);
 	});
 } else {
-	const fs = require("fs");
-	const langs = fs.readdirSync(`${__dirname}/langs`);
-	langs.map((file) => {
-		require(`./langs/${file}`);
-	});
+	try { // 这里加 try ... catch 只是为了避免 webpack 打包时，前端找不到 fs 模块而报错的问题
+		const fs = require("fs");
+		const langs = fs.readdirSync(`${__dirname}/langs`);
+		langs.map((file) => {
+			require(`./langs/${file}`);
+		});
+	}catch {
+	}
 }
 
 const NEW_LINE_REGX = /(\r\n|\r)/ig;
