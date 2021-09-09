@@ -201,7 +201,7 @@ function defaultDoNumber(code, index, len, output) {
 		append(output, word);
 	}
 
-	return index - 1;
+	return --index;
 }
 
 function doLineComment4Like(code, index, len, at, output) {

@@ -1,3 +1,6 @@
+/**
+ * C#
+ */
 const { Mark } = Coralian.constants;
 const { Span, CLike } = require("./../constants");
 const { addLang } = require("./../common");

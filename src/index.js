@@ -1,4 +1,3 @@
-
 exports = module.exports = {};
 
 const { Mark } = Coralian.constants;
@@ -64,8 +63,8 @@ function parseLang(lang, input) {
 }
 
 const FlyHighLighter = {
-	constants: {},
-	components: {},
+	constants: require("./constants"),
+	components: require("./components"),
 	execute: (input, lang) => {
 
 		input = String.trim(input);
@@ -86,7 +85,5 @@ const FlyHighLighter = {
 	},
 	getLangs: getLanguagesName
 };
-Object.addAll(require("./constants"), FlyHighLighter.constants);
-Object.addAll(require("./components"), FlyHighLighter.components);
 
 Coralian.setToGlobal("FlyHighLighter", FlyHighLighter);

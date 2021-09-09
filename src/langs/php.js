@@ -1,8 +1,10 @@
-
+/**
+ * PHP
+ */
 const { Span } = require("./../constants");
 const common = require("./../common");
 
-const dftBuiltInFunc = ['eval'];
+const dftBuiltInFunc = ['eval', 'echo', 'print', 'require'];
 
 const PHP_START = "<?php",
 	PHP_END = "?>";
@@ -18,9 +20,9 @@ const php = common.initLangObject(null, {
 	}
 },
 	['and', 'or', 'xor', 'exception', 'as', 'break', 'case', 'class', 'const', 'continue ', 'declare',
-		'default', 'do', 'echo', 'else', 'elseif', 'enddeclare', 'endfor', 'endforeach', 'endif', 'endswitch',
+		'default', 'do', 'else', 'elseif', 'enddeclare', 'endfor', 'endforeach', 'endif', 'endswitch',
 		'endwhile', 'extends', 'for', 'foreach', 'function', 'global', 'if', 'include', 'include_once', 'new',
-		'print', 'require', 'require_once', 'return', 'static', 'switch', 'use', 'var', 'while', 'final',
+		'require_once', 'return', 'static', 'switch', 'use', 'var', 'while', 'final',
 		'php_user_filter', 'interface', 'implements', 'public', 'private', 'protected', 'abstract', 'clone ',
 		'try', 'catch', 'throw', 'cfunction', 'this', '__LINE__', '__FUNCTION__', '__CLASS__', '__METHOD__']
 );
