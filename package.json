@@ -7,11 +7,14 @@
 		"type": "git",
 		"url": "git+https://github.com/undeadway/FlyHighLighter.git"
 	},
-	"dependencies": {
-		"coralian": "0.0.19"
+	"dependencies": {},
+	"devDependencies": {
+		"coralian": "0.0.26"
+	},
+	"scripts": {
+		"pkg": "webpack"
 	},
 	"author": "hzwaygc@gmail.com",
 	"license": "Apache-2.0",
-	"homepage": "http://codes.waygc.net/fly/FlyHighLighter.helper.html",
-	"devDependencies": {}
+	"homepage": "http://codes.waygc.net/fly/FlyHighLighter.helper.html"
 }
