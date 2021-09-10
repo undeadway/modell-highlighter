@@ -31,6 +31,7 @@ const langMap = {
 	JAVA: 'Java',
 	JAVASCRIPT: 'JavaScript',
 	VBSCRIPT: 'VBScript',
+	SHELL: 'Shell'
 };
 
 function getFullName(lang) {
@@ -42,6 +43,8 @@ function getFullName(lang) {
 			lang = 'VBSCRIPT';
 		case 'CS':
 			lang = 'C#';
+		case 'SH':
+			lang = 'SHELL'
 		default:
 			break;
 	}
