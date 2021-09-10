@@ -120,7 +120,7 @@ function commonExecute(code) {
 		let at = code.charAt(index),
 			codeAt = code.charCodeAt(index);
 
-		if (codeAt === 8203) continue;
+		if (codeAt === 8203) continue; // 零宽空白
 
 		if (Mark.SPACE_REGX.test(at)) { // 标准空白
 			append(output, word);
@@ -151,7 +151,7 @@ function commonExecute(code) {
 				index = doNumber(code, index, len, output);
 			} else {
 				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
-					append(output, word + Span.BRACKET + at + Span.CLOSE);
+					append(output, `${word}${span.BRACKET}${at}${Span.CLOSE}`);
 					word = String.BLANK;
 				} else if (at === Mark.LEFT_ANGLE) { // 左尖括号
 					append(output, word);
@@ -164,7 +164,7 @@ function commonExecute(code) {
 						append(output, word);
 						word = String.BLANK;
 					} else if (doKeyword(output, kw, word, next, charCaseMethod)) { // 关键字
-						append(output, Span.KEYWORD + word + Span.CLOSE);
+						append(output, `${Span.KEYWORD}${word}${Span.CLOSE}`);
 						word = String.BLANK;
 					} else if (doBuiltIn(word, next, code.charAt(index + 1), output, isBuiltInFunc, isBuiltInVar)) { // 语言内置函数、变量等
 						word = String.BLANK;
