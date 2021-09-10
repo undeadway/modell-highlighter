@@ -25,27 +25,29 @@ const plugIn = {
 
 		let outWord = defaultDoCharCase(word),
 			result = false;
-		dftBuiltInFunc.forEach(function (wd) {
-			if (String.equalsIgnoreCase(outWord, wd)) {
+		
+		for (let funName of dftBuiltInFunc) {
+			if (String.equalsIgnoreCase(outWord, funName)) {
 				result = true;
-				return;
+				break;
 			}
-		});
+		}
 
 		return result;
 	},
 	doComment: doLineComment4Like,
 	escaper: Mark.DQUOTE,
-	doKeyword: function (output, kw, word, next, charCaseMethod) {
+	doKeyword: function (output, kws, word, next, charCaseMethod) {
 
-		let outWord = defaultDoCharCase(word),
+		let outWord = defaultDoCharCase(word, charCaseMethod),
 			result = false;
-		kw.forEach(function (wd) {
-			if (String.equalsIgnoreCase(outWord, wd)) {
+
+		for (let kw of kws) {
+			if (String.equalsIgnoreCase(outWord, kw)) {
 				result = true;
-				return;
+				break;
 			}
-		});
+		}
 
 		return result && !canInWord(next);
 	}
