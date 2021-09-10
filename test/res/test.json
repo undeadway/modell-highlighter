@@ -1,13 +1,24 @@
 {
 	"name": "flyhighlighter",
-	"version": "0.0.1",
-	"main": "FlyHighLighter.js",
-	"license": "Apache-2.0",
+	"version": "0.0.5",
+	"description": "A source code highlighter created by pure javascript.",
+	"main": "./src/index.js",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/undeadway/FlyHighLighter.git"
 	},
-	"dependencies": {
-		"coralian": "0.0.14"
-	}
+	"dependencies": {},
+	"devDependencies": {
+		"coralian": "0.0.26",
+		"jquery": "^3.6.0",
+		"jsdom": "^17.0.0"
+	},
+	"scripts": {
+		"pkg": "webpack"
+	},
+	"author": "hzwaygc@gmail.com",
+	"license": "Apache-2.0",
+	"homepage": "http://codes.waygc.net/fly/FlyHighLighter.helper.html",
+	"test1": 1,
+	"test2": false
 }
