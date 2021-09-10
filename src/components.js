@@ -123,10 +123,10 @@ function defaultDoCharCase(word, charCaseMethod) {
 	let outWord = word;
 	if (charCaseMethod) {
 		switch (typeOf(charCaseMethod)) {
-			case 'string':
+			case "string":
 				outWord = word[charCaseMethod]();
 				break;
-			case ',':
+			case ",":
 				outWord = charCaseMethod.apply(word);
 				break;
 			default:
@@ -185,7 +185,7 @@ function defaultDoNumber(code, index, len, output) {
 	let word = "";
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === 'x' || at === 'X') {
+		if (at === "x" || at === "X") {
 		}
 		if (canInNumber(at)) {
 			if (at === Mark.HYPHEN && canInNumber(code.charAt(index - 1))) break;

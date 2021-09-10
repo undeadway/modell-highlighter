@@ -5,16 +5,16 @@ const { Mark } = Coralian.constants;
 const { doLineComment4Like, defaultDoCharCase, canInWord } = require("./../components");
 const { addLang } = require("./../common");
 
-const dftBuiltInFunc = ['CDate', 'Date', 'DateAdd', 'DateDiff', 'DatePart', 'DateSerial', 'DateValue', 'Day',
-	'FormatDateTime', 'Hour', 'IsDate', 'Minute', 'Month', 'MonthName', 'Now', 'Second', 'Time', 'Timer',
-	'TimeSerial', 'TimeValue', 'Weekday', 'WeekdayName', 'Year', 'Asc', 'CBool', 'CByte', 'CCur', 'CDate',
-	'CDbl', 'Chr', 'CInt', 'CLng', 'CSng', 'CStr', 'Hex', 'Oct', 'FormatCurrency', 'FormatDateTime', , 'Sgn',
-	'FormatNumber', 'FormatPercent', 'Abs', 'Atn', 'Cos', 'Exp', 'Hex', 'Int', 'Fix', 'Log', 'Oct', 'Rnd',
-	'Sin', 'Sqr', 'Tan', 'Array', 'Filter', 'IsArray', 'Join', 'LBound', 'Split', 'UBound', 'InStr', 'InStrRev',
-	'LCase', 'Left', 'Len', 'LTrim', 'RTrim', 'Trim', 'Mid', 'Replace', 'Right', 'Space', 'StrComp', 'String',
-	'StrReverse', 'UCase', 'CreateObject', 'Eval', 'GetLocale', 'GetObject', 'GetRef', 'InputBox', 'IsEmpty',
-	'IsNull', 'IsNumeric', 'IsObject', 'LoadPicture', 'MsgBox', 'RGB', 'Round', 'ScriptEngine', 'VarType',
-	'ScriptEngineBuildVersion', 'ScriptEngineMajorVersion', 'ScriptEngineMinorVersion', 'SetLocale', 'TypeName'
+const dftBuiltInFunc = ["CDate", "Date", "DateAdd", "DateDiff", "DatePart", "DateSerial", "DateValue", "Day",
+	"FormatDateTime", "Hour", "IsDate", "Minute", "Month", "MonthName", "Now", "Second", "Time", "Timer",
+	"TimeSerial", "TimeValue", "Weekday", "WeekdayName", "Year", "Asc", "CBool", "CByte", "CCur", "CDate",
+	"CDbl", "Chr", "CInt", "CLng", "CSng", "CStr", "Hex", "Oct", "FormatCurrency", "FormatDateTime", , "Sgn",
+	"FormatNumber", "FormatPercent", "Abs", "Atn", "Cos", "Exp", "Hex", "Int", "Fix", "Log", "Oct", "Rnd",
+	"Sin", "Sqr", "Tan", "Array", "Filter", "IsArray", "Join", "LBound", "Split", "UBound", "InStr", "InStrRev",
+	"LCase", "Left", "Len", "LTrim", "RTrim", "Trim", "Mid", "Replace", "Right", "Space", "StrComp", "String",
+	"StrReverse", "UCase", "CreateObject", "Eval", "GetLocale", "GetObject", "GetRef", "InputBox", "IsEmpty",
+	"IsNull", "IsNumeric", "IsObject", "LoadPicture", "MsgBox", "RGB", "Round", "ScriptEngine", "VarType",
+	"ScriptEngineBuildVersion", "ScriptEngineMajorVersion", "ScriptEngineMinorVersion", "SetLocale", "TypeName"
 ];
 
 const plugIn = {

@@ -6,11 +6,11 @@ const { Span } = require("./../constants");
 const { doHtmlEscape, doBlockComment4CLike, doNewLineJoin, append } = require("./../components");
 const { addLang } = require("./../common");
 
-const CSS_ID_SPAN = '<span class="css_name css_id">',
-	CSS_CLASS_SPAN = '<span class="css_name css_class">',
-	CSS_AT_SPAN = '<span class="css_name css_at">',
-	CSS_XMLTAG_SPAN = '<span class="css_name xmltag">',
-	CSS_PESUDO_CLASS_SPAN = '<span class="css_name css_pesudo_class">',
+const CSS_ID_SPAN = "<span class=\"css_name css_id\">",
+	CSS_CLASS_SPAN = "<span class=\"css_name css_class\">",
+	CSS_AT_SPAN = "<span class=\"css_name css_at\">",
+	CSS_XMLTAG_SPAN = "<span class=\"css_name xmltag\">",
+	CSS_PESUDO_CLASS_SPAN = "<span class=\"css_name css_pesudo_class\">",
 	CSS_FILETYPE = "@CHARSET";
 
 // 这个函数负责进入解析 CSS 名称部分

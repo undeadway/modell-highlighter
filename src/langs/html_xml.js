@@ -39,8 +39,8 @@ const XML_COMMENT_START_ENTITY = "&lt!--",
 const XML_EMPTY_ATTR_REGX = new RegExp(Span.DATA_KEY + Span.CLOSE, "g"),
 	XML_EMPTY_VAL_REGX = new RegExp(Span.DATA_VAL + Span.CLOSE, "g");
 
-const XML_CDATA_SPAN = '<span class="xml_cdata">',
-	XML_DOCTYPE_SPAN = '<span class="xml_doctype">';
+const XML_CDATA_SPAN = "<span class=\"xml_cdata\">",
+	XML_DOCTYPE_SPAN = "<span class=\"xml_doctype\">";
 
 function doXmlCData(code) {
 
@@ -260,10 +260,10 @@ function doScriptOrStyle(tag, content) {
 	let tmp = content.slice(starts, ends);
 
 	switch (tag) {
-		case 'SCRIPT':
+		case "SCRIPT":
 			append(output, _doJS.execute(tmp));
 			break;
-		case 'STYLE':
+		case "STYLE":
 			append(output, _doCSS.execute(tmp));
 			break;
 		default:

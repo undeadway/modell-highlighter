@@ -5,7 +5,7 @@ const { Mark } = Coralian.constants;
 const { Span } = require("../constants");
 const common = require("../common");
 
-const AT_INTERFACE = '@interface';
+const AT_INTERFACE = "@interface";
 
 function doAnnotation(code, index, len, output) {
 
@@ -24,15 +24,15 @@ function doAnnotation(code, index, len, output) {
 	return --index;
 }
 
-const dftBuiltInFunc = ['main',
-	'Boolean', 'Byte', 'Character', 'Double', 'Float', 'Integer', 'Long', 'Short', 'Enum',
-	'Error', 'Exception', 'NoSuchFieldException', 'NoSuchMethodException', 'NullPointerException',
-	'ClassCastException', 'ClassNotFoundException', 'IndexOutOfBoundsException', 'IllegalAccessException',
-	'IllegalArgumentException', 'Throwable', 'Class', 'Object', 'System', 'Thread', 'Runnable', 'Properties',
-	'String', 'Number', 'Void', 'StringBuffer', 'StringBuilder', 'Math', 'Package', 'Random',
-	'Arrays', 'Calendar', 'Map', 'List', 'Set', 'Collection', 'HashMap', 'HashSet', 'ArrayList'
+const dftBuiltInFunc = ["main",
+	"Boolean", "Byte", "Character", "Double", "Float", "Integer", "Long", "Short", "Enum",
+	"Error", "Exception", "NoSuchFieldException", "NoSuchMethodException", "NullPointerException",
+	"ClassCastException", "ClassNotFoundException", "IndexOutOfBoundsException", "IllegalAccessException",
+	"IllegalArgumentException", "Throwable", "Class", "Object", "System", "Thread", "Runnable", "Properties",
+	"String", "Number", "Void", "StringBuffer", "StringBuilder", "Math", "Package", "Random",
+	"Arrays", "Calendar", "Map", "List", "Set", "Collection", "HashMap", "HashSet", "ArrayList"
 ];
-const dftBuiltInVar = ['T', 'E', 'K', 'V', 'O'];
+const dftBuiltInVar = ["T", "E", "K", "V", "O"];
 
 common.addLang([{ name: "JAVA" }], null, {
 	judgeExe: function (at) {
@@ -58,9 +58,9 @@ common.addLang([{ name: "JAVA" }], null, {
 				return index;
 		}
 	}
-}, ['private', 'protected', 'public', 'abstract', 'class', 'extends', 'final', 'implements', 'interface',
-	'native', 'new', 'static', 'strictfp', 'synchronized', 'transient', 'volatile', 'break', 'continue',
-	'return', 'do', 'while', 'if', 'else', 'for', 'instanceof', 'switch', 'case', 'default', 'assert',
-	'catch', 'finally', 'throw', 'throws', 'try', 'import', 'package', 'boolean', 'byte', 'char', 'double',
-	'float', 'int', 'long', 'short', 'null', 'true', 'false', 'super', 'this', 'void', 'goto'
+}, ["private", "protected", "public", "abstract", "class", "extends", "final", "implements", "interface",
+	"native", "new", "static", "strictfp", "synchronized", "transient", "volatile", "break", "continue",
+	"return", "do", "while", "if", "else", "for", "instanceof", "switch", "case", "default", "assert",
+	"catch", "finally", "throw", "throws", "try", "import", "package", "boolean", "byte", "char", "double",
+	"float", "int", "long", "short", "null", "true", "false", "super", "this", "void", "goto"
 ]);

@@ -7,9 +7,9 @@ const { doHtmlEscape, defaultDoChars, doComment4CLike, defaultJudgePluginExe, ju
 const LANGUAGES = {};
 
 const langMap = {
-	JAVA: 'Java',
-	JAVASCRIPT: 'JavaScript',
-	VBSCRIPT: 'VBScript',
+	JAVA: "Java",
+	JAVASCRIPT: "JavaScript",
+	VBSCRIPT: "VBScript",
 };
 
 function commonDoRegExp(code, index, len, at, output) {
@@ -23,7 +23,7 @@ function commonDoRegExp(code, index, len, at, output) {
 			break;
 		} else if (at === Mark.SLASH && before !== CLike.ESCAPER) {
 			hasRegex = true;
-		} else if (hasRegex && !(at === 'i' || at === 'g' || at === 'm')) {
+		} else if (hasRegex && !(at === "i" || at === "g" || at === "m")) {
 			break;
 		}
 		doHtmlEscape(at, word);
@@ -195,30 +195,30 @@ function initLangObject(execute, plugIn, keywords) {
 }
 
 let pesudocode = (function () {
-	let dftBuiltInFunc = ['eval', 'alert', 'print'];
+	let dftBuiltInFunc = ["eval", "alert", "print"];
 
 	return initLangObject(commonExecute, {
 		doComment: commonDoComment,
 		isBuiltInFunc: function (word) {
 			return Array.has(dftBuiltInFunc, word);
 		},
-	}, ['abstract', 'assert',
-		'boolean', 'break', 'byte',
-		'case', 'catch', 'class', 'char', 'const', 'continue',
-		'default', 'delete ', 'do', 'double',
-		'else', 'eval', 'echo', 'enum', 'export', 'extends',
-		'false', 'final', 'finally', 'float', 'for', 'foreach', 'function',
-		'goto',
-		'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface',
-		'long',
-		'new', 'null', 'namespace',
-		'package', 'private', 'protected', 'public',
-		'return',
-		'short', 'static', 'string', 'struct', 'super', 'switch',
-		'this', 'throw', 'throws', 'true', 'try',
-		'var',
-		'while',
-		'void'
+	}, ["abstract", "assert",
+		"boolean", "break", "byte",
+		"case", "catch", "class", "char", "const", "continue",
+		"default", "delete ", "do", "double",
+		"else", "eval", "echo", "enum", "export", "extends",
+		"false", "final", "finally", "float", "for", "foreach", "function",
+		"goto",
+		"if", "implements", "import", "in", "instanceof", "int", "interface",
+		"long",
+		"new", "null", "namespace",
+		"package", "private", "protected", "public",
+		"return",
+		"short", "static", "string", "struct", "super", "switch",
+		"this", "throw", "throws", "true", "try",
+		"var",
+		"while",
+		"void"
 	]);
 })();
 
@@ -232,7 +232,7 @@ exports = module.exports = {
 	},
 	addLang: function (langs, execute, plugIn, ...keywords) {
 
-		if (typeIs(keywords[0], 'array')) {
+		if (typeIs(keywords[0], "array")) {
 			keywords = keywords[0];
 		}
 		let langObj = initLangObject(execute, plugIn, keywords);

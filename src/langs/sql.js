@@ -52,7 +52,7 @@ common.addLang([{ name: "SQL" }], null, {
 		return index;
 	},
 	escaper: Mark.QUOTE,
-	charCaseMethod: 'toUpperCase'
+	charCaseMethod: "toUpperCase"
 }, ["ABORT", "ACTION", "ADD", "AFTER", "ALL", "ALTER", "ANALYZE", "AND", "AS", "ASC", "ATTACH", "AUTOINCREMENT",
 	"BEFORE", "BEGIN", "BETWEEN", "BY", "CASCADE", "CASE", "CAST", "CHECK", "COLLATE", "COLUMN", "COMMIT",
 	"CONFLICT", "CONSTRAINT", "CREATE", "CROSS", "CURRENT_DATE", "CURRENT_TIME", "CURRENT_TIMESTAMP",

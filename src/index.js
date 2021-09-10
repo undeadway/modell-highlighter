@@ -24,8 +24,8 @@ const NEW_LINE_REGX = /(\r\n|\r)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
 	FILED_LIST = '</legend><pre><ol class="code_list"><li>',
 	FILED_END = '</li></ol></pre></fieldset>',
-	CODE_TAG_START = "<code>",
-	CODE_TAG_END = "</code>";
+	CODE_START_TAG = "<code>",
+	CODE_END_TAG = "</code>";
 
 const langMap = {
 	JAVA: 'Java',
@@ -74,11 +74,11 @@ const FlyHighLighter = {
 		if (!input) return String.BLANK;
 
 		if (!String.contains(input, Mark.NEW_LINE) && !lang) {
-			let output = [CODE_TAG_START];
+			let output = [CODE_START_TAG];
 			for (let i = 0, len = input.length; i < len; i++) {
 				components.doHtmlEscape(input.charAt(i), output);
 			}
-			output.push(CODE_TAG_END);
+			output.push(CODE_END_TAG);
 			return output.join(String.BLANK);
 		}
 
