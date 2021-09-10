@@ -44,7 +44,7 @@ function getFullName(lang) {
 		case 'CS':
 			lang = 'C#';
 		case 'SH':
-			lang = 'SHELL'
+			lang = 'SHELL';
 		default:
 			break;
 	}

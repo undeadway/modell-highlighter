@@ -7,11 +7,11 @@
 <script type="text/javascript" src="http://res.waygc.net/marked/marked.min.js"></script>
 <script type="text/javascript" src="http://codes.waygc.net/coralian/coralian.js"></script>
 <script type="text/javascript" src="http://codes.waygc.net/coralian/coralian.client.dev.js"></script>
-<script type="text/javascript" src="http://codes.waygc.net/fly/FlyHighLighter.js"></script>
+<script type="text/javascript" src="http://codes.waygc.net/fly/FlyHighlighter.js"></script>
 <link rel="stylesheet" type="text/css" href="http://codes.waygc.net/fly/FlyHighLighter.css" />
 <style type="text/css">
 	#left, #right{display: inline-block; vertical-align: top;}
-	#right fieldset{width:720px; min-width72px; max-width:720px;}
+	#right fieldset{width:720px; min-width:72px; max-width:720px;}
 	#left textarea{width:720px; height: 439px;}
 </style>
 </head>
@@ -28,7 +28,7 @@
 (function() {
 
 	$.get({
-		url : "./README.md",
+		url : "./FlyHighLighter.md",
 		dataType: "text",
 		success : function(req) {
 			$("#readme").html(marked(req));
@@ -36,6 +36,7 @@
 	});
 
 	var langs = FlyHighLighter.getLangs();
+	console.log(langs);
 
 	var select = document.getElementById("select");
 	select.appendChild(document.createElement("option"));
