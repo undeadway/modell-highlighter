@@ -9,7 +9,9 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"coralian": "0.0.26"
+		"coralian": "0.0.26",
+		"jquery": "^3.6.0",
+		"jsdom": "^17.0.0"
 	},
 	"scripts": {
 		"pkg": "webpack"
