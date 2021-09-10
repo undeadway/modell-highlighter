@@ -138,8 +138,7 @@ function defaultDoCharCase(word, charCaseMethod) {
 }
 /**
  * 处理关键字
- * 
- * @param output         输出值
+ *
  * @param kws            每种语言的关键字集
  * @param word           请求判断的语言
  * @param next           下一个字符
@@ -148,7 +147,7 @@ function defaultDoCharCase(word, charCaseMethod) {
  *                       这个函数可以是自定义函数，也可以是 JS 既存的字符串处理函数
  * 
  */
-function defaultDoKeyword(output, kws, word, next, charCaseMethod) {
+function defaultDoKeyword(kws, word, next, charCaseMethod) {
 	return Array.has(kws, defaultDoCharCase(word, charCaseMethod)) && !canInWord(next);
 }
 /**

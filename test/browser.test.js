@@ -9,4 +9,3 @@ global.document = window.document;
 require("coralian");
 require("../dist/FlyHighlighter");
 const highlighter = FlyHighLighter;
-console.log(highlighter.getLangs());

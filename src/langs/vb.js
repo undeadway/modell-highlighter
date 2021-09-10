@@ -2,13 +2,13 @@
  * VB、VB.NET、VBA
  */
 const { Mark } = Coralian.constants;
-const { doLineComment4Like, defaultDoCharCase, canInWord } = require("./../components");
+const { doLineComment4Like, canInWord } = require("./../components");
 const { addLang } = require("./../common");
 
 const dftBuiltInFunc = ["CDate", "Date", "DateAdd", "DateDiff", "DatePart", "DateSerial", "DateValue", "Day",
 	"FormatDateTime", "Hour", "IsDate", "Minute", "Month", "MonthName", "Now", "Second", "Time", "Timer",
 	"TimeSerial", "TimeValue", "Weekday", "WeekdayName", "Year", "Asc", "CBool", "CByte", "CCur", "CDate",
-	"CDbl", "Chr", "CInt", "CLng", "CSng", "CStr", "Hex", "Oct", "FormatCurrency", "FormatDateTime", , "Sgn",
+	"CDbl", "Chr", "CInt", "CLng", "CSng", "CStr", "Hex", "Oct", "FormatCurrency", "FormatDateTime", "Sgn",
 	"FormatNumber", "FormatPercent", "Abs", "Atn", "Cos", "Exp", "Hex", "Int", "Fix", "Log", "Oct", "Rnd",
 	"Sin", "Sqr", "Tan", "Array", "Filter", "IsArray", "Join", "LBound", "Split", "UBound", "InStr", "InStrRev",
 	"LCase", "Left", "Len", "LTrim", "RTrim", "Trim", "Mid", "Replace", "Right", "Space", "StrComp", "String",
@@ -36,7 +36,7 @@ const plugIn = {
 	},
 	doComment: doLineComment4Like,
 	escaper: Mark.DQUOTE,
-	doKeyword: function (output, kws, word, next) {
+	doKeyword: function (kws, word, next) {
 
 		let result = false;
 
