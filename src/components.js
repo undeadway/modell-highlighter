@@ -126,7 +126,7 @@ function defaultDoCharCase(word, charCaseMethod) {
 			case "string":
 				outWord = word[charCaseMethod]();
 				break;
-			case ",": // TODO 这里为什么写 “,” 自己也忘了，但从上文的判断是 typeOf 来看，应该是写错了
+			case "function": // TODO 这里为什么写 “,” 自己也忘了，但从上文的判断是 typeOf 来看，应该是写错了
 				outWord = charCaseMethod.apply(word);
 				break;
 			default:
