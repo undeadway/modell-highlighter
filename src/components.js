@@ -128,7 +128,7 @@ function defaultDoCharCase(word, charCaseMethod) {
 				break;
 			case "function": // TODO 这里为什么写 “,” 自己也忘了，但从上文的判断是 typeOf 来看，应该是写错了
 							 // 感觉应该是 function ，先这么改了
-				outWord = charCaseMethod.apply(word);
+				outWord = charCaseMethod(word);
 				break;
 			default:
 				Error.unsupportedType(charCaseMethod);
