@@ -87,13 +87,13 @@ function isWord(str) {
  * 输出形式具体是字符还是字符串全权交给每个语言自定义实现
  * </p>
  * 
- * @param code 处理的目标字符串
- * @param index 处理的起始位置
- * @param len 字符串长度
- * @param output 输出对象（数组）
- * @param escaper 转义字符
- * @param end  结束标识符
- * @param charSpan 字符 span 标签，用于区分字符和字符串
+ * @param code       处理的目标字符串
+ * @param index      处理的起始位置
+ * @param len        字符串长度
+ * @param output     输出对象（数组）
+ * @param escaper    转义字符
+ * @param end        结束标识符
+ * @param charSpan   字符 span 标签，用于区分字符和字符串
  */
 function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 	append(output, charSpan);
@@ -127,6 +127,7 @@ function defaultDoCharCase(word, charCaseMethod) {
 				outWord = word[charCaseMethod]();
 				break;
 			case "function": // TODO 这里为什么写 “,” 自己也忘了，但从上文的判断是 typeOf 来看，应该是写错了
+							 // 感觉应该是 function ，先这么改了
 				outWord = charCaseMethod.apply(word);
 				break;
 			default:
@@ -138,19 +139,28 @@ function defaultDoCharCase(word, charCaseMethod) {
 /**
  * 处理关键字
  * 
- * @param output 输出值
- * @param kw 每种语言的关键字集
- * @param word 请求判断的语言
- * @param next 下一个字符
+ * @param output         输出值
+ * @param kws            每种语言的关键字集
+ * @param word           请求判断的语言
+ * @param next           下一个字符
  * @param charCaseMethod 大小写标签，因为有些语言不区分大小写，而关键字大小写是固定的
  *                       所以这里加入这个函数对被请求的词进行大小写处理
  *                       这个函数可以是自定义函数，也可以是 JS 既存的字符串处理函数
  * 
  */
-function defaultDoKeyword(output, kw, word, next, charCaseMethod) {
-	return Array.has(kw, defaultDoCharCase(word, charCaseMethod)) && !canInWord(next);
+function defaultDoKeyword(output, kws, word, next, charCaseMethod) {
+	return Array.has(kws, defaultDoCharCase(word, charCaseMethod)) && !canInWord(next);
 }
-
+/**
+ * 处理内置函数
+ * @param word            请求判断的内容
+ * @param nextCode        下一个字符的编码
+ * @param next            下一个字符
+ * @param output          输出
+ * @param isBuiltInFunc   判断是否是内置函数
+ * @param isBuiltInVar    判断是否是内置变量 
+ * @returns 
+ */
 function defaultDoBuiltIn(word, nextCode, next, output, isBuiltInFunc, isBuiltInVar) {
 
 	if (canInWord(nextCode)) return false; // 紧接着的字符可以入词则返回
