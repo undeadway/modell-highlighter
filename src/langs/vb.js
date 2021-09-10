@@ -23,11 +23,10 @@ const plugIn = {
 	},
 	isBuiltInFunc: function (word) {
 
-		let outWord = defaultDoCharCase(word),
-			result = false;
+		let result = false;
 		
 		for (let funName of dftBuiltInFunc) {
-			if (String.equalsIgnoreCase(outWord, funName)) {
+			if (String.equalsIgnoreCase(word, funName)) {
 				result = true;
 				break;
 			}
@@ -37,13 +36,12 @@ const plugIn = {
 	},
 	doComment: doLineComment4Like,
 	escaper: Mark.DQUOTE,
-	doKeyword: function (output, kws, word, next, charCaseMethod) {
+	doKeyword: function (output, kws, word, next) {
 
-		let outWord = defaultDoCharCase(word, charCaseMethod),
-			result = false;
+		let result = false;
 
 		for (let kw of kws) {
-			if (String.equalsIgnoreCase(outWord, kw)) {
+			if (String.equalsIgnoreCase(word, kw)) {
 				result = true;
 				break;
 			}
