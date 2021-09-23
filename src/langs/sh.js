@@ -24,8 +24,9 @@ const dftBuiltInVar = ["cat", "chattr", "chgrpchmod", "chown", "cksum", "cmpdiff
 ];
 const dftBuiltInFunc = [];
 
-common.addLang([{ name: "SHELL" }], null, {
+// TODO shell 暂时不加入
+// common.addLang([{ name: "SHELL" }], null, {
 
-}, ["case", "do", "done", "elif", "else", "esac", "if", "for", "function", "if", "in", "then", "time", "until", "while"
-		//,"","","","","","","","","","","","","","","","","","","","",""
-	]);
+// }, ["case", "do", "done", "elif", "else", "esac", "if", "for", "function", "if", "in", "then", "time", "until", "while"
+// 		//,"","","","","","","","","","","","","","","","","","","","",""
+// 	]);
