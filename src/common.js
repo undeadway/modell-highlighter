@@ -179,9 +179,7 @@ function commonExecute(code) {
 	return output.join(String.BLANK);
 }
 
-function initLangObject(execute, plugIn, keywords) {
-
-	execute = execute || commonExecute;
+function initLangObject(execute = commonExecute, plugIn, keywords) {
 
 	return {
 		getKeywords: function () {
