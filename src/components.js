@@ -228,14 +228,14 @@ function doLineComment4Like(code, index, len, at, output) {
 	return index;
 }
 
-function doBlockComment4CLike(code, index, len, output, doc) {
-	doc = doc && code.charAt(index + 2) === Mark.ASTERISK;
-	append(output, doc ? Span.DOC : Span.COMMENT);
+function doBlockComment4CLike(code, index, len, output, isDoc) {
+	isDoc = isDoc && code.charAt(index + 2) === Mark.ASTERISK;
+	append(output, isDoc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== Mark.SLASH) {
 			if (at === Mark.NEW_LINE) {
-				doNewLineJoin(output, doc ? Span.DOC : Span.COMMENT);
+				doNewLineJoin(output, isDoc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);
 			}
