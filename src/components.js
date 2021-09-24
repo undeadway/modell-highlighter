@@ -228,14 +228,14 @@ function doLineComment4Like(code, index, len, at, output) {
 	return index;
 }
 
-function doBlockComment4CLike(code, index, len, output, isDoc) {
-	isDoc = isDoc && code.charAt(index + 2) === Mark.ASTERISK;
-	append(output, isDoc ? Span.DOC : Span.COMMENT);
+function doBlockComment4CLike(code, index, len, output, hasDoc) {
+	hasDoc = hasDoc && code.charAt(index + 2) === Mark.ASTERISK;
+	append(output, hasDoc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== Mark.SLASH) {
 			if (at === Mark.NEW_LINE) {
-				doNewLineJoin(output, isDoc ? Span.DOC : Span.COMMENT);
+				doNewLineJoin(output, hasDoc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);
 			}
@@ -274,22 +274,22 @@ function append(output, str) {
 }
 
 exports = module.exports = {
-	append: append,
-	doHtmlEscape: doHtmlEscape,
-	canInNumber: canInNumber,
-	isNumber: isNumber,
-	doNewLineJoin: doNewLineJoin,
-	canInWord: canInWord,
-	isWord: isWord,
-	defaultDoChars: defaultDoChars,
-	defaultDoCharCase: defaultDoCharCase,
-	defaultDoKeyword: defaultDoKeyword,
-	defaultDoBuiltIn: defaultDoBuiltIn,
-	defaultIsBuiltIn: defaultIsBuiltIn,
-	defaultDoNumber: defaultDoNumber,
-	doLineComment4Like: doLineComment4Like,
-	doBlockComment4CLike: doBlockComment4CLike,
-	judgeComment4CLike: judgeComment4CLike,
-	doComment4CLike: doComment4CLike,
-	defaultJudgePluginExe: defaultJudgePluginExe
+	append,
+	doHtmlEscape,
+	canInNumber,
+	isNumber,
+	doNewLineJoin,
+	canInWord,
+	isWord,
+	defaultDoChars,
+	defaultDoCharCase,
+	defaultDoKeyword,
+	defaultDoBuiltIn,
+	defaultIsBuiltIn,
+	defaultDoNumber,
+	doLineComment4Like,
+	doBlockComment4CLike,
+	judgeComment4CLike,
+	doComment4CLike,
+	defaultJudgePluginExe
 }
