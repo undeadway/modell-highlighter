@@ -1,3 +1,5 @@
+require("jsconst");
+
 exports = module.exports = {};
 
 const { Char } = JsConst;
