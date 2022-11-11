@@ -1,5 +1,5 @@
 
-const { Mark, CharCode } = Coralian.constants;
+const { Char, CharCode } = JsConst;
 const { Span, Common, CLike } = require("./constants");
 const { doHtmlEscape, defaultDoChars, doComment4CLike, defaultJudgePluginExe, judgeComment4CLike,
 		defaultIsBuiltIn, defaultDoKeyword, defaultDoNumber, defaultDoBuiltIn, append } = require("./components");
@@ -19,9 +19,9 @@ function commonDoRegExp(code, index, len, at, output) {
 	let start = index;
 	for (start += 1; start < len; start++) {
 		at = code.charAt(start);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.NEW_LINE) {
 			break;
-		} else if (at === Mark.SLASH && before !== CLike.ESCAPER) {
+		} else if (at === Char.SLASH && before !== CLike.ESCAPER) {
 			hasRegex = true;
 		} else if (hasRegex && !(at === "i" || at === "g" || at === "m")) {
 			break;
@@ -39,7 +39,7 @@ function commonDoRegExp(code, index, len, at, output) {
 
 function commonDoComment(code, index, len, at, output) {
 	let next = code.charAt(index + 1);
-	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? doComment4CLike : commonDoRegExp;
+	let method = (next === Char.SLASH || next === Char.ASTERISK) ? doComment4CLike : commonDoRegExp;
 	return method(code, index, len, at, output);
 }
 
@@ -122,7 +122,7 @@ function commonExecute(code) {
 
 		if (codeAt === 8203) continue; // 零宽空白
 
-		if (Mark.SPACE_REGX.test(at)) { // 标准空白
+		if (Char.SPACE_REGX.test(at)) { // 标准空白
 			append(output, word);
 			doHtmlEscape(at, output);
 			word = String.BLANK;
@@ -132,13 +132,13 @@ function commonExecute(code) {
 			append(output, word);
 			index = doComment(code, index, len, at, output, doc);
 			word = String.BLANK;
-		} else if (at === Mark.DQUOTE) {
+		} else if (at === Char.DQUOTE) {
 			append(output, word);
 			// 双引号，一般来说双引号都都是字符串，所以这里直接写死
 			// 以后要是遇到了 双引号不是字符串的，再做修改
 			index = defaultDoChars(code, index, len, output, escaper, at, Span.STRING);
 			word = String.BLANK;
-		} else if (at === Mark.QUOTE) {
+		} else if (at === Char.QUOTE) {
 			append(output, word);
 			// 单引号，默认判断为字符，具体实现由各语言自定义的 doChar 方法来实现
 			// 即，如果将 doChar 自定义为 doChars ，那单引号也可以被当作字符串来处理
@@ -153,7 +153,7 @@ function commonExecute(code) {
 				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
 					append(output, `${word}${Span.BRACKET}${at}${Span.CLOSE}`);
 					word = String.BLANK;
-				} else if (at === Mark.LEFT_ANGLE) { // 左尖括号
+				} else if (at === Char.LEFT_ANGLE) { // 左尖括号
 					append(output, word);
 					doHtmlEscape(at, output);
 					word = String.BLANK;

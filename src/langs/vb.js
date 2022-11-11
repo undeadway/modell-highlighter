@@ -1,7 +1,7 @@
 /**
  * VB、VB.NET、VBA
  */
-const { Mark } = Coralian.constants;
+const { Char } = JsConst;
 const { doLineComment4Like, canInWord } = require("./../components");
 const { addLang } = require("./../common");
 
@@ -19,7 +19,7 @@ const dftBuiltInFunc = ["CDate", "Date", "DateAdd", "DateDiff", "DatePart", "Dat
 
 const plugIn = {
 	judgeComment: function (at) {
-		return at === Mark.QUOTE;
+		return at === Char.QUOTE;
 	},
 	isBuiltInFunc: function (word) {
 
@@ -35,7 +35,7 @@ const plugIn = {
 		return result;
 	},
 	doComment: doLineComment4Like,
-	escaper: Mark.DQUOTE,
+	escaper: Char.DQUOTE,
 	doKeyword: function (kws, word, next) {
 
 		let result = false;

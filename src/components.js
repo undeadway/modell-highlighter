@@ -1,4 +1,4 @@
-const { Mark, CharCode, XmlEntity } = Coralian.constants;
+const { Char, CharCode, XmlEntity } = JsConst;
 const { Span, Common, CLike, JOIN } = require("./constants");
 
 const IS_HEX_NUMBER_REGX = /^0x[a-f0-9]+$/i;
@@ -10,22 +10,22 @@ function doHtmlEscape(at, output) {
 	if (String.isEmpty(at) || at === CharCode.ZERO_WIDTH) return;
 
 	switch (at) {
-		case Mark.NEW_LINE:
+		case Char.NEW_LINE:
 			append(output, JOIN);
 			break;
-		case Mark.LEFT_ANGLE:
+		case Char.LEFT_ANGLE:
 			append(output, XmlEntity.LEFT_ANGLE);
 			break;
-		case Mark.RIGHT_ANGLE:
+		case Char.RIGHT_ANGLE:
 			append(output, XmlEntity.RIGHT_ANGLE);
 			break;
-		case Mark.SHARP:
+		case Char.SHARP:
 			append(output, XmlEntity.SHARP);
 			break;
-		case Mark.AND:
+		case Char.AND:
 			append(output, XmlEntity.AMP);
 			break;
-		case Mark.DQUOTE:
+		case Char.DQUOTE:
 			append(output, XmlEntity.QUOT);
 			break;
 		default:
@@ -100,7 +100,7 @@ function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 	let before = escaper;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.NEW_LINE) {
 			doNewLineJoin(output, charSpan);
 		} else {
 			doHtmlEscape(at, output);
@@ -197,7 +197,7 @@ function defaultDoNumber(code, index, len, output) {
 		if (at === "x" || at === "X") {
 		}
 		if (canInNumber(at)) {
-			if (at === Mark.HYPHEN && canInNumber(code.charAt(index - 1))) break;
+			if (at === Char.HYPHEN && canInNumber(code.charAt(index - 1))) break;
 			word += at;
 		} else {
 			break;
@@ -217,7 +217,7 @@ function doLineComment4Like(code, index, len, at, output) {
 	append(output, Span.COMMENT);
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.NEW_LINE) {
 			doNewLineJoin(output);
 			break;
 		} else {
@@ -229,12 +229,12 @@ function doLineComment4Like(code, index, len, at, output) {
 }
 
 function doBlockComment4CLike(code, index, len, output, hasDoc) {
-	hasDoc = hasDoc && code.charAt(index + 2) === Mark.ASTERISK;
+	hasDoc = hasDoc && code.charAt(index + 2) === Char.ASTERISK;
 	append(output, hasDoc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== Mark.SLASH) {
-			if (at === Mark.NEW_LINE) {
+		if (at !== Char.ASTERISK || code.charAt(index + 1) !== Char.SLASH) {
+			if (at === Char.NEW_LINE) {
 				doNewLineJoin(output, hasDoc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);
@@ -249,14 +249,14 @@ function doBlockComment4CLike(code, index, len, output, hasDoc) {
 }
 
 function judgeComment4CLike(at) {
-	return at === Mark.SLASH;
+	return at === Char.SLASH;
 }
 
 function doComment4CLike(code, index, len, at, output, doc) {
 	let next = (index < len - 1) ? code.charAt(index + 1) : String.BLNAK;
 	if (judgeComment4CLike(next)) {
 		index = doLineComment4Like(code, index, len, at, output);
-	} else if (next === Mark.ASTERISK) {
+	} else if (next === Char.ASTERISK) {
 		index = doBlockComment4CLike(code, index, len, output, doc);
 	}
 	return index;

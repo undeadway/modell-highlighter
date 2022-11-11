@@ -1,19 +1,19 @@
 /**
  * C#
  */
-const { Mark } = Coralian.constants;
+const { Char } = JsConst;
 const { Span, CLike } = require("./../constants");
 const { addLang } = require("./../common");
 const { append } = require("./../components");
 
 const dftBuiltInVar = ["System", "IO", "Windows", "Forms", "List"];
-const JUGDE_PLUGIN_KW = [Mark.LEFT_SQUARE_BRACKET, Mark.SHARP];
+const JUGDE_PLUGIN_KW = [Char.LEFT_SQUARE_BRACKET, Char.SHARP];
 
 function doDescription(code, index, len, output) {
 
 	FOR_ATTRIBUTE: for (let i = index - 1; i >= 0; i--) {
 		let at = code.charAt(i);
-		if (!Mark.SPACE_REGX.test(at)) {
+		if (!Char.SPACE_REGX.test(at)) {
 			/*
 			 * 1. 左花括号 ： } [Description]
 			 * 2. 右花括号 ： { [Description]
@@ -23,22 +23,22 @@ function doDescription(code, index, len, output) {
 			 *				    [Description]
 			 * 其他 Description 的形式未总结，或者只要是空白，就可以写 
 			 */
-			if (at === Mark.LEFT_BRACE || at === Mark.RIGHT_BRACE) { // 左右花括号
+			if (at === Char.LEFT_BRACE || at === Char.RIGHT_BRACE) { // 左右花括号
 				index += 1;
 				break FOR_ATTRIBUTE;
-			} else if (i > 0 && at === Mark.SLASH) { // 注释
+			} else if (i > 0 && at === Char.SLASH) { // 注释
 				let before = code.charAt(i - 1);
-				if (before === Mark.ASTERISK) { // 块注释
+				if (before === Char.ASTERISK) { // 块注释
 					index += 1;
 					break FOR_ATTRIBUTE;
-				} else if (before === Mark.SLASH) {
+				} else if (before === Char.SLASH) {
 					for (let j = i - 2; j >= 0; j--) {
 						let at2 = code.charAt(j);
 						/*
 						 * 因为存在 “// aaa // bbb” 这种形式的注释
 						 * 所以不能直接判断第一个遇到的 // 之前是否有非空白，而只能以换行符为准
 						 */
-						if (at2 === Mark.NEW_LINE) { // 遇到换行符之后取整段字符，看是否以 // 开头
+						if (at2 === Char.NEW_LINE) { // 遇到换行符之后取整段字符，看是否以 // 开头
 							let line = code.slice(j + 1, index - 1).trim();
 							if (line.startsWith(CLike.LINE_COMMENT)) {
 								index += 1;
@@ -53,11 +53,11 @@ function doDescription(code, index, len, output) {
 		}
 	}
 
-	append(output, Span.BRACKET + Mark.LEFT_SQUARE_BRACKET + Span.CLOSE);
+	append(output, Span.BRACKET + Char.LEFT_SQUARE_BRACKET + Span.CLOSE);
 	let word = String.BLANK;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.RIGHT_SQUARE_BRACKET || at === Mark.LEFT_PARENTHE || Mark.SPACE_REGX.test(at) || at === Mark.POINT) break;
+		if (at === Char.RIGHT_SQUARE_BRACKET || at === Char.LEFT_PARENTHE || Char.SPACE_REGX.test(at) || at === Char.POINT) break;
 		word += at;
 	}
 
@@ -74,7 +74,7 @@ function doRegion(code, index, len, output) {
 
 	for (index; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.NEW_LINE) {
 			break;
 		}
 
@@ -89,7 +89,7 @@ function doRegion(code, index, len, output) {
 
 addLang([{ name: "C#" }], null, {
 	judgeExe: function (at) {
-		// return at === Mark.LEFT_SQUARE_BRACKET;
+		// return at === Char.LEFT_SQUARE_BRACKET;
 		return Array.has(JUGDE_PLUGIN_KW, at);
 	},
 	isBuiltInVar: function (word) {
@@ -99,9 +99,9 @@ addLang([{ name: "C#" }], null, {
 		let at = code.charAt(index);
 
 		switch (at) {
-			case Mark.LEFT_SQUARE_BRACKET:
+			case Char.LEFT_SQUARE_BRACKET:
 				return doDescription(code, index, len, output);
-			case Mark.SHARP:
+			case Char.SHARP:
 				return doRegion(code, index, len, output);
 			default:
 				return index;

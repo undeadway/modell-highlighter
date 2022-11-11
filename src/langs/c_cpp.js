@@ -1,7 +1,7 @@
 /**
  * C、C++
  */
-const { XmlEntity, Mark } = Coralian.constants;
+const { XmlEntity, Char } = JsConst;
 const { Span } = require("./../constants");
 const { doHtmlEscape, append } = require("./../components");
 const { addLang } = require("./../common");
@@ -14,7 +14,7 @@ function doMacroDefine(code, index, len, output) {
 
 	for (index; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.NEW_LINE || (Mark.SPACE_REGX.test(at) && before !== Mark.SHARP) || at === Mark.LEFT_ANGLE || at === Mark.DQUOTE) {
+		if (at === Char.NEW_LINE || (Char.SPACE_REGX.test(at) && before !== Char.SHARP) || at === Char.LEFT_ANGLE || at === Char.DQUOTE) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
@@ -27,7 +27,7 @@ function doMacroDefine(code, index, len, output) {
 
 const plugIn = {
 	judgeExe: function (at) {
-		return at === Mark.SHARP;
+		return at === Char.SHARP;
 	},
 	isBuiltInFunc: function (word) {
 		return Array.has(dftBuiltInFunc, word);
@@ -35,7 +35,7 @@ const plugIn = {
 	execute: function (code, index, len, output) {
 		let at = code.charAt(index);
 		switch (at) {
-			case Mark.SHARP:
+			case Char.SHARP:
 				append(output, Span.DEFINE);
 				append(output, XmlEntity.SHARP);
 				return doMacroDefine(code, ++index, len, output);

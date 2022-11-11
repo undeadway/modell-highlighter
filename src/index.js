@@ -1,6 +1,6 @@
 exports = module.exports = {};
 
-const { Mark } = Coralian.constants;
+const { Char } = JsConst;
 const { getLang, getLanguagesName } = require("./common");
 
 // 载入所有包
@@ -62,7 +62,7 @@ function getLangName(lang) {
 function parseLang(lang, input) {
 
 	let language = getLang(lang);
-	return language.execute(input.replace(NEW_LINE_REGX, Mark.NEW_LINE));
+	return language.execute(input.replace(NEW_LINE_REGX, Char.NEW_LINE));
 }
 
 const FlyHighLighter = {
@@ -73,7 +73,7 @@ const FlyHighLighter = {
 		input = String.trim(input);
 		if (!input) return String.BLANK;
 
-		if (!String.contains(input, Mark.NEW_LINE) && !lang) {
+		if (!String.contains(input, Char.NEW_LINE) && !lang) {
 			let output = [CODE_START_TAG];
 			for (let i = 0, len = input.length; i < len; i++) {
 				components.doHtmlEscape(input.charAt(i), output);

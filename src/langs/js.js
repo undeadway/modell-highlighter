@@ -1,7 +1,7 @@
 /**
  * JavaScript
  */
-const { Mark } = Coralian.constants;
+const { Char } = JsConst;
 const { Span, CLike } = require("./../constants");
 const common = require("./../common");
 const { defaultDoChars } = require("./../components");
@@ -17,14 +17,14 @@ common.addLang([{ name: "JAVASCRIPT" }, { name: "JSON" }], null, {
 	doComment: common.commonDoComment,
 	charSpan: Span.STRING,
 	judgeExe: function (at) {
-		return at === Mark.GRAVE_ACCENT;
+		return at === Char.GRAVE_ACCENT;
 	},
 	execute: function (code, index, len, output) {
 		// js 中的 ` 就是字符串符号，所以直接调用字符串操作
 		let at = code.charAt(index);
 		switch (at) {
-			case Mark.GRAVE_ACCENT:
-				return defaultDoChars(code, index, len, output, CLike.ESCAPER, Mark.GRAVE_ACCENT, Span.STRING);
+			case Char.GRAVE_ACCENT:
+				return defaultDoChars(code, index, len, output, CLike.ESCAPER, Char.GRAVE_ACCENT, Span.STRING);
 
 		}
 	},

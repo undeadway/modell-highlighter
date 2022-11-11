@@ -1,7 +1,7 @@
 /**
  * Java
  */
-const { Mark } = Coralian.constants;
+const { Char } = JsConst;
 const { Span } = require("../constants");
 const common = require("../common");
 
@@ -12,7 +12,7 @@ function doAnnotation(code, index, len, output) {
 	let word = String.BLANK;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (Mark.SPACE_REGX.test(at) || at === Mark.LEFT_PARENTHE) break;
+		if (Char.SPACE_REGX.test(at) || at === Char.LEFT_PARENTHE) break;
 		word += at;
 	}
 	if (word === AT_INTERFACE) {
@@ -37,7 +37,7 @@ const dftBuiltInVar = ["T", "E", "K", "V", "O"];
 common.addLang([{ name: "JAVA" }], null, {
 	judgeExe: function (at) {
 		switch (at) {
-			case Mark.AT:
+			case Char.AT:
 				return true;
 			default:
 				return false;
@@ -52,7 +52,7 @@ common.addLang([{ name: "JAVA" }], null, {
 	doc: true,
 	execute: function (code, index, len, output) {
 		switch (code.charAt(index)) {
-			case Mark.AT:
+			case Char.AT:
 				return doAnnotation(code, index, len, output);
 			default:
 				return index;
