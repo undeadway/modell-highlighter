@@ -151,7 +151,7 @@ function commonExecute(code) {
 				index = doNumber(code, index, len, output);
 			} else {
 				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
-					append(output, `${word}${Span.BRACKET}${at}${Span.CLOSE}`);
+					append(output, `${word}${Span.Brackct.LEFT}${at}${Span.Brackct.RIGHT}`);
 					word = String.BLANK;
 				} else if (at === Char.Angle.LEFT) { // 左尖括号
 					append(output, word);
