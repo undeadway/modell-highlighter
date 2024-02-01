@@ -75,7 +75,7 @@ const FlyHighLighter = {
 		input = String.trim(input);
 		if (!input) return String.BLANK;
 
-		if (!String.contains(input, Char.Space.LF) && !lang) {
+		if (!String.contains(input, NEW_LINE_REGX) && !lang) {
 			let output = [CODE_START_TAG];
 			for (let i = 0, len = input.length; i < len; i++) {
 				components.doHtmlEscape(input.charAt(i), output);
