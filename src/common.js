@@ -150,10 +150,10 @@ function commonExecute(code) {
 				word = String.BLANK;
 				index = doNumber(code, index, len, output);
 			} else {
-				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
+				if (Common.BRACEKT_REGX.test(at) && at !== Char.Angle.LEFT) { // 合法的括号（不含尖括号）
 					append(output, word + Span.BRACKET + at + Span.CLOSE);
 					word = String.BLANK;
-				} else if (at === Mark.LEFT_ANGLE) { // 左尖括号
+				} else if (at === Char.Angle.LEFT) { // 左尖括号
 					append(output, word);
 					doHtmlEscape(at, output);
 					word = String.BLANK;
