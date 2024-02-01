@@ -22,7 +22,7 @@ if (Coralian.side()) {
 	}
 }
 
-const NEW_LINE_REGX = /(\r\n|\r)/ig;
+const NEW_LINE_REGX = /(\r\n|\r|\n)/ig;
 const FILED_START = '<fieldset class="code"><legend>',
 	FILED_LIST = '</legend><pre><ol class="code_list"><li>',
 	FILED_END = '</li></ol></pre></fieldset>',
@@ -64,7 +64,7 @@ function getLangName(lang) {
 function parseLang(lang, input) {
 
 	let language = getLang(lang);
-	return language.execute(input.replace(NEW_LINE_REGX, Char.NEW_LINE));
+	return language.execute(input.replace(NEW_LINE_REGX, Char.Space.LF));
 }
 
 const FlyHighLighter = {
@@ -75,7 +75,7 @@ const FlyHighLighter = {
 		input = String.trim(input);
 		if (!input) return String.BLANK;
 
-		if (!String.contains(input, Char.NEW_LINE) && !lang) {
+		if (!String.contains(input, Char.Space.LF) && !lang) {
 			let output = [CODE_START_TAG];
 			for (let i = 0, len = input.length; i < len; i++) {
 				components.doHtmlEscape(input.charAt(i), output);
