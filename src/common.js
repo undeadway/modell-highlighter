@@ -122,7 +122,7 @@ function commonExecute(code) {
 
 		if (codeAt === 8203) continue; // 零宽空白
 
-		if (Char.SPACE_REGX.test(at)) { // 标准空白
+		if (Char.SPACE.REGX.test(at)) { // 标准空白
 			append(output, word);
 			doHtmlEscape(at, output);
 			word = String.BLANK;
