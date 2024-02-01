@@ -153,7 +153,7 @@ function commonExecute(code) {
 				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
 					append(output, `${word}${Span.BRACKET}${at}${Span.CLOSE}`);
 					word = String.BLANK;
-				} else if (at === Char.LEFT_ANGLE) { // 左尖括号
+				} else if (at === Char.Angle.LEFT) { // 左尖括号
 					append(output, word);
 					doHtmlEscape(at, output);
 					word = String.BLANK;
