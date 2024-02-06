@@ -15,7 +15,7 @@ if (testLang) {
 	var output = highlighter.execute(file, testLang);
 
 	var html = `<html><head>
-	<title>测试</title>
+	<title>${testLang}测试</title>
 	<link rel="stylesheet" type="text/css" href="./../FlyHighLighter.css" />
 	</head>
 	<body>${output}</body></html>`;
