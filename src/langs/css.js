@@ -20,7 +20,7 @@ function doCssName(code, index, len, output) {
 
 		let at = code.charAt(index);
 
-		if (at === Char.TILDE || Char.SPACE_REGX.test(at)) {
+		if (at === Char.TILDE || Char.Space.REGX.test(at)) {
 			doHtmlEscape(at, output);
 			continue;
 		}
@@ -47,7 +47,7 @@ function doCssBody(code, index, len, output) {
 
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (Char.SPACE_REGX.test(at)) {
+		if (Char.Space.REGX.test(at)) {
 			doHtmlEscape(at, output);
 		} else if (at === Char.RIGHT_BRACKET) {
 			append(output, at);
@@ -86,7 +86,7 @@ function doCssPesudoClass(code, index, len, output) {
 
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.COMMA || Char.SPACE_REGX.test(at)) {
+		if (at === Char.COMMA || Char.Space.REGX.test(at)) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
@@ -112,7 +112,7 @@ function doCssCssNames(code, index, len, output) {
 			} else {
 				return index;
 			}
-		} else if (at === Char.COMMA || Char.SPACE_REGX.test(at)) {
+		} else if (at === Char.COMMA || Char.Space.REGX.test(at)) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
@@ -141,7 +141,7 @@ function cssBody(code, index, len, output) {
 			append(output, Span.CLOSE);
 			return --index;
 		}
-		if (at === Char.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output, Span.DATA_VAL);
 		} else {
 			doHtmlEscape(at, output);
@@ -155,7 +155,7 @@ function cssSpace(code, index, len, output) {
 		let at = code.charAt(index);
 		if (at === Char.SLASH && Char.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
-		} else if (at === Char.COMMA || Char.SPACE_REGX.test(at)) {
+		} else if (at === Char.COMMA || Char.Space.REGX.test(at)) {
 			doHtmlEscape(at, output);
 		} else {
 			return index;
@@ -173,7 +173,7 @@ function doCssAttr(code, index, len, output) {
 			append(output, at);
 			return ++index;
 		}
-		if (at === Char.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output, Span.DATA_KEY);
 		} else {
 			doHtmlEscape(at, output);
@@ -209,7 +209,7 @@ function doCSS(code) {
 			index = doCssAt(code, index, len, output);
 		} else if (at === Char.SLASH) {
 			index = doBlockComment4CLike(code, index, len, output);
-		} else if (at === Char.COMMA || Char.SPACE_REGX.test(at)) {
+		} else if (at === Char.COMMA || Char.Space.REGX.test(at)) {
 			doHtmlEscape(at, output);
 		} else {
 			index = doCssName(code, index, len, output);

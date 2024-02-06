@@ -7,16 +7,16 @@ const IS_INTEGER_REGX = /^[0-9](l)*/i;
 const CAN_IN_NUMBER_REGX = /([0-9a-f]|l|\.|x|\-)/i;
 
 function doHtmlEscape(at, output) {
-	if (String.isEmpty(at) || at === CharCode.ZERO_WIDTH) return;
+	if (String.isEmpty(at) || at === Char.ZERO_WIDTH) return;
 
 	switch (at) {
-		case Char.NEW_LINE:
+		case Char.Space.LF:
 			append(output, JOIN);
 			break;
-		case Char.LEFT_ANGLE:
+		case Char.Angle.LEFT:
 			append(output, XmlEntity.LEFT_ANGLE);
 			break;
-		case Char.RIGHT_ANGLE:
+		case Char.Angle.RIGHT:
 			append(output, XmlEntity.RIGHT_ANGLE);
 			break;
 		case Char.SHARP:
@@ -47,7 +47,9 @@ function isNumber(str) {
 function doNewLineJoin(output, startSpan) {
 	append(output, Span.CLOSE);
 	append(output, JOIN);
-	if (startSpan) append(output, startSpan);
+	if (startSpan) {
+		append(output, startSpan);
+	}
 }
 
 /**
@@ -57,9 +59,9 @@ function doNewLineJoin(output, startSpan) {
  */
 function canInWord(at) {
 	// [A-Z]
-	return (CharCode.UPPER_A <= at && at <= CharCode.UPPER_Z) ||
+	return (CharCode.Upper.A <= at && at <= CharCode.Upper.Z) ||
 		// [a-z]
-		(CharCode.LOWER_A <= at && at <= CharCode.LOWER_Z) ||
+		(CharCode.Lower.A <= at && at <= CharCode.Lower.Z) ||
 		// [0-9]
 		(CharCode.ZERO <= at && at <= CharCode.NINE) ||
 		// [_ $]
@@ -100,7 +102,7 @@ function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 	let before = escaper;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output, charSpan);
 		} else {
 			doHtmlEscape(at, output);
@@ -164,8 +166,8 @@ function defaultDoBuiltIn(word, nextCode, next, output, isBuiltInFunc, isBuiltIn
 
 	if (canInWord(nextCode)) return false; // 紧接着的字符可以入词则返回
 
-	let builtInFuncFlg = isBuiltInFunc(word),
-		builtInVarFlg = isBuiltInVar(word);
+	let builtInFuncFlg = isBuiltInFunc(word, next),
+		builtInVarFlg = isBuiltInVar(word, next);
 	let result = (builtInFuncFlg || builtInVarFlg);
 
 	if (result) {
@@ -217,7 +219,7 @@ function doLineComment4Like(code, index, len, at, output) {
 	append(output, Span.COMMENT);
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === Char.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output);
 			break;
 		} else {
@@ -234,7 +236,7 @@ function doBlockComment4CLike(code, index, len, output, hasDoc) {
 	for (; index < len; index++) {
 		let at = code.charAt(index);
 		if (at !== Char.ASTERISK || code.charAt(index + 1) !== Char.SLASH) {
-			if (at === Char.NEW_LINE) {
+			if (at === Char.Space.LF) {
 				doNewLineJoin(output, hasDoc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);
@@ -245,6 +247,7 @@ function doBlockComment4CLike(code, index, len, output, hasDoc) {
 	}
 	append(output, CLike.BLOCK_COMMENT_END);
 	append(output, Span.CLOSE);
+	// append(output, JOIN);
 	return ++index;
 }
 

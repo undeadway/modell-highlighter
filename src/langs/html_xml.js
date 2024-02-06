@@ -68,7 +68,7 @@ function doXmlComment(code) {
 
 	for (let i = 0, len = code.length; i < len; i++) {
 		let at = code.charAt(i);
-		if (at === Char.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output, Span.COMMENT);
 		} else {
 			doHtmlEscape(at, output);
@@ -89,7 +89,7 @@ function doXmlAttibute(input) {
 
 	for (let i = 0, len = input.length; i < len; i++) {
 		let at = input.charAt(i);
-		if (Char.SPACE_REGX.test(at) && isInName) {
+		if (Char.Space.REGX.test(at) && isInName) {
 			if (i > 0) {
 				append(output, Span.CLOSE);
 			}
@@ -126,7 +126,7 @@ function doXmlAttibute(input) {
 // 通用于标签属性（包括普通 标签和声明标签）
 function doXmlCommons(commonSpan, startVal, endVal, input) {
 
-	let tmp = input.split(Char.SPACE_REGX);
+	let tmp = input.split(Char.Space.REGX);
 	/*
 	 * <xxx .... /> => [xxx, .., .., .., /] => true
 	 * <xxx ..../> => [xxx, .., .., ../] => true
@@ -355,4 +355,4 @@ function doHTML(input) {
 
 }
 
-common.addLang([{ name: "HTML" }], doHTML);
+common.addLang([{ name: "HTML" }, { name: "VUE" }], doHTML);

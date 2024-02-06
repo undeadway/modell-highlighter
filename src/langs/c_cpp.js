@@ -14,7 +14,7 @@ function doMacroDefine(code, index, len, output) {
 
 	for (index; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.NEW_LINE || (Char.SPACE_REGX.test(at) && before !== Char.SHARP) || at === Char.LEFT_ANGLE || at === Char.DQUOTE) {
+		if (at === Char.Space.LF || (Char.Space.REGX.test(at) && before !== Char.SHARP) || at === Char.Angle.LEFT || at === Char.DQUOTE) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;

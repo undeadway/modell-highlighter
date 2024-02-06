@@ -4,6 +4,7 @@
 const { Char } = JsConst;
 const { Span } = require("../constants");
 const common = require("../common");
+const { canInWord } = require("../components");
 
 const AT_INTERFACE = "@interface";
 
@@ -12,7 +13,7 @@ function doAnnotation(code, index, len, output) {
 	let word = String.BLANK;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (Char.SPACE_REGX.test(at) || at === Char.LEFT_PARENTHE) break;
+		if (Char.Space.REGX.test(at) || at === Char.Parenthe.LEFT) break;
 		word += at;
 	}
 	if (word === AT_INTERFACE) {
@@ -43,11 +44,11 @@ common.addLang([{ name: "JAVA" }], null, {
 				return false;
 		}
 	},
-	isBuiltInFunc: function (word) {
-		return Array.has(dftBuiltInFunc, word);
+	isBuiltInFunc: function (word, next) {
+		return Array.has(dftBuiltInFunc, word && !canInWord(next.charCodeAt(0)));
 	},
-	isBuiltInVar: function (word) {
-		return Array.has(dftBuiltInVar, word);
+	isBuiltInVar: function (word, next) {
+		return Array.has(dftBuiltInVar, word) && !canInWord(next.charCodeAt(0));
 	},
 	doc: true,
 	execute: function (code, index, len, output) {

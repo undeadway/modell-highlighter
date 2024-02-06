@@ -13,7 +13,7 @@ function doDescription(code, index, len, output) {
 
 	FOR_ATTRIBUTE: for (let i = index - 1; i >= 0; i--) {
 		let at = code.charAt(i);
-		if (!Char.SPACE_REGX.test(at)) {
+		if (!Char.Space.REGX.test(at)) {
 			/*
 			 * 1. 左花括号 ： } [Description]
 			 * 2. 右花括号 ： { [Description]
@@ -38,7 +38,7 @@ function doDescription(code, index, len, output) {
 						 * 因为存在 “// aaa // bbb” 这种形式的注释
 						 * 所以不能直接判断第一个遇到的 // 之前是否有非空白，而只能以换行符为准
 						 */
-						if (at2 === Char.NEW_LINE) { // 遇到换行符之后取整段字符，看是否以 // 开头
+						if (at2 === Char.Space.LF) { // 遇到换行符之后取整段字符，看是否以 // 开头
 							let line = code.slice(j + 1, index - 1).trim();
 							if (line.startsWith(CLike.LINE_COMMENT)) {
 								index += 1;
@@ -57,7 +57,7 @@ function doDescription(code, index, len, output) {
 	let word = String.BLANK;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.RIGHT_SQUARE_BRACKET || at === Char.LEFT_PARENTHE || Char.SPACE_REGX.test(at) || at === Char.POINT) break;
+		if (at === Char.RIGHT_SQUARE_BRACKET || at === Char.LEFT_PARENTHE || Char.Space.REGX.test(at) || at === Char.POINT) break;
 		word += at;
 	}
 
@@ -74,10 +74,7 @@ function doRegion(code, index, len, output) {
 
 	for (index; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.NEW_LINE) {
-			break;
-		}
-
+		if (at === Char.Space.LF) break;
 		word += at;
 	}
 

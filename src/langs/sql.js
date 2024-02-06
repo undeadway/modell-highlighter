@@ -31,7 +31,7 @@ common.addLang([{ name: "SQL" }], null, {
 		for (; index < len; index++) {
 			let at = code.charAt(index);
 
-			if (at === Char.NEW_LINE) {
+			if (at === Char.Space.LF) {
 				doNewLineJoin(output, span);
 			} else {
 				doHtmlEscape(at, output);
