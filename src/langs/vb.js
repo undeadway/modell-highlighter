@@ -2,7 +2,7 @@
  * VB、VB.NET、VBA
  */
 const { Char } = JsConst;
-const { doLineComment4Like, canInWord } = require("./../components");
+const { doLineComment4CLike, canInWord } = require("./../components");
 const { addLang } = require("./../common");
 
 const dftBuiltInFunc = ["CDate", "Date", "DateAdd", "DateDiff", "DatePart", "DateSerial", "DateValue", "Day",
@@ -34,7 +34,7 @@ const plugIn = {
 
 		return result;
 	},
-	doComment: doLineComment4Like,
+	doComment: doLineComment4CLike,
 	escaper: Char.DQUOTE,
 	doKeyword: function (kws, word, next) {
 

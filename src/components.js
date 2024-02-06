@@ -215,7 +215,7 @@ function defaultDoNumber(code, index, len, output) {
 	return --index;
 }
 
-function doLineComment4Like(code, index, len, at, output) {
+function doLineComment4CLike(code, index, len, at, output) {
 	append(output, Span.COMMENT);
 	for (; index < len; index++) {
 		at = code.charAt(index);
@@ -258,7 +258,7 @@ function judgeComment4CLike(at) {
 function doComment4CLike(code, index, len, at, output, doc) {
 	let next = (index < len - 1) ? code.charAt(index + 1) : String.BLNAK;
 	if (judgeComment4CLike(next)) {
-		index = doLineComment4Like(code, index, len, at, output);
+		index = doLineComment4CLike(code, index, len, at, output);
 	} else if (next === Char.ASTERISK) {
 		index = doBlockComment4CLike(code, index, len, output, doc);
 	}
@@ -290,7 +290,7 @@ exports = module.exports = {
 	defaultDoBuiltIn,
 	defaultIsBuiltIn,
 	defaultDoNumber,
-	doLineComment4Like,
+	doLineComment4CLike,
 	doBlockComment4CLike,
 	judgeComment4CLike,
 	doComment4CLike,

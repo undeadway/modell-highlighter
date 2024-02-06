@@ -3,7 +3,7 @@
  */
 const { Char } = JsConst;
 const { Span } = require("./../constants");
-const { doBlockComment4CLike, doLineComment4Like, doHtmlEscape, doNewLineJoin, append } = require("./../components");
+const { doBlockComment4CLike, doLineComment4CLike, doHtmlEscape, doNewLineJoin, append } = require("./../components");
 const common = require("./../common");
 
 
@@ -13,7 +13,7 @@ common.addLang([{ name: "SQL" }], null, {
 		if (at === Char.SLASH && next === Char.ASTERISK) {
 			index = doBlockComment4CLike(code, index, len, output);
 		} else if (at == Char.HYPHEN && next === Char.HYPHEN) {
-			index = doLineComment4Like(code, index, len, at, output);
+			index = doLineComment4CLike(code, index, len, at, output);
 		} else {
 			doHtmlEscape(at, output);
 		}
