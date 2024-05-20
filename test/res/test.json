@@ -1,11 +1,11 @@
 {
-	"name": "flyhighlighter",
+	"name": "Modellhighlighter",
 	"version": "0.0.1",
-	"main": "FlyHighLighter.js",
+	"main": "ModellHighLighter.js",
 	"license": "Apache-2.0",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/undeadway/FlyHighLighter.git"
+		"url": "git+https://github.com/undeadway/ModellHighLighter.git"
 	},
 	"dependencies": {
 		"coralian": "0.0.14"

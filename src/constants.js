@@ -1,5 +1,5 @@
 /**
- * FlyHighLighter 用到的所有常量
+ * ModellHighLighter 用到的所有常量
  */
 
 exports = module.exports = {

@@ -2,13 +2,13 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<title>FlyHighLighter帮助文档</title>
+<title>ModellHighLighter帮助文档</title>
 <script type="text/javascript" src="http://res.waygc.net/js/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="http://res.waygc.net/js/marked.min.js"></script>
 <script type="text/javascript" src="http://waygc.net/res/js/coralian.js"></script>
 <script type="text/javascript" src="http://waygc.net/res/js/coralian.client.js"></script>
-<script type="text/javascript" src="./dist/FlyHighLighter.js"></script>
-<link rel="stylesheet" type="text/css" href="./test/FlyHighLighter.css" />
+<script type="text/javascript" src="./dist/ModellHighLighter.js"></script>
+<link rel="stylesheet" type="text/css" href="./test/ModellHighLighter.css" />
 <style type="text/css">
 	#left, #right{display: inline-block; vertical-align: top;}
 	#right fieldset{width:720px; min-width72px; max-width:720px;}
@@ -35,7 +35,7 @@
 		}
 	});
 
-	var langs = FlyHighLighter.getLangs();
+	var langs = ModellHighLighter.getLangs();
 
 	var select = document.getElementById("select");
 	select.appendChild(document.createElement("option"));
@@ -49,7 +49,7 @@
 
 function test() {
 
-	var html = FlyHighLighter.execute(
+	var html = ModellHighLighter.execute(
 		document.getElementById("source").value,
 		document.getElementById("select").value);
 	document.getElementById("right").innerHTML = html;

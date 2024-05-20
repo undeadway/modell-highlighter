@@ -13,7 +13,7 @@ if (testLang) {
 
 	var html = `<html><head>
 <title>测试</title>
-<link rel="stylesheet" type="text/css" href="./../FlyHighLighter.css" />
+<link rel="stylesheet" type="text/css" href="./../ModellHighLighter.css" />
 </head>
 <body>${output}</body></html>`;
 	fs.writeFileSync(`./test/output/${testLang}.html`, html);
@@ -27,7 +27,7 @@ if (testLang) {
 
 			let html = `<html><head>
 <title>${lang}测试</title>
-<link rel="stylesheet" type="text/css" href="./../FlyHighLighter.css" />
+<link rel="stylesheet" type="text/css" href="./../ModellHighLighter.css" />
 </head>
 <body>${output}</body></html>`;
 			fs.writeFileSync(`./test/output/${lang}.html`, html);
