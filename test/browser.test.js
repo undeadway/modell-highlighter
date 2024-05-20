@@ -7,5 +7,5 @@ global.window = window;
 global.document = window.document;
 
 require("coralian");
-require("../dist/FlyHighlighter");
-const highlighter = FlyHighLighter;
+require("../dist/ModellHighlighter");
+const highlighter = ModellHighLighter;

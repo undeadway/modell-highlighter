@@ -67,7 +67,7 @@ function parseLang(lang, input) {
 	return language.execute(input.replace(NEW_LINE_REGX, Char.Space.LF));
 }
 
-const FlyHighLighter = {
+const ModellHighLighter = {
 	constants: require("./constants"),
 	components: require("./components"),
 	execute: (input, lang) => {
@@ -91,4 +91,4 @@ const FlyHighLighter = {
 	getLangs: getLanguagesName
 };
 
-Coralian.setToGlobal("FlyHighLighter", FlyHighLighter);
+Coralian.setToGlobal("ModellHighLighter", ModellHighLighter);

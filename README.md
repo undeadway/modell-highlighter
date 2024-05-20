@@ -1,4 +1,4 @@
-# FlyHighLighter
+# ModellHighLighter
 
 ## Chinese
 
@@ -27,24 +27,24 @@
 #### Node.js
 在Node.js中，只需要执行
 ```
-npm install flyhighlighter
+npm install Modellhighlighter
 ```
 即可完成所有安装，然后在项目中引入即可。
 ```
-require("flyhighlighter");
+require("Modellhighlighter");
 ```
-就可以开始使用`FlyHighLighter`了。
+就可以开始使用`ModellHighLighter`了。
 
 #### 浏览器
-只需要将`dist`文件夹下已编译好的`FlyHighLighter.js`复制到项目中去即可。  
-`FlyHighLighter`依赖`Coralian`，所以请事先下载 [coralian](https://gitee.com/undeadway/coralian) 。
+只需要将`dist`文件夹下已编译好的`ModellHighLighter.js`复制到项目中去即可。  
+`ModellHighLighter`依赖`Coralian`，所以请事先下载 [coralian](https://gitee.com/undeadway/coralian) 。
 
 ### 使用
-然后可以通过下面的代码来使用 `FlyHighLighter`
+然后可以通过下面的代码来使用 `ModellHighLighter`
 ```
 var source = "var source = 'test code'";
 var langName = "javascript";
-var output = FlyHighLighter.execute(source, langName);
+var output = ModellHighLighter.execute(source, langName);
 ```
 执行完毕后的`output`即最终可以直接显示的HTML。
 
@@ -75,20 +75,20 @@ A source code highlighter created by pure javascript.
 #### Node.js
 Run the followen command:
 ```
-npm install flyhighlighter
+npm install Modellhighlighter
 ```
 And import it into project:
 ```
-require("flyhighlighter");
+require("Modellhighlighter");
 ```
 
 #### Browser
-Copy the compired file `FlyHighLighter` to client.  
-And `FlyHighLighter` has relied `Coralian`, so download the [coralian](https://gitee.com/undeadway/coralian) first.
+Copy the compired file `ModellHighLighter` to client.  
+And `ModellHighLighter` has relied `Coralian`, so download the [coralian](https://gitee.com/undeadway/coralian) first.
 
 ### Using
 ```
 var source = "var source = 'test code'";
 var langName = "javascript";
-var output = FlyHighLighter.execute(source, langName);
+var output = ModellHighLighter.execute(source, langName);
 ```

@@ -1,11 +1,11 @@
 {
-	"name": "flyhighlighter",
+	"name": "Modellhighlighter",
 	"version": "0.0.5",
 	"description": "A source code highlighter created by pure javascript.",
 	"main": "./src/index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/undeadway/FlyHighLighter.git"
+		"url": "git+https://github.com/undeadway/ModellHighLighter.git"
 	},
 	"dependencies": {
 		"jsconst": "git+https://gitee.com/undeadway/jsconst#dev"
@@ -20,5 +20,5 @@
 	},
 	"author": "hzwaygc@gmail.com",
 	"license": "Apache-2.0",
-	"homepage": "http://prj.waygc.net/?/FlyHighLighter"
+	"homepage": "http://prj.waygc.net/?/ModellHighLighter"
 }

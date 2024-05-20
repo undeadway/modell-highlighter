@@ -2,13 +2,13 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8" />
-<title>FlyHighLighter帮助文档</title>
+<title>ModellHighLighter帮助文档</title>
 <script type="text/javascript" src="http://res.waygc.net/jQuery/jquery-3.4.1.min.js"></script>
 <script type="text/javascript" src="http://res.waygc.net/marked/marked.min.js"></script>
 <script type="text/javascript" src="http://codes.waygc.net/coralian/coralian.js"></script>
 <script type="text/javascript" src="http://codes.waygc.net/coralian/coralian.client.dev.js"></script>
-<script type="text/javascript" src="http://codes.waygc.net/fly/FlyHighlighter.js"></script>
-<link rel="stylesheet" type="text/css" href="http://codes.waygc.net/fly/FlyHighLighter.css" />
+<script type="text/javascript" src="http://codes.waygc.net/Modell/ModellHighlighter.js"></script>
+<link rel="stylesheet" type="text/css" href="http://codes.waygc.net/Modell/ModellHighLighter.css" />
 <style type="text/css">
 	#left, #right{display: inline-block; vertical-align: top;}
 	#right fieldset{width:720px; min-width:72px; max-width:720px;}
@@ -28,14 +28,14 @@
 (function() {
 
 	$.get({
-		url : "./FlyHighLighter.md",
+		url : "./ModellHighLighter.md",
 		dataType: "text",
 		success : function(req) {
 			$("#readme").html(marked(req));
 		}
 	});
 
-	var langs = FlyHighLighter.getLangs();
+	var langs = ModellHighLighter.getLangs();
 
 	var select = document.getElementById("select");
 	select.appendChild(document.createElement("option"));
@@ -49,7 +49,7 @@
 
 function test() {
 
-	var html = FlyHighLighter.execute(
+	var html = ModellHighLighter.execute(
 		document.getElementById("source").value,
 		document.getElementById("select").value);
 	document.getElementById("right").innerHTML = html;
