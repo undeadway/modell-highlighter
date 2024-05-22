@@ -23,7 +23,7 @@ if (Coralian.side()) {
 }
 
 const NEW_LINE_REGX = /(\r\n|\r|\n)/ig;
-const FILED_START = '<fieldset class="code"><legend>',
+const FILED_START = '<fieldset class="modell-highlighter"><legend>',
 	FILED_LIST = '</legend><pre><ol class="code_list"><li>',
 	FILED_END = '</li></ol></pre></fieldset>',
 	CODE_START_TAG = "<code>",
