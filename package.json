@@ -1,5 +1,5 @@
 {
-	"name": "Modellhighlighter",
+	"name": "modellhighlighter",
 	"version": "0.0.5",
 	"description": "A source code highlighter created by pure javascript.",
 	"main": "./src/index.js",
