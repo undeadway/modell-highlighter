@@ -1,7 +1,7 @@
 /**
  * HTML、XML
  */
-const { XmlEntity, Mark } = Coralian.constants;
+const { XmlEntity, Char } = JsConst;
 const { Span } = require("../constants");
 const { doHtmlEscape, doNewLineJoin, append } = require("./../components");
 const common = require("./../common");
@@ -39,8 +39,8 @@ const XML_COMMENT_START_ENTITY = "&lt!--",
 const XML_EMPTY_ATTR_REGX = new RegExp(Span.DATA_KEY + Span.CLOSE, "g"),
 	XML_EMPTY_VAL_REGX = new RegExp(Span.DATA_VAL + Span.CLOSE, "g");
 
-const XML_CDATA_SPAN = '<span class="xml_cdata">',
-	XML_DOCTYPE_SPAN = '<span class="xml_doctype">';
+const XML_CDATA_SPAN = "<span class=\"xml_cdata\">",
+	XML_DOCTYPE_SPAN = "<span class=\"xml_doctype\">";
 
 function doXmlCData(code) {
 
@@ -68,7 +68,7 @@ function doXmlComment(code) {
 
 	for (let i = 0, len = code.length; i < len; i++) {
 		let at = code.charAt(i);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output, Span.COMMENT);
 		} else {
 			doHtmlEscape(at, output);
@@ -89,7 +89,7 @@ function doXmlAttibute(input) {
 
 	for (let i = 0, len = input.length; i < len; i++) {
 		let at = input.charAt(i);
-		if (Mark.SPACE_REGX.test(at) && isInName) {
+		if (Char.Space.REGX.test(at) && isInName) {
 			if (i > 0) {
 				append(output, Span.CLOSE);
 			}
@@ -99,14 +99,14 @@ function doXmlAttibute(input) {
 			}
 			isInVal = true;
 			isInName = false;
-		} else if ((at === Mark.EQUALS) && isInVal) {
+		} else if ((at === Char.EQUALS) && isInVal) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			append(output, Span.DATA_VAL);
 			isInName = true;
 			isInVal = false;
 		} else {
-			if (at === Mark.DQUOTE) {
+			if (at === Char.DQUOTE) {
 				isInName = !isInName;
 				isInVal = !isInVal;
 			}
@@ -126,7 +126,7 @@ function doXmlAttibute(input) {
 // 通用于标签属性（包括普通 标签和声明标签）
 function doXmlCommons(commonSpan, startVal, endVal, input) {
 
-	let tmp = input.split(Mark.SPACE_REGX);
+	let tmp = input.split(Char.Space.REGX);
 	/*
 	 * <xxx .... /> => [xxx, .., .., .., /] => true
 	 * <xxx ..../> => [xxx, .., .., ../] => true
@@ -134,7 +134,7 @@ function doXmlCommons(commonSpan, startVal, endVal, input) {
 	 * <xxx /> => [xxx, /] => true
 	 * <xxx/> => [xxx/] => false
 	 */
-	let withSlash = String.endsWith(input, Mark.SLASH) && !String.endsWith(tmp[0], Mark.SLASH);
+	let withSlash = String.endsWith(input, Char.SLASH) && !String.endsWith(tmp[0], Char.SLASH);
 
 	let output = [];
 	append(output, commonSpan);
@@ -151,7 +151,7 @@ function doXmlCommons(commonSpan, startVal, endVal, input) {
 
 	append(output, commonSpan);
 	if (withSlash) {
-		append(output, Mark.SLASH);
+		append(output, Char.SLASH);
 	}
 	append(output, endVal);
 	append(output, Span.CLOSE);
@@ -166,7 +166,7 @@ function doXml(input) {
 	// 处理 <!DOCTYPE ...>
 	if (XML_DOCTYPE_REGX.test(input)) {
 		input = input.replace(XML_DOCTYPE_REGX, XML_REPLACE_PART + xmlReplaceList.length + REPLACE_END);
-		let output = XML_DOCTYPE_SPAN + XmlEntity.LEFT_ANGLE + Mark.EXCALMATORY + RegExp.$1 + RegExp.$2 +
+		let output = XML_DOCTYPE_SPAN + XmlEntity.LEFT_ANGLE + Char.EXCALMATORY + RegExp.$1 + RegExp.$2 +
 			XmlEntity.RIGHT_ANGLE + Span.CLOSE;
 		xmlReplaceList.push(output);
 	}
@@ -197,7 +197,7 @@ function doXml(input) {
 
 	// 处理</xxx>
 	while (XML_END_TAG_REGX.test(input)) {
-		let output = Span.XMLTAG + XmlEntity.LEFT_ANGLE + Mark.SLASH + RegExp.$1 + XmlEntity.RIGHT_ANGLE + Span.CLOSE;
+		let output = Span.XMLTAG + XmlEntity.LEFT_ANGLE + Char.SLASH + RegExp.$1 + XmlEntity.RIGHT_ANGLE + Span.CLOSE;
 
 		input = input.replace(XML_END_TAG_REGX, XML_REPLACE_PART + xmlReplaceList.length + REPLACE_END);
 		xmlReplaceList.push(output);
@@ -260,10 +260,10 @@ function doScriptOrStyle(tag, content) {
 	let tmp = content.slice(starts, ends);
 
 	switch (tag) {
-		case 'SCRIPT':
+		case "SCRIPT":
 			append(output, _doJS.execute(tmp));
 			break;
-		case 'STYLE':
+		case "STYLE":
 			append(output, _doCSS.execute(tmp));
 			break;
 		default:
@@ -312,7 +312,7 @@ function doHTML(input) {
 			doScriptOrStyle(tag, content) +
 			Span.COMMENT + XML_COMMENT_END_ENTITY + Span.CLOSE +
 			after.join(String.BLANK) +
-			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, afterTag);
+			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Char.SLASH, XmlEntity.RIGHT_ANGLE, afterTag);
 
 		input = input.replace(COMMENT_TAG_REGX, HTML_REPLACE_PART + htmlReplaceList.length + REPLACE_END);
 		htmlReplaceList.push(output);
@@ -336,7 +336,7 @@ function doHTML(input) {
 
 		let output = doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE, XmlEntity.RIGHT_ANGLE, before) +
 			doScriptOrStyle(tag, content) +
-			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Mark.SLASH, XmlEntity.RIGHT_ANGLE, after);
+			doXmlCommons(Span.XMLTAG, XmlEntity.LEFT_ANGLE + Char.SLASH, XmlEntity.RIGHT_ANGLE, after);
 
 		input = input.replace(SCRIPT_STYLE_TAG_REGX, HTML_REPLACE_PART + htmlReplaceList.length + REPLACE_END);
 		htmlReplaceList.push(output);
@@ -355,4 +355,4 @@ function doHTML(input) {
 
 }
 
-common.addLang([{ name: "HTML" }], doHTML);
+common.addLang([{ name: "HTML" }, { name: "VUE" }], doHTML);

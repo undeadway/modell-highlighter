@@ -1,5 +1,5 @@
 
-const { Mark, CharCode } = Coralian.constants;
+const { Char, CharCode } = JsConst;
 const { Span, Common, CLike } = require("./constants");
 const { doHtmlEscape, defaultDoChars, doComment4CLike, defaultJudgePluginExe, judgeComment4CLike,
 		defaultIsBuiltIn, defaultDoKeyword, defaultDoNumber, defaultDoBuiltIn, append } = require("./components");
@@ -7,9 +7,9 @@ const { doHtmlEscape, defaultDoChars, doComment4CLike, defaultJudgePluginExe, ju
 const LANGUAGES = {};
 
 const langMap = {
-	JAVA: 'Java',
-	JAVASCRIPT: 'JavaScript',
-	VBSCRIPT: 'VBScript',
+	JAVA: "Java",
+	JAVASCRIPT: "JavaScript",
+	VBSCRIPT: "VBScript",
 };
 
 function commonDoRegExp(code, index, len, at, output) {
@@ -19,11 +19,11 @@ function commonDoRegExp(code, index, len, at, output) {
 	let start = index;
 	for (start += 1; start < len; start++) {
 		at = code.charAt(start);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			break;
-		} else if (at === Mark.SLASH && before !== CLike.ESCAPER) {
+		} else if (at === Char.SLASH && before !== CLike.ESCAPER) {
 			hasRegex = true;
-		} else if (hasRegex && !(at === 'i' || at === 'g' || at === 'm')) {
+		} else if (hasRegex && !(at === "i" || at === "g" || at === "m")) {
 			break;
 		}
 		doHtmlEscape(at, word);
@@ -39,7 +39,7 @@ function commonDoRegExp(code, index, len, at, output) {
 
 function commonDoComment(code, index, len, at, output) {
 	let next = code.charAt(index + 1);
-	let method = (next === Mark.SLASH || next === Mark.ASTERISK) ? doComment4CLike : commonDoRegExp;
+	let method = (next === Char.SLASH || next === Char.ASTERISK) ? doComment4CLike : commonDoRegExp;
 	return method(code, index, len, at, output);
 }
 
@@ -120,9 +120,9 @@ function commonExecute(code) {
 		let at = code.charAt(index),
 			codeAt = code.charCodeAt(index);
 
-		if (codeAt === 8203) continue;
+		if (codeAt === 8203) continue; // 零宽空白
 
-		if (Mark.SPACE_REGX.test(at)) { // 标准空白
+		if (Char.Space.REGX.test(at)) { // 标准空白
 			append(output, word);
 			doHtmlEscape(at, output);
 			word = String.BLANK;
@@ -132,13 +132,13 @@ function commonExecute(code) {
 			append(output, word);
 			index = doComment(code, index, len, at, output, doc);
 			word = String.BLANK;
-		} else if (at === Mark.DQUOTE) {
+		} else if (at === Char.DQUOTE) {
 			append(output, word);
 			// 双引号，一般来说双引号都都是字符串，所以这里直接写死
 			// 以后要是遇到了 双引号不是字符串的，再做修改
 			index = defaultDoChars(code, index, len, output, escaper, at, Span.STRING);
 			word = String.BLANK;
-		} else if (at === Mark.QUOTE) {
+		} else if (at === Char.QUOTE) {
 			append(output, word);
 			// 单引号，默认判断为字符，具体实现由各语言自定义的 doChar 方法来实现
 			// 即，如果将 doChar 自定义为 doChars ，那单引号也可以被当作字符串来处理
@@ -150,8 +150,8 @@ function commonExecute(code) {
 				word = String.BLANK;
 				index = doNumber(code, index, len, output);
 			} else {
-				if (Common.BRACEKT_REGX.test(at) && at !== Char.Angle.LEFT) { // 合法的括号（不含尖括号）
-					append(output, word + Span.BRACKET + at + Span.CLOSE);
+				if (Common.BRACEKT_REGX.test(at)) { // 合法的括号（不含尖括号）
+					append(output, `${word}${Span.BRACKET}${at}${Span.CLOSE}`);
 					word = String.BLANK;
 				} else if (at === Char.Angle.LEFT) { // 左尖括号
 					append(output, word);
@@ -163,8 +163,8 @@ function commonExecute(code) {
 					if (operatorRegx.test(word)) { // 类C语言的操作符
 						append(output, word);
 						word = String.BLANK;
-					} else if (doKeyword(output, kw, word, next, charCaseMethod)) { // 关键字
-						append(output, Span.KEYWORD + word + Span.CLOSE);
+					} else if (doKeyword(kw, word, next, charCaseMethod)) { // 关键字
+						append(output, `${Span.KEYWORD}${word}${Span.CLOSE}`);
 						word = String.BLANK;
 					} else if (doBuiltIn(word, next, code.charAt(index + 1), output, isBuiltInFunc, isBuiltInVar)) { // 语言内置函数、变量等
 						word = String.BLANK;
@@ -181,8 +181,6 @@ function commonExecute(code) {
 
 function initLangObject(execute, plugIn, keywords) {
 
-	execute = execute || commonExecute;
-
 	return {
 		getKeywords: function () {
 			return keywords;
@@ -190,35 +188,35 @@ function initLangObject(execute, plugIn, keywords) {
 		getPlugIn: function () {
 			return plugIn;
 		},
-		execute: execute
+		execute: execute || commonExecute
 	};
 }
 
 let pesudocode = (function () {
-	let dftBuiltInFunc = ['eval', 'alert', 'print'];
+	let dftBuiltInFunc = ["eval", "alert", "print"];
 
 	return initLangObject(commonExecute, {
 		doComment: commonDoComment,
 		isBuiltInFunc: function (word) {
 			return Array.has(dftBuiltInFunc, word);
 		},
-	}, ['abstract', 'assert',
-		'boolean', 'break', 'byte',
-		'case', 'catch', 'class', 'char', 'const', 'continue',
-		'default', 'delete ', 'do', 'double',
-		'else', 'eval', 'echo', 'enum', 'export', 'extends',
-		'false', 'final', 'finally', 'float', 'for', 'foreach', 'function',
-		'goto',
-		'if', 'implements', 'import', 'in', 'instanceof', 'int', 'interface',
-		'long',
-		'new', 'null', 'namespace',
-		'package', 'private', 'protected', 'public',
-		'return',
-		'short', 'static', 'string', 'struct', 'super', 'switch',
-		'this', 'throw', 'throws', 'true', 'try',
-		'var',
-		'while',
-		'void'
+	}, ["abstract", "assert",
+		"boolean", "break", "byte",
+		"case", "catch", "class", "char", "const", "continue",
+		"default", "delete ", "do", "double",
+		"else", "eval", "echo", "enum", "export", "extends",
+		"false", "final", "finally", "float", "for", "foreach", "function",
+		"goto",
+		"if", "implements", "import", "in", "instanceof", "int", "interface",
+		"long",
+		"new", "null", "namespace",
+		"package", "private", "protected", "public",
+		"return",
+		"short", "static", "string", "struct", "super", "switch",
+		"this", "throw", "throws", "true", "try",
+		"var",
+		"while",
+		"void"
 	]);
 })();
 
@@ -232,7 +230,7 @@ exports = module.exports = {
 	},
 	addLang: function (langs, execute, plugIn, ...keywords) {
 
-		if (typeIs(keywords[0], 'array')) {
+		if (typeIs(keywords[0], "array")) {
 			keywords = keywords[0];
 		}
 		let langObj = initLangObject(execute, plugIn, keywords);

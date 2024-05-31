@@ -1,51 +1,51 @@
 /**
  * VB、VB.NET、VBA
  */
-const { Mark } = Coralian.constants;
-const { doLineComment4Like, defaultDoCharCase, canInWord } = require("./../components");
+const { Char } = JsConst;
+const { doLineComment4CLike, canInWord } = require("./../components");
 const { addLang } = require("./../common");
 
-const dftBuiltInFunc = ['CDate', 'Date', 'DateAdd', 'DateDiff', 'DatePart', 'DateSerial', 'DateValue', 'Day',
-	'FormatDateTime', 'Hour', 'IsDate', 'Minute', 'Month', 'MonthName', 'Now', 'Second', 'Time', 'Timer',
-	'TimeSerial', 'TimeValue', 'Weekday', 'WeekdayName', 'Year', 'Asc', 'CBool', 'CByte', 'CCur', 'CDate',
-	'CDbl', 'Chr', 'CInt', 'CLng', 'CSng', 'CStr', 'Hex', 'Oct', 'FormatCurrency', 'FormatDateTime', , 'Sgn',
-	'FormatNumber', 'FormatPercent', 'Abs', 'Atn', 'Cos', 'Exp', 'Hex', 'Int', 'Fix', 'Log', 'Oct', 'Rnd',
-	'Sin', 'Sqr', 'Tan', 'Array', 'Filter', 'IsArray', 'Join', 'LBound', 'Split', 'UBound', 'InStr', 'InStrRev',
-	'LCase', 'Left', 'Len', 'LTrim', 'RTrim', 'Trim', 'Mid', 'Replace', 'Right', 'Space', 'StrComp', 'String',
-	'StrReverse', 'UCase', 'CreateObject', 'Eval', 'GetLocale', 'GetObject', 'GetRef', 'InputBox', 'IsEmpty',
-	'IsNull', 'IsNumeric', 'IsObject', 'LoadPicture', 'MsgBox', 'RGB', 'Round', 'ScriptEngine', 'VarType',
-	'ScriptEngineBuildVersion', 'ScriptEngineMajorVersion', 'ScriptEngineMinorVersion', 'SetLocale', 'TypeName'
+const dftBuiltInFunc = ["CDate", "Date", "DateAdd", "DateDiff", "DatePart", "DateSerial", "DateValue", "Day",
+	"FormatDateTime", "Hour", "IsDate", "Minute", "Month", "MonthName", "Now", "Second", "Time", "Timer",
+	"TimeSerial", "TimeValue", "Weekday", "WeekdayName", "Year", "Asc", "CBool", "CByte", "CCur", "CDate",
+	"CDbl", "Chr", "CInt", "CLng", "CSng", "CStr", "Hex", "Oct", "FormatCurrency", "FormatDateTime", "Sgn",
+	"FormatNumber", "FormatPercent", "Abs", "Atn", "Cos", "Exp", "Hex", "Int", "Fix", "Log", "Oct", "Rnd",
+	"Sin", "Sqr", "Tan", "Array", "Filter", "IsArray", "Join", "LBound", "Split", "UBound", "InStr", "InStrRev",
+	"LCase", "Left", "Len", "LTrim", "RTrim", "Trim", "Mid", "Replace", "Right", "Space", "StrComp", "String",
+	"StrReverse", "UCase", "CreateObject", "Eval", "GetLocale", "GetObject", "GetRef", "InputBox", "IsEmpty",
+	"IsNull", "IsNumeric", "IsObject", "LoadPicture", "MsgBox", "RGB", "Round", "ScriptEngine", "VarType",
+	"ScriptEngineBuildVersion", "ScriptEngineMajorVersion", "ScriptEngineMinorVersion", "SetLocale", "TypeName"
 ];
 
 const plugIn = {
 	judgeComment: function (at) {
-		return at === Mark.QUOTE;
+		return at === Char.QUOTE;
 	},
 	isBuiltInFunc: function (word) {
 
-		let outWord = defaultDoCharCase(word),
-			result = false;
-		dftBuiltInFunc.forEach(function (wd) {
-			if (String.equalsIgnoreCase(outWord, wd)) {
+		let result = false;
+		
+		for (let funName of dftBuiltInFunc) {
+			if (String.equalsIgnoreCase(word, funName)) {
 				result = true;
-				return;
+				break;
 			}
-		});
+		}
 
 		return result;
 	},
-	doComment: doLineComment4Like,
-	escaper: Mark.DQUOTE,
-	doKeyword: function (output, kw, word, next, charCaseMethod) {
+	doComment: doLineComment4CLike,
+	escaper: Char.DQUOTE,
+	doKeyword: function (kws, word, next) {
 
-		let outWord = defaultDoCharCase(word),
-			result = false;
-		kw.forEach(function (wd) {
-			if (String.equalsIgnoreCase(outWord, wd)) {
+		let result = false;
+
+		for (let kw of kws) {
+			if (String.equalsIgnoreCase(word, kw)) {
 				result = true;
-				return;
+				break;
 			}
-		});
+		}
 
 		return result && !canInWord(next);
 	}

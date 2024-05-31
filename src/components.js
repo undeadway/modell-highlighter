@@ -1,4 +1,4 @@
-const { Mark, CharCode, XmlEntity } = Coralian.constants;
+const { Char, CharCode, XmlEntity } = JsConst;
 const { Span, Common, CLike, JOIN } = require("./constants");
 
 const IS_HEX_NUMBER_REGX = /^0x[a-f0-9]+$/i;
@@ -7,25 +7,25 @@ const IS_INTEGER_REGX = /^[0-9](l)*/i;
 const CAN_IN_NUMBER_REGX = /([0-9a-f]|l|\.|x|\-)/i;
 
 function doHtmlEscape(at, output) {
-	if (String.isEmpty(at) || at === CharCode.ZERO_WIDTH) return;
+	if (String.isEmpty(at) || at === Char.ZERO_WIDTH) return;
 
 	switch (at) {
-		case Mark.NEW_LINE:
+		case Char.Space.LF:
 			append(output, JOIN);
 			break;
-		case Mark.LEFT_ANGLE:
+		case Char.Angle.LEFT:
 			append(output, XmlEntity.LEFT_ANGLE);
 			break;
-		case Mark.RIGHT_ANGLE:
+		case Char.Angle.RIGHT:
 			append(output, XmlEntity.RIGHT_ANGLE);
 			break;
-		case Mark.SHARP:
+		case Char.SHARP:
 			append(output, XmlEntity.SHARP);
 			break;
-		case Mark.AND:
+		case Char.AND:
 			append(output, XmlEntity.AMP);
 			break;
-		case Mark.DQUOTE:
+		case Char.DQUOTE:
 			append(output, XmlEntity.QUOT);
 			break;
 		default:
@@ -47,7 +47,9 @@ function isNumber(str) {
 function doNewLineJoin(output, startSpan) {
 	append(output, Span.CLOSE);
 	append(output, JOIN);
-	if (startSpan) append(output, startSpan);
+	if (startSpan) {
+		append(output, startSpan);
+	}
 }
 
 /**
@@ -57,9 +59,9 @@ function doNewLineJoin(output, startSpan) {
  */
 function canInWord(at) {
 	// [A-Z]
-	return (CharCode.UPPER_A <= at && at <= CharCode.UPPER_Z) ||
+	return (CharCode.Upper.A <= at && at <= CharCode.Upper.Z) ||
 		// [a-z]
-		(CharCode.LOWER_A <= at && at <= CharCode.LOWER_Z) ||
+		(CharCode.Lower.A <= at && at <= CharCode.Lower.Z) ||
 		// [0-9]
 		(CharCode.ZERO <= at && at <= CharCode.NINE) ||
 		// [_ $]
@@ -87,20 +89,20 @@ function isWord(str) {
  * 输出形式具体是字符还是字符串全权交给每个语言自定义实现
  * </p>
  * 
- * @param code 处理的目标字符串
- * @param index 处理的起始位置
- * @param len 字符串长度
- * @param output 输出对象（数组）
- * @param escaper 转义字符
- * @param end  结束标识符
- * @param charSpan 字符 span 标签，用于区分字符和字符串
+ * @param code       处理的目标字符串
+ * @param index      处理的起始位置
+ * @param len        字符串长度
+ * @param output     输出对象（数组）
+ * @param escaper    转义字符
+ * @param end        结束标识符
+ * @param charSpan   字符 span 标签，用于区分字符和字符串
  */
 function defaultDoChars(code, index, len, output, escaper, end, charSpan) {
 	append(output, charSpan);
 	let before = escaper;
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output, charSpan);
 		} else {
 			doHtmlEscape(at, output);
@@ -123,11 +125,12 @@ function defaultDoCharCase(word, charCaseMethod) {
 	let outWord = word;
 	if (charCaseMethod) {
 		switch (typeOf(charCaseMethod)) {
-			case 'string':
+			case "string":
 				outWord = word[charCaseMethod]();
 				break;
-			case ',':
-				outWord = charCaseMethod.apply(word);
+			case "function": // TODO 这里为什么写 “,” 自己也忘了，但从上文的判断是 typeOf 来看，应该是写错了
+							 // 感觉应该是 function ，先这么改了
+				outWord = charCaseMethod(word);
 				break;
 			default:
 				Error.unsupportedType(charCaseMethod);
@@ -137,26 +140,34 @@ function defaultDoCharCase(word, charCaseMethod) {
 }
 /**
  * 处理关键字
- * 
- * @param output 输出值
- * @param kw 每种语言的关键字集
- * @param word 请求判断的语言
- * @param next 下一个字符
+ *
+ * @param kws            每种语言的关键字集
+ * @param word           请求判断的语言
+ * @param next           下一个字符
  * @param charCaseMethod 大小写标签，因为有些语言不区分大小写，而关键字大小写是固定的
  *                       所以这里加入这个函数对被请求的词进行大小写处理
  *                       这个函数可以是自定义函数，也可以是 JS 既存的字符串处理函数
  * 
  */
-function defaultDoKeyword(output, kw, word, next, charCaseMethod) {
-	return Array.has(kw, defaultDoCharCase(word, charCaseMethod)) && !canInWord(next);
+function defaultDoKeyword(kws, word, next, charCaseMethod) {
+	return Array.has(kws, defaultDoCharCase(word, charCaseMethod)) && !canInWord(next);
 }
-
+/**
+ * 处理内置函数
+ * @param word            请求判断的内容
+ * @param nextCode        下一个字符的编码
+ * @param next            下一个字符
+ * @param output          输出
+ * @param isBuiltInFunc   判断是否是内置函数
+ * @param isBuiltInVar    判断是否是内置变量 
+ * @returns 
+ */
 function defaultDoBuiltIn(word, nextCode, next, output, isBuiltInFunc, isBuiltInVar) {
 
 	if (canInWord(nextCode)) return false; // 紧接着的字符可以入词则返回
 
-	let builtInFuncFlg = isBuiltInFunc(word),
-		builtInVarFlg = isBuiltInVar(word);
+	let builtInFuncFlg = isBuiltInFunc(word, next),
+		builtInVarFlg = isBuiltInVar(word, next);
 	let result = (builtInFuncFlg || builtInVarFlg);
 
 	if (result) {
@@ -185,10 +196,10 @@ function defaultDoNumber(code, index, len, output) {
 	let word = "";
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === 'x' || at === 'X') {
+		if (at === "x" || at === "X") {
 		}
 		if (canInNumber(at)) {
-			if (at === Mark.HYPHEN && canInNumber(code.charAt(index - 1))) break;
+			if (at === Char.HYPHEN && canInNumber(code.charAt(index - 1))) break;
 			word += at;
 		} else {
 			break;
@@ -204,11 +215,11 @@ function defaultDoNumber(code, index, len, output) {
 	return --index;
 }
 
-function doLineComment4Like(code, index, len, at, output) {
+function doLineComment4CLike(code, index, len, at, output) {
 	append(output, Span.COMMENT);
 	for (; index < len; index++) {
 		at = code.charAt(index);
-		if (at === Mark.NEW_LINE) {
+		if (at === Char.Space.LF) {
 			doNewLineJoin(output);
 			break;
 		} else {
@@ -219,14 +230,14 @@ function doLineComment4Like(code, index, len, at, output) {
 	return index;
 }
 
-function doBlockComment4CLike(code, index, len, output, doc) {
-	doc = doc && code.charAt(index + 2) === Mark.ASTERISK;
-	append(output, doc ? Span.DOC : Span.COMMENT);
+function doBlockComment4CLike(code, index, len, output, hasDoc) {
+	hasDoc = hasDoc && code.charAt(index + 2) === Char.ASTERISK;
+	append(output, hasDoc ? Span.DOC : Span.COMMENT);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at !== Mark.ASTERISK || code.charAt(index + 1) !== Mark.SLASH) {
-			if (at === Mark.NEW_LINE) {
-				doNewLineJoin(output, doc ? Span.DOC : Span.COMMENT);
+		if (at !== Char.ASTERISK || code.charAt(index + 1) !== Char.SLASH) {
+			if (at === Char.Space.LF) {
+				doNewLineJoin(output, hasDoc ? Span.DOC : Span.COMMENT);
 			} else {
 				doHtmlEscape(at, output);
 			}
@@ -236,18 +247,19 @@ function doBlockComment4CLike(code, index, len, output, doc) {
 	}
 	append(output, CLike.BLOCK_COMMENT_END);
 	append(output, Span.CLOSE);
+	// append(output, JOIN);
 	return ++index;
 }
 
 function judgeComment4CLike(at) {
-	return at === Mark.SLASH;
+	return at === Char.SLASH;
 }
 
 function doComment4CLike(code, index, len, at, output, doc) {
 	let next = (index < len - 1) ? code.charAt(index + 1) : String.BLNAK;
 	if (judgeComment4CLike(next)) {
-		index = doLineComment4Like(code, index, len, at, output);
-	} else if (next === Mark.ASTERISK) {
+		index = doLineComment4CLike(code, index, len, at, output);
+	} else if (next === Char.ASTERISK) {
 		index = doBlockComment4CLike(code, index, len, output, doc);
 	}
 	return index;
@@ -265,22 +277,22 @@ function append(output, str) {
 }
 
 exports = module.exports = {
-	append: append,
-	doHtmlEscape: doHtmlEscape,
-	canInNumber: canInNumber,
-	isNumber: isNumber,
-	doNewLineJoin: doNewLineJoin,
-	canInWord: canInWord,
-	isWord: isWord,
-	defaultDoChars: defaultDoChars,
-	defaultDoCharCase: defaultDoCharCase,
-	defaultDoKeyword: defaultDoKeyword,
-	defaultDoBuiltIn: defaultDoBuiltIn,
-	defaultIsBuiltIn: defaultIsBuiltIn,
-	defaultDoNumber: defaultDoNumber,
-	doLineComment4Like: doLineComment4Like,
-	doBlockComment4CLike: doBlockComment4CLike,
-	judgeComment4CLike: judgeComment4CLike,
-	doComment4CLike: doComment4CLike,
-	defaultJudgePluginExe: defaultJudgePluginExe
+	append,
+	doHtmlEscape,
+	canInNumber,
+	isNumber,
+	doNewLineJoin,
+	canInWord,
+	isWord,
+	defaultDoChars,
+	defaultDoCharCase,
+	defaultDoKeyword,
+	defaultDoBuiltIn,
+	defaultIsBuiltIn,
+	defaultDoNumber,
+	doLineComment4CLike,
+	doBlockComment4CLike,
+	judgeComment4CLike,
+	doComment4CLike,
+	defaultJudgePluginExe
 }

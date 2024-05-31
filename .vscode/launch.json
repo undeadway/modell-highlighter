@@ -8,8 +8,14 @@
 		{
 			"type": "node",
 			"request": "launch",
-			"name": "启动测试",
-			"program": "${workspaceFolder}/test/test.js"
+			"name": "Node 测试",
+			"program": "${workspaceFolder}/test/node.test.js"
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "浏览器测试",
+			"program": "${workspaceFolder}/test/node.test.js"
 		}
 	]
 }
