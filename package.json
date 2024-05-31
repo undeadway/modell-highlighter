@@ -8,17 +8,21 @@
 		"url": "git+https://github.com/undeadway/modell-highlighter.git"
 	},
 	"dependencies": {
-		"jsconst": "0.0.3"
 	},
 	"devDependencies": {
-		"coralian": "0.0.30",
+		"jsconst": "0.0.5",
+		"chinese-traditional-color": "git+https://gitee.com/undeadway/chinese-traditional-color#dev",
+		"sass": "^1.50.0",
+		"coralian": "0.0.31",
 		"jquery": "^3.6.0",
 		"jsdom": "^17.0.0",
 		"webpack": "^5.91.0",
 		"webpack-cli": "^5.1.4"
 	},
 	"scripts": {
-		"build": "webpack"
+		"build:js": "webpack",
+		"build:css": "node ./build/css.js",
+		"build": "webpack && node ./build/css.js"
 	},
 	"author": "hzwaygc@gmail.com",
 	"license": "Apache-2.0",
