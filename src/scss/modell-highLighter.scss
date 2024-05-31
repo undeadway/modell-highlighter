@@ -1,4 +1,5 @@
 @CHARSET "UTF-8";
+@import "./../../node_modules/chinese-traditional-color/dist/chinese-traditional-color.scss";
 
 .modell-highlighter {
 
@@ -9,77 +10,79 @@
 		margin: 0px;
 		max-height:500px;
 		overflow: auto;
-		background:#49494b;
+		background: $CTC_AutumnEquinox_qianyun;
 	}
-	ol{
+	ol {
 		display:block;
 		margin:0px;
 		list-style:decimal;
 		margin: 0px;
 	}
-	li{
+	li {
 		vertical-align:middle;
-		border-left:3px solid #146b00;
+		border-left:3px solid $CTC_HeatEnd_congqian;
 		padding-left:5px;
 		height: 22px;
 		line-height: 22px;
-		color:#f6fffd;
+		color: $CTC_AutumnEquinox_ruancui;
 	}
-	li:nth-child(2n-1){
-		background:#41535b;
+	li:nth-child(2n-1) {
+		background: $CTC_SummerSolstice_yuping;
 	}
 
 	/* 红色系：正则表达式、CSS# */
 	.regexp, .css_id{
-		color:#f55385;
+		color:$CTC_SringBeginning_shanhuhe;
 	}
 
 	/* 橙色系：字符串、字符 */
 	.string, .data_val{
-		color:#ff9600;
+		color:$CTC_LesserFullness_yujinqun;
 	}
 	.css_pesudo_class, .character{
-		color:#f0ff00;
+		color:$CTC_HeatEnd_sanglei;
 	}
 
 	/* 黄色系：注释、文档 */
 	.comment{
-		color:#dcdcaa;
+		color:$CTC_LesserFullness_yuanzhi;
 		font-style:oblique;
 	}
 	.doc, .xml_cdata{
-		color:#c9c986;
+		color:$CTC_ColdDew_xingzi;
 	}
 
 	/* 绿色系：数字、CSS类、预定义、Annotation、描述信息 */
 	.number{
-		color:#00F00F;
+		color:$CTC_LesserFullness_shifa;
 	}
 	.css_class, .define{
-		color:#afff03;
+		color:$CTC_RainWater_chunchen;
 	}
 	.description, .data_key{
-		color:#25f8a0;
+		color:$CTC_SummerBeginning_shuilongyin;
 	}
 
 	/* 蓝色系：关键字、内置函数、变量  */
 	.keyword, .xmltag{
-		color:#9cdcfe;
+		color:$CTC_SpringEquinox_qingming;
+		font-weight: bold;
 	}
 	.builtin_func, .xml_doctype{
-		color:#60fdf4;
+		color:$CTC_HeatEnd_tianshuibi;
 	}
 	.builtin_var, .filetype{
-		color:#a892f9;
+		color:$CTC_GrainRain_nuolan;
+		font-weight: bold;
 	}
 
 
 	/* 紫色系：括号、TODO、CSS@ */
 	.bracket{
-		color:#f885fa; margin:0px 2px;
+		color:$CTC_PureBrightness_chengzi; margin:0px 2px;
 	}
 	.css_at, .todo{
-		color:#bbb0ff;
+		color:$CTC_HeatEnd_mujin;
 	}
 
 	.css_name, .keyword{
