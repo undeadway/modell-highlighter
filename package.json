@@ -1,6 +1,6 @@
 {
 	"name": "modell-highlighter",
-	"version": "0.0.10",
+	"version": "0.1.0",
 	"description": "A source code highlighter created by pure javascript.",
 	"main": "./src/index.js",
 	"repository": {
