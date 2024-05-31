@@ -7,8 +7,8 @@
 <script type="text/javascript" src="http://res.waygc.net/marked/marked.min.js"></script>
 <script type="text/javascript" src="http://codes.waygc.net/coralian/coralian.js"></script>
 <script type="text/javascript" src="http://codes.waygc.net/coralian/coralian.client.dev.js"></script>
-<script type="text/javascript" src="http://codes.waygc.net/Modell/ModellHighlighter.js"></script>
-<link rel="stylesheet" type="text/css" href="http://codes.waygc.net/Modell/ModellHighLighter.css" />
+<script type="text/javascript" src="http://codes.waygc.net/modell/modell-highlighter.js"></script>
+<link rel="stylesheet" type="text/css" href="http://codes.waygc.net/modell/modell-highlighter.css" />
 <style type="text/css">
 	#left, #right{display: inline-block; vertical-align: top;}
 	#right fieldset{width:720px; min-width:72px; max-width:720px;}
@@ -26,9 +26,8 @@
 </div>
 <script type="text/javascript">
 (function() {
-
 	$.get({
-		url : "./ModellHighLighter.md",
+		url : "./modell-highLighter.md",
 		dataType: "text",
 		success : function(req) {
 			$("#readme").html(marked(req));
@@ -48,7 +47,6 @@
 })();
 
 function test() {
-
 	var html = ModellHighLighter.execute(
 		document.getElementById("source").value,
 		document.getElementById("select").value);
