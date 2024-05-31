@@ -1,5 +1,5 @@
 require("coralian");
-require("../src/index");
+require("./../src/index");
 const highlighter = ModellHighLighter;
 const fs = require("fs");
 const FOLDER = './test/res/';
@@ -15,8 +15,8 @@ if (testLang) {
 	var output = highlighter.execute(file, testLang);
 
 	var html = `<html><head>
-	<title>${testLang}测试</title>
-	<link rel="stylesheet" type="text/css" href="./../../dist/modell-highLighter.css" />
+	<title>测试</title>
+	<link rel="stylesheet" type="text/css" href="./../ModellHighLighter.css" />
 	</head>
 	<body>${output}</body></html>`;
 	fs.writeFileSync(`./test/output/${testLang}.html`, html);
@@ -30,7 +30,7 @@ if (testLang) {
 
 			let html = `<html><head>
 	<title>${lang}测试</title>
-	<link rel="stylesheet" type="text/css" href="./../../dist/modell-highLighter.css" />
+	<link rel="stylesheet" type="text/css" href="./../ModellHighLighter.css" />
 	</head>
 	<body>${output}</body></html>`;
 			fs.writeFileSync(`./test/output/${lang}.html`, html);
