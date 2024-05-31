@@ -32,8 +32,8 @@ function doCssName(code, index, len, output) {
 			case Char.SHARP:
 				append(output, CSS_ID_SPAN);
 				break;
-			case Char.LEFT_BRACKET:
-			case Char.RIGHT_BRACKET:
+			case Char.Bracket.LEFT:
+			case Char.Bracket.RIGHT:
 				return index;
 			default:
 				append(output, CSS_XMLTAG_SPAN);
@@ -49,12 +49,12 @@ function doCssBody(code, index, len, output) {
 		let at = code.charAt(index);
 		if (Char.Space.REGX.test(at)) {
 			doHtmlEscape(at, output);
-		} else if (at === Char.RIGHT_BRACKET) {
+		} else if (at === Char.Bracket.RIGHT) {
 			append(output, at);
 			return index;
 		} else if (at === Char.SLASH && Char.ASTERISK === code.charAt(index + 1)) {
 			index = doBlockComment4CLike(code, index, len, output, false);
-		} else if (at !== Char.LEFT_BRACKET) {
+		} else if (at !== Char.Bracket.LEFT) {
 			index = doCssAttr(code, index, len, output);
 			if (index < len) {
 				index = cssBody(code, index, len, output);
@@ -71,9 +71,9 @@ function doCssAt(code, index, len, output) {
 	append(output, CSS_AT_SPAN);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.LEFT_BRACKET) {
+		if (at === Char.Bracket.LEFT) {
 			append(output, Span.CLOSE);
-			append(output, Char.LEFT_BRACKET);
+			append(output, Char.Bracket.LEFT);
 
 			return index;
 		} else {
@@ -90,7 +90,7 @@ function doCssPesudoClass(code, index, len, output) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
-		} else if (at === Char.LEFT_BRACKET) {
+		} else if (at === Char.Bracket.LEFT) {
 			append(output, Span.CLOSE);
 			return --index;
 		} else {
@@ -103,7 +103,7 @@ function doCssPesudoClass(code, index, len, output) {
 function doCssCssNames(code, index, len, output) {
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.RIGHT_ANGLE) {
+		if (at === Char.Angle.RIGHT) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			if (code.charAt(index + 1) === Char.COLON) {
@@ -116,7 +116,7 @@ function doCssCssNames(code, index, len, output) {
 			append(output, Span.CLOSE);
 			doHtmlEscape(at, output);
 			return index;
-		} else if (at === Char.LEFT_BRACKET) {
+		} else if (at === Char.Bracket.LEFT) {
 			append(output, Span.CLOSE);
 			return --index;
 		} else {
@@ -136,7 +136,7 @@ function cssBody(code, index, len, output) {
 			append(output, Span.CLOSE);
 			append(output, at);
 			return index;
-		} else if (at === Char.RIGHT_BRACKET) {
+		} else if (at === Char.Bracket.RIGHT) {
 			// 后括号判断为退出 CSS 身体部，身体部的所有逻辑到此结束
 			append(output, Span.CLOSE);
 			return --index;
@@ -168,7 +168,7 @@ function doCssAttr(code, index, len, output) {
 	append(output, Span.DATA_KEY);
 	for (; index < len; index++) {
 		let at = code.charAt(index);
-		if (at === Char.COLON || at === Char.RIGHT_BRACKET) {
+		if (at === Char.COLON || at === Char.Bracket.RIGHT) {
 			append(output, Span.CLOSE);
 			append(output, at);
 			return ++index;
