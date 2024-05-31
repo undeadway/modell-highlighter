@@ -1,17 +1,17 @@
 {
-	"name": "modellhighlighter",
-	"version": "0.0.5",
+	"name": "modell-highlighter",
+	"version": "0.0.10",
 	"description": "A source code highlighter created by pure javascript.",
 	"main": "./src/index.js",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/undeadway/ModellHighLighter.git"
+		"url": "git+https://github.com/undeadway/modell-highlighter.git"
 	},
 	"dependencies": {
-		"jsconst": "git+https://gitee.com/undeadway/jsconst#dev"
+		"jsconst": "0.0.3"
 	},
 	"devDependencies": {
-		"coralian": "git+https://gitee.com/undeadway/coralian#dev",
+		"coralian": "0.0.30",
 		"jquery": "^3.6.0",
 		"jsdom": "^17.0.0",
 		"webpack": "^5.91.0",
@@ -22,5 +22,5 @@
 	},
 	"author": "hzwaygc@gmail.com",
 	"license": "Apache-2.0",
-	"homepage": "http://prj.waygc.net/?/ModellHighLighter"
+	"homepage": "http://codes.waygc.net/projects?modell-highlighter"
 }
