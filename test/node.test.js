@@ -6,7 +6,7 @@ const FOLDER = './test/res/';
 
 console.log(highlighter.getLangs());
 
-let testLang;
+let testLang = "css";
 
 if (testLang) {
 
@@ -16,7 +16,7 @@ if (testLang) {
 
 	var html = `<html><head>
 	<title>${testLang}测试</title>
-	<link rel="stylesheet" type="text/css" href="./../ModellHighLighter.css" />
+	<link rel="stylesheet" type="text/css" href="./../../dist/modell-highLighter.css" />
 	</head>
 	<body>${output}</body></html>`;
 	fs.writeFileSync(`./test/output/${testLang}.html`, html);
@@ -30,7 +30,7 @@ if (testLang) {
 
 			let html = `<html><head>
 	<title>${lang}测试</title>
-	<link rel="stylesheet" type="text/css" href="./../ModellHighLighter.css" />
+	<link rel="stylesheet" type="text/css" href="./../../dist/modell-highLighter.css" />
 	</head>
 	<body>${output}</body></html>`;
 			fs.writeFileSync(`./test/output/${lang}.html`, html);
